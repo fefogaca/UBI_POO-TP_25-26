@@ -32,6 +32,14 @@ public class Produto {
         }
     }
 
+    public void removerStock(int quantidade) {
+        if (quantidade > 0 && this.stock >= quantidade) {
+            this.stock -= quantidade;
+        } else {
+            System.out.println("Erro: Stock insuficiente ou quantidade inválida.");
+        }
+    }
+
     // --- MUDANÇA 4: Método toString() atualizado para mostrar o ID ---
     @Override
     public String toString() {

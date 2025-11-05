@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8e57b136-2e18-4f17-a7aa-1b73b6171586" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/Farmacia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Farmacia.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Produto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Produto.java" afterDir="false" />
+    </list>
+    <list id="84812e18-48fa-48a2-a528-183cb567d2d0" name="Changes by fefogaca" comment="">
+      <change beforePath="$PROJECT_DIR$/src/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Cliente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Farmacia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Farmacia.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Morada.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Morada.java" afterDir="false" />
+    </list>
+    <list id="7cc0b684-7455-4c19-97f4-48d59c4acf9d" name="Changes by tdias" comment="">
+      <change beforePath="$PROJECT_DIR$/src/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Cliente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Farmacia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Farmacia.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Morada.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Morada.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/src/Main.java">
+      <ranges>
+        <range start1="0" end1="0" start2="0" end2="3" changelist="8e57b136-2e18-4f17-a7aa-1b73b6171586" />
+        <range start1="4" end1="5" start2="7" end2="7" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+        <range start1="6" end1="7" start2="8" end2="8" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+        <range start1="8" end1="8" start2="9" end2="10" changelist="8e57b136-2e18-4f17-a7aa-1b73b6171586" />
+        <range start1="9" end1="9" start2="11" end2="12" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+        <range start1="15" end1="15" start2="18" end2="19" changelist="8e57b136-2e18-4f17-a7aa-1b73b6171586" />
+        <range start1="19" end1="21" start2="23" end2="26" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+        <range start1="27" end1="27" start2="32" end2="35" changelist="8e57b136-2e18-4f17-a7aa-1b73b6171586" />
+        <range start1="39" end1="39" start2="47" end2="48" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+        <range start1="46" end1="46" start2="55" end2="56" changelist="7cc0b684-7455-4c19-97f4-48d59c4acf9d" />
+        <range start1="50" end1="51" start2="60" end2="61" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+        <range start1="52" end1="52" start2="62" end2="63" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+        <range start1="58" end1="59" start2="69" end2="70" changelist="8e57b136-2e18-4f17-a7aa-1b73b6171586" />
+        <range start1="67" end1="67" start2="78" end2="81" changelist="7cc0b684-7455-4c19-97f4-48d59c4acf9d" />
+        <range start1="75" end1="75" start2="89" end2="90" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+        <range start1="92" end1="92" start2="107" end2="187" changelist="7cc0b684-7455-4c19-97f4-48d59c4acf9d" />
+        <range start1="93" end1="93" start2="188" end2="189" changelist="8e57b136-2e18-4f17-a7aa-1b73b6171586" />
+        <range start1="104" end1="105" start2="200" end2="201" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+        <range start1="106" end1="106" start2="202" end2="203" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+        <range start1="112" end1="113" start2="209" end2="209" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+        <range start1="115" end1="119" start2="211" end2="215" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+        <range start1="123" end1="124" start2="219" end2="219" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+        <range start1="125" end1="126" start2="220" end2="221" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+        <range start1="133" end1="133" start2="228" end2="229" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+        <range start1="140" end1="141" start2="236" end2="237" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+        <range start1="144" end1="144" start2="240" end2="367" changelist="8e57b136-2e18-4f17-a7aa-1b73b6171586" />
+      </ranges>
+    </file>
+    <file path="$PROJECT_DIR$/src/Farmacia.java">
+      <ranges>
+        <range start1="4" end1="5" start2="4" end2="4" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+        <range start1="7" end1="7" start2="6" end2="7" changelist="8e57b136-2e18-4f17-a7aa-1b73b6171586" />
+        <range start1="11" end1="11" start2="11" end2="16" changelist="8e57b136-2e18-4f17-a7aa-1b73b6171586" />
+        <range start1="13" end1="14" start2="18" end2="20" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+        <range start1="24" end1="24" start2="30" end2="31" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+        <range start1="33" end1="33" start2="40" end2="41" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+        <range start1="43" end1="52" start2="51" end2="51" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+        <range start1="53" end1="53" start2="52" end2="53" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+        <range start1="62" end1="62" start2="62" end2="93" changelist="7cc0b684-7455-4c19-97f4-48d59c4acf9d" />
+        <range start1="63" end1="76" start2="94" end2="95" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+        <range start1="82" end1="83" start2="101" end2="102" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+        <range start1="85" end1="94" start2="104" end2="105" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+        <range start1="95" end1="96" start2="106" end2="106" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+        <range start1="105" end1="107" start2="115" end2="115" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+        <range start1="112" end1="127" start2="120" end2="121" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+        <range start1="138" end1="139" start2="132" end2="133" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+        <range start1="144" end1="147" start2="138" end2="138" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+        <range start1="151" end1="151" start2="142" end2="152" changelist="8e57b136-2e18-4f17-a7aa-1b73b6171586" />
+      </ranges>
+    </file>
+    <file path="$PROJECT_DIR$/src/Cliente.java">
+      <ranges>
+        <range start1="2" end1="4" start2="2" end2="4" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+        <range start1="15" end1="15" start2="15" end2="18" changelist="7cc0b684-7455-4c19-97f4-48d59c4acf9d" />
+      </ranges>
+    </file>
+    <file path="$PROJECT_DIR$/src/Morada.java">
+      <ranges>
+        <range start1="10" end1="10" start2="10" end2="35" changelist="7cc0b684-7455-4c19-97f4-48d59c4acf9d" />
+        <range start1="15" end1="15" start2="40" end2="41" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
+      </ranges>
+    </file>
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 6
+}]]></component>
+  <component name="ProjectId" id="353NalfmotxwnsAaxzkRGYtOPfm" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "Application.TestarEntregas.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.27397.103" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8e57b136-2e18-4f17-a7aa-1b73b6171586" name="Changes" comment="" />
+      <created>1762334862648</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1762334862648</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

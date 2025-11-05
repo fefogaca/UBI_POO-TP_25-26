@@ -1,7 +1,7 @@
 public class Cliente {
     private String nome;
-    private String nif; // Número de Identificação Fiscal
-    private Morada morada; // <--- ISTO É COMPOSIÇÃO
+    private String nif;
+    private Morada morada;
 
     public Cliente(String nome, String nif, Morada morada) {
         this.nome = nome;
@@ -13,6 +13,9 @@ public class Cliente {
     public String getNome() { return nome; }
     public String getNif() { return nif; }
     public Morada getMorada() { return morada; }
+
+    public void setNome(String nome) { this.nome = nome; }
+
 
     @Override
     public String toString() {

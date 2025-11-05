@@ -2,16 +2,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Farmacia {
-    // Listas de Objetos
     private List<Produto> produtos;
     private List<Cliente> clientes;
+    private Entregas entregas;
 
     public Farmacia() {
         this.produtos = new ArrayList<>();
         this.clientes = new ArrayList<>();
+        this.entregas = new Entregas();
     }
 
-    // --- Métodos de Gestão de Clientes (Sem alterações) ---
+    public Entregas getEntregas() {
+        return entregas;
+    }
+
+
+    // Adicionar cliente Nome/NIF/Morada
     public void adicionarCliente(String nome, String nif, Morada morada) {
         if (acharClienteNif(nif) != null) {
             System.out.println("Erro: Já existe um cliente com o NIF " + nif);
@@ -22,6 +28,7 @@ public class Farmacia {
         System.out.println("Cliente adicionado com sucesso!");
     }
 
+    // Achar cliente por NIF
     public Cliente acharClienteNif(String nif) {
         for (Cliente cliente : clientes) {
             if (cliente.getNif().equals(nif)) {
@@ -31,6 +38,7 @@ public class Farmacia {
         return null;
     }
 
+    // Listar clientes
     public void listarClientes() {
         if (clientes.isEmpty()) {
             System.out.println("Nenhum cliente registado.");
@@ -41,16 +49,8 @@ public class Farmacia {
         }
     }
 
-    public void listarClientesNN() {
-        if(clientes.isEmpty()){
-            System.out.println("Nenhum cliente registado.");
-            return;
-        }
-        for (Cliente cliente : clientes) {
-            System.out.println("Cliente: " + cliente.getNome() + " | NIF: " + cliente.getNif());
-        }
-    }
 
+    // Eliminar clientes
     public void eliminarCliente(String nif) {
         Cliente clienteEliminar = acharClienteNif(nif);
         if (clienteEliminar != null) {
@@ -61,39 +61,49 @@ public class Farmacia {
         }
     }
 
-    // --- Métodos de Gestão de Produtos ---
-
-    // Achar produto pelo nome dele
-    public Produto acharProdutoNome(String nome) {
-        for (Produto produto : produtos) {
-            if (produto.getNome().equalsIgnoreCase(nome)) {
-                return produto;
-            }
+    public void editarcliente(String nif, String NovoNome, String NovaRua, String NovaCidade, String NovocodPostal) {
+        Cliente clienteparaeditar = acharClienteNif(nif);
+        if (clienteparaeditar == null) {
+            System.out.println("Cliente nao encontrado.");
+            return;
         }
-        return null;
+
+        // atualiza o nome
+        if (NovoNome != null && !NovoNome.isEmpty()) {
+            clienteparaeditar.setNome(NovoNome);
+        }
+
+        //atualiza a morada
+        Morada moradaparaEditar = clienteparaeditar.getMorada();
+
+        if (NovaRua != null && !NovaRua.isEmpty()) {
+            moradaparaEditar.setRua(NovaRua);
+        }
+
+        // atualiza a cidade
+        if (NovaCidade != null && !NovaCidade.isEmpty()) {
+            moradaparaEditar.setCidade(NovaCidade);
+        }
+        if (NovocodPostal != null && !NovocodPostal.isEmpty()) {
+            moradaparaEditar.setCodPostal(NovocodPostal);
+        }
+        System.out.println("cliente (NIF:"+ nif+ ") atualizado com exito!");
     }
 
-    // --- MUDANÇA 1: Novo método para achar produto pelo ID ---
+
+
+    // Achar produtos por ID
     public Produto acharProdutoPorId(int id) {
         for (Produto produto : produtos) {
             if (produto.getId() == id) {
                 return produto;
             }
         }
-        return null; // Não encontrou
-    }
-
-    // Achar produto pelo índice na lista
-    public Produto acharProdutoPorIndice(int indice) {
-        if (indice >= 0 && indice < produtos.size()) {
-            return produtos.get(indice);
-        }
         return null;
     }
 
-
+    // Adicionar produto
     public void adicionarProduto(String nome, double preco, int stockInicial) {
-        // Validações
         if (preco < 0) {
             System.out.println("Erro: O preço não pode ser negativo!");
             return;
@@ -103,28 +113,12 @@ public class Farmacia {
             return;
         }
 
-        // Esta linha agora funciona, pois o construtor de Produto
-        // só pede 3 argumentos e trata do ID automaticamente.
         Produto novoProduto = new Produto(nome, preco, stockInicial);
         this.produtos.add(novoProduto);
         System.out.println("Produto (ID: " + novoProduto.getId() + ") adicionado com sucesso!");
     }
 
-    // Metodo para eliminar produtos pelo nome (existente)
-    public void eliminarProduto(String nome) {
-        Produto produtoEliminar = acharProdutoNome(nome);
-
-        if (produtoEliminar != null) {
-            produtos.remove(produtoEliminar);
-            System.out.println("Produto eliminado com sucesso!");
-        } else {
-            System.out.println("Produto " + nome + " não encontrado.");
-        }
-    }
-
-    // --- MUDANÇA 2: Novo método para eliminar produtos pelo ID ---
-    // Isto é "sobrecarga de método" (method overloading),
-    // pois temos dois métodos 'eliminarProduto' mas com argumentos diferentes.
+    // Eliminar os produtos por ID
     public void eliminarProduto(int id) {
         Produto produtoEliminar = acharProdutoPorId(id); // Usa o novo helper
 
@@ -136,17 +130,24 @@ public class Farmacia {
         }
     }
 
-    // --- MUDANÇA 3: Listar produtos agora mostra o ID ---
+    // Listar os produtos por ID
     public void listarProdutos() {
         if (produtos.isEmpty()) {
             System.out.println("Nenhum produto registado.");
             return;
         }
-
-        // Removemos o 'indice' manual, pois o toString() do Produto
-        // agora inclui o ID real do produto.
         for (Produto produto : produtos) {
             System.out.println(produto.toString());
         }
+    }
+
+    // Verificação se há clientes
+    public boolean temClientes() {
+        return !clientes.isEmpty();
+    }
+
+    // Verificação se há produtos
+    public boolean temProdutos() {
+        return !produtos.isEmpty();
     }
 }

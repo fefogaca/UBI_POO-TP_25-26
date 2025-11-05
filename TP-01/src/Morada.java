@@ -9,8 +9,34 @@ public class Morada {
         this.codPostal = codPostal;
     }
 
+    public String getRua() {
+        return this.rua;
+    }
+
+    public String getCidade() {
+        return this.cidade;
+    }
+
+    public String getCodPostal() {
+        return this.codPostal;
+    }
+
+    public void setRua(String rua) {
+        this.rua = rua;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public void setCodPostal(String codPostal) {
+        this.codPostal = codPostal;
+    }
+
+
     @Override
     public String toString() {
         return rua + ", " + cidade + ", " + codPostal;
     }
+
 }
