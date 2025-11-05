@@ -40,6 +40,8 @@ public class Produto {
         }
     }
 
+
+
     // --- MUDANÇA 4: Método toString() atualizado para mostrar o ID ---
     @Override
     public String toString() {

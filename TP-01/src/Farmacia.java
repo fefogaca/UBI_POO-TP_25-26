@@ -61,34 +61,7 @@ public class Farmacia {
         }
     }
 
-    public void editarcliente(String nif, String NovoNome, String NovaRua, String NovaCidade, String NovocodPostal) {
-        Cliente clienteparaeditar = acharClienteNif(nif);
-        if (clienteparaeditar == null) {
-            System.out.println("Cliente nao encontrado.");
-            return;
-        }
 
-        // atualiza o nome
-        if (NovoNome != null && !NovoNome.isEmpty()) {
-            clienteparaeditar.setNome(NovoNome);
-        }
-
-        //atualiza a morada
-        Morada moradaparaEditar = clienteparaeditar.getMorada();
-
-        if (NovaRua != null && !NovaRua.isEmpty()) {
-            moradaparaEditar.setRua(NovaRua);
-        }
-
-        // atualiza a cidade
-        if (NovaCidade != null && !NovaCidade.isEmpty()) {
-            moradaparaEditar.setCidade(NovaCidade);
-        }
-        if (NovocodPostal != null && !NovocodPostal.isEmpty()) {
-            moradaparaEditar.setCodPostal(NovocodPostal);
-        }
-        System.out.println("cliente (NIF:"+ nif+ ") atualizado com exito!");
-    }
 
 
 

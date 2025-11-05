@@ -10,21 +10,8 @@ public class Entregas {
     }
 
     public void registarEncomenda(Cliente cliente, Map<Produto, Integer> produtos) {
-        // Verificar stock antes de criar a encomenda
-        for (Map.Entry<Produto, Integer> entry : produtos.entrySet()) {
-            Produto p = entry.getKey();
-            int quantidade = entry.getValue();
-            if (p.getStock() < quantidade) {
-                System.out.println("Erro: Stock insuficiente para o produto '" + p.getNome() + "'. Stock disponível: " + p.getStock() + ", Quantidade pedida: " + quantidade);
-                return; // Cancela a encomenda
-            }
-        }
-
         // Se houver stock para todos, então cria a encomenda e baixa o stock
         Encomenda novaEncomenda = new Encomenda(cliente, produtos);
-        for (Map.Entry<Produto, Integer> entry : produtos.entrySet()) {
-            entry.getKey().removerStock(entry.getValue());
-        }
         this.encomendas.add(novaEncomenda);
         System.out.println("Encomenda registada com sucesso! ID: " + novaEncomenda.getId());
     }

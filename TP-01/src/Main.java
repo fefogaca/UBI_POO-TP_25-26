@@ -112,78 +112,61 @@ public class Main {
             return;
         }
 
-        System.out.print("Nif do cliente a editar.");
+        System.out.print("Nif do cliente a editar: ");
         String nif = scanner.nextLine();
         Cliente cliente = farmacia.acharClienteNif(nif);
-
 
         if (cliente == null) {
             System.out.print("Cliente não encontrado");
             return;
         }
-        private static void menuEditar() {
-            int opcaoeditar;
-            do {
-                System.out.println("\n--- O que deseja editar? ---");
-                System.out.println("1. Editar Nome");
-                System.out.println("2. Editar Morada");
-                System.out.println("3. Editar Rua");
-                System.out.println("4. Editar Clientes");
-                System.out.println("0. Voltar ao Menu Principal");
-                System.out.print("Escolha uma opção: ");
 
-                opcaoeditar = scanner.nextInt();
-                scanner.nextLine();
+        int opcaoeditar;
+        do {
+            System.out.println("\n--- O que deseja editar? ---");
+            System.out.println("1. Editar Nome");
+            System.out.println("2. Editar Rua");
+            System.out.println("3. Editar Cidade");
+            System.out.println("4. Editar Código Postal");
+            System.out.println("0. Voltar ao Menu de Clientes");
+            System.out.print("Escolha uma opção: ");
 
-                // Switch case para escolher as opções
-                switch (opcaoeditar) {
-                    case 1:
-                        System.out.print("insira o novo nome(" + cliente.getNome() + ")");
-                        String novoNome = scanner.nextLine();
-                        break;
-                    case 2:
-                        System.out.print("\n");
-                        farmacia.listarClientes();
-                        System.out.print("\n");
-                        System.out.print("NIF do cliente a eliminar: ");
-                        String nif = scanner.nextLine();
-                        farmacia.eliminarCliente(nif);
-                        break;
-                    case 3:
-                        farmacia.listarClientes();
-                        break;
-                    case 4:
-                        editarCliente();
-                        break;
-                    case 0:
-                        break;
-                    default:
-                        System.out.println("Opção inválida!");
-                }
-            } while (opcaoeditar != 0);
-        }
+            opcaoeditar = scanner.nextInt();
+            scanner.nextLine(); // Limpar o buffer
 
+            Morada moradaAtual = cliente.getMorada();
 
-        System.out.println("a editar o cliente" + cliente.getNome());
-        System.out.println("deixe em branco se nao quiser alterar o nome");
-
-        // pedir o novo nome
-        System.out.print("insira o novo nome(" + cliente.getNome() + ")");
-        String novoNome = scanner.nextLine();
-
-        System.out.println(" Nova Morada");
-        Morada moradaAtual = cliente.getMorada();
-
-        System.out.print("nova rua(" + moradaAtual.getRua() + ")");
-        String novaRua = scanner.nextLine();
-
-        System.out.print("nova cidade(" + moradaAtual.getCidade() + ")");
-        String novaCidade = scanner.nextLine();
-
-        System.out.print("Novo codigo postal(" + moradaAtual.getCodPostal() + ")");
-        String novaCodPostal = scanner.nextLine();
-
-        farmacia.editarcliente(nif, novoNome, novaRua, novaCidade, novaCodPostal);
+            switch (opcaoeditar) {
+                case 1:
+                    System.out.print("Insira o novo nome (" + cliente.getNome() + "): ");
+                    String novoNome = scanner.nextLine();
+                    cliente.setNome(novoNome);
+                    System.out.println("Nome atualizado com sucesso!");
+                    break;
+                case 2:
+                    System.out.print("Nova rua (" + moradaAtual.getRua() + "): ");
+                    String novaRua = scanner.nextLine();
+                    moradaAtual.setRua(novaRua);
+                    System.out.println("Rua atualizada com sucesso!");
+                    break;
+                case 3:
+                    System.out.print("Nova cidade (" + moradaAtual.getCidade() + "): ");
+                    String novaCidade = scanner.nextLine();
+                    moradaAtual.setCidade(novaCidade);
+                    System.out.println("Cidade atualizada com sucesso!");
+                    break;
+                case 4:
+                    System.out.print("Novo código postal (" + moradaAtual.getCodPostal() + "): ");
+                    String novaCodPostal = scanner.nextLine();
+                    moradaAtual.setCodPostal(novaCodPostal);
+                    System.out.println("Código postal atualizado com sucesso!");
+                    break;
+                case 0:
+                    break;
+                default:
+                    System.out.println("Opção inválida!");
+            }
+        } while (opcaoeditar != 0);
     }
 
     // Menu para Gestão de Produtos
@@ -194,6 +177,7 @@ public class Main {
             System.out.println("1. Adicionar Produto");
             System.out.println("2. Eliminar Produto");
             System.out.println("3. Listar Produtos");
+            System.out.println("4. Editar Produtos");
             System.out.println("0. Voltar ao Menu Principal");
             System.out.print("Escolha uma opção: ");
 
@@ -237,6 +221,16 @@ public class Main {
         scanner.nextLine();
 
         farmacia.adicionarProduto(nome, preco, stock);
+    }
+
+    // Editar produto
+    private static void editarproduto() {
+        farmacia.listarProdutos();
+        System.out.println("Qual produto deseja editar?");
+        System.out.print("ID do produto: ");
+        int idProduto = scanner.nextInt();
+        scanner.nextLine();
+
     }
 
     // Menu para Gestão de Encomendas
@@ -320,6 +314,7 @@ public class Main {
 
                 if (produto.getStock() >= quantidade) {
                     produtosEncomenda.put(produto, produtosEncomenda.getOrDefault(produto, 0) + quantidade);
+                    produto.removerStock(quantidade);
                     System.out.println("Produto adicionado à encomenda.");
                 } else {
                     System.out.println("Stock insuficiente. Stock disponível: " + produto.getStock());
