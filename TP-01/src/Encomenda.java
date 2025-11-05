@@ -10,11 +10,9 @@ public class Encomenda {
         ENTREGUE("Entregue");
 
         private final String descricao;
-
         EstadoEncomenda(String descricao) {
             this.descricao = descricao;
         }
-
         public String getDescricao() {
             return descricao;
         }
@@ -43,14 +41,8 @@ public class Encomenda {
         return total;
     }
 
-    // Getters
     public int getId() { return id; }
-    public Cliente getCliente() { return cliente; }
-    public Map<Produto, Integer> getProdutos() { return produtos; }
-    public double getPrecoTotal() { return precoTotal; }
     public EstadoEncomenda getEstado() { return estado; }
-
-    // Setter para o estado
     public void setEstado(EstadoEncomenda estado) {
         this.estado = estado;
     }

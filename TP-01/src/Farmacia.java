@@ -16,8 +16,6 @@ public class Farmacia {
         return entregas;
     }
 
-
-    // Adicionar cliente Nome/NIF/Morada
     public void adicionarCliente(String nome, String nif, Morada morada) {
         if (acharClienteNif(nif) != null) {
             System.out.println("Erro: Já existe um cliente com o NIF " + nif);
@@ -28,7 +26,6 @@ public class Farmacia {
         System.out.println("Cliente adicionado com sucesso!");
     }
 
-    // Achar cliente por NIF
     public Cliente acharClienteNif(String nif) {
         for (Cliente cliente : clientes) {
             if (cliente.getNif().equals(nif)) {
@@ -38,7 +35,6 @@ public class Farmacia {
         return null;
     }
 
-    // Listar clientes
     public void listarClientes() {
         if (clientes.isEmpty()) {
             System.out.println("Nenhum cliente registado.");
@@ -49,8 +45,6 @@ public class Farmacia {
         }
     }
 
-
-    // Eliminar clientes
     public void eliminarCliente(String nif) {
         Cliente clienteEliminar = acharClienteNif(nif);
         if (clienteEliminar != null) {
@@ -61,11 +55,6 @@ public class Farmacia {
         }
     }
 
-
-
-
-
-    // Achar produtos por ID
     public Produto acharProdutoPorId(int id) {
         for (Produto produto : produtos) {
             if (produto.getId() == id) {
@@ -75,7 +64,6 @@ public class Farmacia {
         return null;
     }
 
-    // Adicionar produto
     public void adicionarProduto(String nome, double preco, int stockInicial) {
         if (preco < 0) {
             System.out.println("Erro: O preço não pode ser negativo!");
@@ -91,19 +79,17 @@ public class Farmacia {
         System.out.println("Produto (ID: " + novoProduto.getId() + ") adicionado com sucesso!");
     }
 
-    // Eliminar os produtos por ID
     public void eliminarProduto(int id) {
-        Produto produtoEliminar = acharProdutoPorId(id); // Usa o novo helper
+        Produto produtoEliminar = acharProdutoPorId(id);
 
         if (produtoEliminar != null) {
             produtos.remove(produtoEliminar);
             System.out.println("Produto (ID: " + id + ") eliminado com sucesso!");
         } else {
-            System.out.println("Produto com ID " + id + " não encontrado.");
+            System.out.print("Produto com ID " + id + " não encontrado.\n");
         }
     }
 
-    // Listar os produtos por ID
     public void listarProdutos() {
         if (produtos.isEmpty()) {
             System.out.println("Nenhum produto registado.");
@@ -114,12 +100,9 @@ public class Farmacia {
         }
     }
 
-    // Verificação se há clientes
     public boolean temClientes() {
         return !clientes.isEmpty();
     }
-
-    // Verificação se há produtos
     public boolean temProdutos() {
         return !produtos.isEmpty();
     }

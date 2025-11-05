@@ -10,7 +10,6 @@ public class Entregas {
     }
 
     public void registarEncomenda(Cliente cliente, Map<Produto, Integer> produtos) {
-        // Se houver stock para todos, então cria a encomenda e baixa o stock
         Encomenda novaEncomenda = new Encomenda(cliente, produtos);
         this.encomendas.add(novaEncomenda);
         System.out.println("Encomenda registada com sucesso! ID: " + novaEncomenda.getId());
@@ -37,11 +36,12 @@ public class Entregas {
 
     public void listarEncomendas() {
         if (encomendas.isEmpty()) {
+            System.out.print("\n");
             System.out.println("Nenhuma encomenda registada.");
             return;
         }
         for (Encomenda e : encomendas) {
-            System.out.println(e.toString());
+            System.out.print(e.toString());
         }
     }
 }

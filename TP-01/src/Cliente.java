@@ -9,13 +9,11 @@ public class Cliente {
         this.morada = morada;
     }
 
-    // Getters
     public String getNome() { return nome; }
     public String getNif() { return nif; }
     public Morada getMorada() { return morada; }
 
     public void setNome(String nome) { this.nome = nome; }
-
 
     @Override
     public String toString() {
