@@ -3,12 +3,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+// A classe Main é a nossa interface com o utilizador. É aqui que tudo começa.
 public class Main {
 
+    // O scanner é o nosso leitor de input do utilizador.
     private static Scanner scanner = new Scanner(System.in);
+    // A farmácia é a nossa classe principal, que gere tudo.
     private static Farmacia farmacia = new Farmacia();
 
-    // Menu principal para escolha de opções
+    // O menu principal, onde o utilizador escolhe o que quer fazer.
     public static void main(String[] args) {
         int opcao;
         do {
@@ -22,7 +25,7 @@ public class Main {
             opcao = scanner.nextInt();
             scanner.nextLine();
 
-           // Switch case para escolher as opções
+           // Um switch para cada opção do menu.
             switch (opcao) {
                 case 1:
                     menuClientes();
@@ -44,7 +47,7 @@ public class Main {
         scanner.close();
     }
 
-    // Menu de escolhas na Gestão de Clientes
+    // O menu para gerir os clientes.
     private static void menuClientes() {
         int opcao;
         do {
@@ -59,7 +62,7 @@ public class Main {
             opcao = scanner.nextInt();
             scanner.nextLine();
 
-            // Switch case para escolher as opções
+            // Um switch para cada opção do menu de clientes.
             switch (opcao) {
                 case 1:
                     adicionarCliente();
@@ -90,7 +93,7 @@ public class Main {
         } while (opcao != 0);
     }
 
-    // Recolha de informações do Cliente
+    // Pede ao utilizador a informação para adicionar um novo cliente.
     private static void adicionarCliente() {
         System.out.print("\nNome do cliente: ");
         String nome = scanner.nextLine();
@@ -107,11 +110,12 @@ public class Main {
         farmacia.adicionarCliente(nome, nif, morada);
     }
 
+    // Chama o método para editar um cliente.
     private static void editarCliente() {
         farmacia.editarCliente(scanner);
     }
 
-    // Menu para Gestão de Produtos
+    // O menu para gerir os produtos.
     private static void menuProdutos() {
         int opcao ;
         do {
@@ -126,7 +130,7 @@ public class Main {
             opcao = scanner.nextInt();
             scanner.nextLine();
 
-            // Switch case para escolher as opções
+            // Um switch para cada opção do menu de produtos.
             switch (opcao) {
                 case 1:
                     adicionarProduto();
@@ -157,7 +161,7 @@ public class Main {
         } while (opcao != 0);
     }
 
-    // Recolha de Informações para adicionar um produto
+    // Pede ao utilizador a informação para adicionar um novo produto.
     private static void adicionarProduto() {
         System.out.print("\nNome do produto: ");
         String nome = scanner.nextLine();
@@ -169,12 +173,12 @@ public class Main {
         farmacia.adicionarProduto(nome, preco, stock);
     }
 
-    // Editar produto
+    // Chama o método para editar um produto.
     private static void editarProduto() {
         farmacia.editarProduto(scanner);
     }
 
-    // Menu para Gestão de Encomendas
+    // O menu para gerir as encomendas.
     private static void menuEncomendas() {
         int opcao;
         do {
@@ -187,7 +191,7 @@ public class Main {
             opcao = scanner.nextInt();
             scanner.nextLine();
 
-            // Switch case para escolher as opções
+            // Um switch para cada opção do menu de encomendas.
             switch (opcao) {
                 case 1:
                     registarEncomenda();
@@ -207,12 +211,12 @@ public class Main {
         } while (opcao != 0);
     }
 
-    // Recolha de informações para Registrar uma Encomenda
+    // Chama o método para registar uma nova encomenda.
     private static void registarEncomenda() {
         farmacia.novaEncomenda(scanner);
     }
 
-    // Recolha de informações para atualizar o estado da encomenda
+    // Chama o método para atualizar o estado de uma encomenda.
     private static void atualizarEstadoEncomenda() {
         farmacia.atualizarEstadoEncomenda(scanner);
     }

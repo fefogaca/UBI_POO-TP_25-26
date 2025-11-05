@@ -15,6 +15,7 @@ public class Farmacia {
         this.encomendas = new ArrayList<>();
     }
 
+    // Adiciona um novo cliente à nossa lista de clientes.
     public void adicionarCliente(String nome, String nif, Morada morada) {
         if (acharClienteNif(nif) != null) {
             System.out.println("Erro: Já existe um cliente com o NIF " + nif);
@@ -25,6 +26,7 @@ public class Farmacia {
         System.out.println("Cliente adicionado com sucesso!");
     }
 
+    // Procura por um cliente na nossa lista através do seu NIF.
     public Cliente acharClienteNif(String nif) {
         for (Cliente cliente : clientes) {
             if (cliente.getNif().equals(nif)) {
@@ -34,6 +36,7 @@ public class Farmacia {
         return null;
     }
 
+    // Mostra todos os clientes que temos registados.
     public void listarClientes() {
         if (clientes.isEmpty()) {
             System.out.println("Nenhum cliente registado.");
@@ -44,6 +47,7 @@ public class Farmacia {
         }
     }
 
+    // Remove um cliente da nossa lista através do seu NIF.
     public void eliminarCliente(String nif) {
         Cliente clienteEliminar = acharClienteNif(nif);
         if (clienteEliminar != null) {
@@ -55,6 +59,7 @@ public class Farmacia {
     }
 
 
+    // Procura por um produto na nossa lista através do seu ID.
     public Produto acharProdutoPorId(int id) {
         for (Produto produto : produtos) {
             if (produto.getId() == id) {
@@ -64,6 +69,7 @@ public class Farmacia {
         return null;
     }
 
+    // Adiciona um novo produto à nossa lista de produtos.
     public void adicionarProduto(String nome, double preco, int stockInicial) {
         if (preco < 0) {
             System.out.println("Erro: O preço não pode ser negativo!");
@@ -79,6 +85,7 @@ public class Farmacia {
         System.out.println("Produto (ID: " + novoProduto.getId() + ") adicionado com sucesso!");
     }
 
+    // Remove um produto da nossa lista através do seu ID.
     public void eliminarProduto(int id) {
         Produto produtoEliminar = acharProdutoPorId(id);
 
@@ -90,6 +97,7 @@ public class Farmacia {
         }
     }
 
+    // Mostra todos os produtos que temos registados.
     public void listarProdutos() {
         if (produtos.isEmpty()) {
             System.out.println("Nenhum produto registado.");
@@ -100,6 +108,7 @@ public class Farmacia {
         }
     }
 
+    // Permite editar a informação de um produto.
     public void editarProduto(Scanner scanner) {
         if (!temProdutos()) {
             System.out.println("Não há nenhum produto registado.");
@@ -170,6 +179,7 @@ public class Farmacia {
         } while (opcaoEditar != 0);
     }
 
+    // Cria uma nova encomenda.
     public void novaEncomenda(Scanner scanner) {
         if (!temClientes()) {
             System.out.println("Não existem clientes registados. Por favor, adicione um cliente primeiro.");
@@ -234,12 +244,14 @@ public class Farmacia {
         }
     }
 
+    // Regista uma nova encomenda na nossa lista de encomendas.
     public void registarEncomenda(Cliente cliente, Map<Produto, Integer> produtos) {
         Encomenda novaEncomenda = new Encomenda(cliente, produtos);
         this.encomendas.add(novaEncomenda);
         System.out.println("Encomenda registada com sucesso! ID: " + novaEncomenda.getId());
     }
 
+    // Procura por uma encomenda na nossa lista através do seu ID.
     public Encomenda acharEncomendaPorId(int id) {
         for (Encomenda e : encomendas) {
             if (e.getId() == id) {
@@ -249,6 +261,7 @@ public class Farmacia {
         return null;
     }
 
+    // Atualiza o estado de uma encomenda.
     public void atualizarEstado(int idEncomenda, Encomenda.EstadoEncomenda novoEstado) {
         Encomenda e = acharEncomendaPorId(idEncomenda);
         if (e != null) {
@@ -259,6 +272,7 @@ public class Farmacia {
         }
     }
 
+    // Mostra todas as encomendas que temos registadas.
     public void listarEncomendas() {
         if (encomendas.isEmpty()) {
             System.out.println();
@@ -270,6 +284,7 @@ public class Farmacia {
         }
     }
 
+    // Permite editar a informação de um cliente.
     public void editarCliente(Scanner scanner) {
         if (!temClientes()) {
             System.out.println("Não há nenhum cliente registado");
@@ -331,6 +346,7 @@ public class Farmacia {
         } while (opcaoeditar != 0);
     }
 
+    // Atualiza o estado de uma encomenda.
     public void atualizarEstadoEncomenda(Scanner scanner) {
         System.out.println();
         System.out.print("ID da encomenda a atualizar: ");
