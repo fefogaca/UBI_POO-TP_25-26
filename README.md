@@ -10,7 +10,7 @@ Para clonar este repositório e ter acesso aos ficheiros do projeto, utilize o s
 git clone https://github.com/fefogaca/TP-POO-25-26
 cd TP-POO-25-26
 ```
-*Substitua `<URL_DO_REPOSITÓRIO>` pelo URL real do repositório Git.*
+
 
 ---
 
@@ -137,7 +137,7 @@ A `TP-02` é uma evolução significativa da `TP-01`, transformando a aplicaçã
     ```bash
     javac -d TP-02/out/production/TP-02 -cp TP-02/lib/junit-platform-console-standalone-1.10.2.jar $(find TP-02/src -name "*.java")
     ```
-    *Nota: Este comando compila todos os ficheiros `.java` do projeto, incluindo os testes, e adiciona o JAR do JUnit 5 ao classpath.*
+    *Nota: Este comando compila todos os ficheiros `.java` do projeto, incluindo os testes, e adiciona o JAR do JUnit 5 ao classpath. Para utilizadores Windows que não possuam o comando `find` disponível no seu terminal (e.g., PowerShell, CMD), pode ser necessário utilizar um terminal compatível com comandos Unix (como o Git Bash) ou listar os ficheiros `.java` manualmente.*
 
 3.  **Executar a aplicação GUI:**
     ```bash
