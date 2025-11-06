@@ -2,6 +2,18 @@
 
 Este repositório contém duas implementações de um sistema de gestão de farmácia, desenvolvidas no âmbito da disciplina de Programação Orientada a Objetos (POO) da Universidade da Beira Interior (UBI). As implementações, designadas como `TP-01` e `TP-02`, representam fases distintas do desenvolvimento do projeto, com a `TP-02` sendo uma evolução da `TP-01`, incorporando conceitos mais avançados de POO e engenharia de software.
 
+## Como Obter o Projeto
+
+Para clonar este repositório e ter acesso aos ficheiros do projeto, utilize o seguinte comando:
+
+```bash
+git clone https://github.com/fefogaca/TP-POO-25-26
+cd TP-POO-25-26
+```
+*Substitua `<URL_DO_REPOSITÓRIO>` pelo URL real do repositório Git.*
+
+---
+
 ## Estrutura do Repositório
 
 *   `Enunciado/`: Contém o enunciado original do projeto (Enunciado.pdf).

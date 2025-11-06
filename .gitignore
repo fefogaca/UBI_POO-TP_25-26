@@ -1,0 +1,34 @@
+# Compiled class files
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# Log Files #
+*.log
+log/
+logs/
+
+# IDE-specific files and directories
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# Build/output directories
+out/
+build/
+target/
+
+# OS-specific generated files
+.DS_Store
+Thumbs.db
+
+# Persistence data
+farmacia.dat
+
+# Generated Javadoc documentation
+doc/
