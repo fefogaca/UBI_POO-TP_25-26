@@ -10,6 +10,19 @@ Este repositório contém duas implementações de um sistema de gestão de farm
 
 ---
 
+## Requisitos
+
+Para compilar e executar os projetos `TP-01` e `TP-02`, é necessário ter instalado o seguinte software:
+
+*   **Java Development Kit (JDK) 8 ou superior:** Essencial para compilar e executar aplicações Java. Pode ser descarregado a partir do site oficial da Oracle ou através de gestores de pacotes como o `sdkman` (para Linux/macOS) ou `Chocolatey` (para Windows).
+    *   [Download JDK](https://www.oracle.com/java/technologies/downloads/)
+
+Para a execução dos testes unitários da `TP-02`, o projeto já inclui o JAR necessário do JUnit 5 (`junit-platform-console-standalone-1.10.2.jar`) no diretório `TP-02/lib/`.
+
+---
+
+---
+
 ## TP-01: Sistema de Gestão de Farmácia (Versão de Consola)
 
 ### Descrição Geral
