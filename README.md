@@ -123,9 +123,9 @@ A `TP-02` é uma evolução significativa da `TP-01`, transformando a aplicaçã
 1.  **Navegar até ao diretório raiz do projeto (onde este `README.md` se encontra).**
 2.  **Compilar os ficheiros Java:**
     ```bash
-    javac -d TP-02/out/production/TP-02 TP-02/src/**/*.java TP-02/src/*.java
+    javac -d TP-02/out/production/TP-02 -cp TP-02/lib/junit-platform-console-standalone-1.10.2.jar $(find TP-02/src -name "*.java")
     ```
-    *Nota: Certifique-se de que o JAR do JUnit 5 está no classpath se for compilar os testes junto. Para a execução da GUI, apenas as classes de modelo, gui e persistência são necessárias.*
+    *Nota: Este comando compila todos os ficheiros `.java` do projeto, incluindo os testes, e adiciona o JAR do JUnit 5 ao classpath.*
 
 3.  **Executar a aplicação GUI:**
     ```bash
@@ -136,10 +136,7 @@ A `TP-02` é uma evolução significativa da `TP-01`, transformando a aplicaçã
 ### Execução de Testes Unitários (JUnit 5)
 
 1.  **Navegar até ao diretório raiz do projeto (onde este `README.md` se encontra).**
-2.  **Compilar os ficheiros Java (incluindo os testes):**
-    ```bash
-    javac -d TP-02/out/production/TP-02 -cp TP-02/lib/junit-platform-console-standalone-1.10.2.jar TP-02/src/**/*.java TP-02/src/*.java
-    ```
+2.  **Certifique-se de que os ficheiros Java foram compilados (ver secção "Compilação e Execução" acima).**
 3.  **Executar os testes JUnit:**
     ```bash
     java -jar TP-02/lib/junit-platform-console-standalone-1.10.2.jar -cp TP-02/out/production/TP-02 --scan-classpath
