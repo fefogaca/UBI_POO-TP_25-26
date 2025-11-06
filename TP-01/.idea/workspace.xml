@@ -9,23 +9,14 @@
       <change beforePath="$PROJECT_DIR$/out/production/TP-01/Cliente.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TP-01/Cliente.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TP-01/Encomenda$EstadoEncomenda.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TP-01/Encomenda$EstadoEncomenda.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TP-01/Encomenda.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TP-01/Encomenda.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TP-01/Entregas.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TP-01/Entregas.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TP-01/Entregas.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TP-01/Farmacia.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TP-01/Farmacia.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TP-01/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TP-01/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TP-01/Morada.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TP-01/Morada.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TP-01/Produto.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TP-01/Produto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TP-01/TestarProdutos.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TP-01/TestarProdutos.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entregas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entregas.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Farmacia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Farmacia.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TP-01/TestarProdutos.class" beforeDir="false" />
     </list>
-    <list id="84812e18-48fa-48a2-a528-183cb567d2d0" name="Changes by fefogaca" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Produto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Produto.java" afterDir="false" />
-    </list>
-    <list id="7cc0b684-7455-4c19-97f4-48d59c4acf9d" name="Changes by tdias" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-    </list>
+    <list id="84812e18-48fa-48a2-a528-183cb567d2d0" name="Changes by fefogaca" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,44 +25,46 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/src/Main.java">
-      <ranges>
-        <range start1="114" end1="115" start2="114" end2="115" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
-        <range start1="118" end1="119" start2="118" end2="118" changelist="8e57b136-2e18-4f17-a7aa-1b73b6171586" />
-        <range start1="123" end1="133" start2="122" end2="132" changelist="8e57b136-2e18-4f17-a7aa-1b73b6171586" />
-        <range start1="134" end1="136" start2="133" end2="135" changelist="8e57b136-2e18-4f17-a7aa-1b73b6171586" />
-        <range start1="137" end1="186" start2="136" end2="169" changelist="8e57b136-2e18-4f17-a7aa-1b73b6171586" />
-        <range start1="196" end1="196" start2="179" end2="180" changelist="7cc0b684-7455-4c19-97f4-48d59c4acf9d" />
-        <range start1="240" end1="240" start2="224" end2="231" changelist="84812e18-48fa-48a2-a528-183cb567d2d0" />
-      </ranges>
-    </file>
-  </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 6
-}]]></component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="353NalfmotxwnsAaxzkRGYtOPfm" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "Application.TestarEntregas.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TestarEntregas.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultAutoModeForALLUsers.v1&quot;: &quot;true&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
         <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.27397.103" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.27397.103" />
       </set>
     </attachedChunks>
   </component>
@@ -82,8 +75,13 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1762334862648</updated>
+      <workItem from="1762356004660" duration="12398000" />
+      <workItem from="1762384006102" duration="30000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
