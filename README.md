@@ -107,12 +107,7 @@ A `TP-02` é uma evolução significativa da `TP-01`, transformando a aplicaçã
 
 ### Compilação e Execução
 
-Para compilar e executar a `TP-02` a partir da linha de comandos:
-
-1.  **Navegar até ao diretório raiz do projeto (`TP-POO-25-26`):**
-    ```bash
-    cd /Users/fefogaca/Documents/UBI/UBI 2025/3˚ Semestre/Programação Orientada a Objetos/Trabalho Prático/TP-POO-25-26
-    ```
+1.  **Navegar até ao diretório raiz do projeto (onde este `README.md` se encontra).**
 2.  **Compilar os ficheiros Java:**
     ```bash
     javac -d TP-02/out/production/TP-02 TP-02/src/**/*.java TP-02/src/*.java
@@ -127,12 +122,7 @@ Para compilar e executar a `TP-02` a partir da linha de comandos:
 
 ### Execução de Testes Unitários (JUnit 5)
 
-Para executar os testes unitários, é necessário ter o JAR do JUnit Platform Console Standalone. No diretório `TP-02/lib/` já se encontra o ficheiro `junit-platform-console-standalone-1.10.2.jar`.
-
-1.  **Navegar até ao diretório raiz do projeto (`TP-POO-25-26`):**
-    ```bash
-    cd /Users/fefogaca/Documents/UBI/UBI 2025/3˚ Semestre/Programação Orientada a Objetos/Trabalho Prático/TP-POO-25-26
-    ```
+1.  **Navegar até ao diretório raiz do projeto (onde este `README.md` se encontra).**
 2.  **Compilar os ficheiros Java (incluindo os testes):**
     ```bash
     javac -d TP-02/out/production/TP-02 -cp TP-02/lib/junit-platform-console-standalone-1.10.2.jar TP-02/src/**/*.java TP-02/src/*.java
@@ -146,10 +136,7 @@ Para executar os testes unitários, é necessário ter o JAR do JUnit Platform C
 
 Para gerar a documentação Javadoc para a `TP-02`:
 
-1.  **Navegar até ao diretório raiz do projeto (`TP-POO-25-26`):**
-    ```bash
-    cd /Users/fefogaca/Documents/UBI/UBI 2025/3˚ Semestre/Programação Orientada a Objetos/Trabalho Prático/TP-POO-25-26
-    ```
+1.  **Navegar até ao diretório raiz do projeto (onde este `README.md` se encontra).**
 2.  **Gerar a documentação Javadoc:**
     ```bash
     javadoc -d TP-02/doc TP-02/src/**/*.java TP-02/src/*.java
