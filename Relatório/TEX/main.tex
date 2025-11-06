@@ -1,0 +1,318 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{natbib}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{acronym}
+\usepackage{dirtree}
+
+\lstset{
+    language=Java,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    commentstyle=\color{green!50!black},
+    numberstyle=\tiny,
+    numbers=left,
+    stepnumber=1,
+    numbersep=5pt,
+    backgroundcolor=\color{gray!10},
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    captionpos=b,
+    breaklines=true,
+    breakatwhitespace=true,
+    breakautoindent=true,
+    escapeinside={\%*}{*)},
+    linewidth=\textwidth,
+    basewidth=0.5em,
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[R]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+% Logo da universidade
+\begin{figure}
+\centering
+\includegraphics{Anexos/UBI_LOGO.jpg}
+\end{figure}
+
+% Título e autores
+\title{Relatório do Trabalho Prático 1 - Farmácia UBI}
+\author{Afonso Esteves - 55047\\Tiago Pereira - 55019\\Felipe Dourado - 53394}
+\date{\today}
+
+\maketitle
+\newpage
+
+% Sumário
+\tableofcontents
+
+\newpage
+
+\section*{Resumo}
+\hspace{10pt}
+Este relatório detalha o desenvolvimento de uma aplicação de consola em Java para a gestão de uma farmácia. O sistema, desenvolvido no âmbito da disciplina de Programação Orientada a Objetos, permite gerir clientes, produtos e encomendas. A aplicação foi estruturada de forma a aplicar os conceitos fundamentais da POO, como encapsulamento, abstração e modelagem de entidades do mundo real em classes. O sistema oferece uma interface de linha de comandos para interagir com as funcionalidades implementadas.
+\addcontentsline{toc}{section}{Resumo}
+\section*{Palavras-chave e \textit{Keywords}}
+Java; Programação Orientada a Objetos; Sistema de Gestão; Farmácia; Consola.
+
+\newpage
+
+\section{Introdução}
+\subsection{Âmbito, enquadramento e motivação}
+\hspace{10pt}
+Este documento consiste num relatório técnico que descreve o desenvolvimento de uma aplicação de consola em Java, no contexto da unidade curricular de Programação Orientada a Objetos. A aplicação simula um sistema de gestão para uma farmácia, permitindo realizar operações básicas como o registo e a gestão de clientes, o controlo de stock de produtos e o processamento de encomendas.
+
+A principal motivação para o desenvolvimento deste projeto foi a aplicação prática dos conceitos de Programação Orientada a Objetos (POO) aprendidos, traduzindo um problema do mundo real para um modelo de software coeso e funcional. O projeto permitiu explorar a modelação de entidades, a definição de responsabilidades entre classes e a criação de uma interface de utilizador textual.
+
+O projeto situa-se na área de Desenvolvimento de Software, com foco na Programação Orientada a Objetos em Java e no desenvolvimento de aplicações de consola.
+
+\section{Contextualização do Projeto}
+
+\subsection{Identificação dos Desenvolvedores}
+Os autores do presente projeto são estudantes do curso de Informática Web, Móvel e na Nuvem da \ac{UBI}, matriculados na disciplina de Programação Orientada a Objetos.
+
+\subsubsection{Desenvolvedores Envolvidos}
+\begin{itemize}
+    \item \textbf{Afonso Esteves (55047)}
+    \item \textbf{Felipe Dourado (53394)}
+    \item \textbf{Tiago Pereira (55019)}
+\end{itemize}     
+
+\subsection{Contextualização Académica}
+O projeto foi desenvolvido no contexto da disciplina de Programação Orientada a Objetos, lecionada pelo Professor Paul Andrew Crocker, com o objetivo de aplicar e consolidar conhecimentos em:
+\begin{itemize}
+    \item Modelação de problemas com base em objetos.
+    \item Implementação de classes, atributos e métodos em Java.
+    \item Utilização de conceitos como encapsulamento, construtores e relacionamentos entre classes.
+    \item Gestão de coleções de objetos.
+    \item Desenvolvimento de uma interface de utilizador baseada em texto.
+\end{itemize}
+
+\section{Especificações Técnicas}
+
+\subsection{Ambiente de Desenvolvimento}
+\begin{itemize}
+    \item \textbf{Linguagem:} Java
+    \item \textbf{Ambiente de Execução:} Java Development Kit (JDK)
+    \item \textbf{Ambiente de Desenvolvimento:} IntelliJ IDEA
+    \item \textbf{Sistema Operacional:} macOS, Windows
+\end{itemize}
+
+\section{Utilização}
+\subsection{Requisitos Prévios}
+\begin{itemize}
+    \item \textbf{Java:} É necessário ter o JDK (Java Development Kit) instalado no sistema.
+\end{itemize}
+
+\subsection{Como executar o programa}
+\begin{itemize}
+    \item \textbf{Compilação:}
+    \begin{enumerate}
+        \item Navegue até à diretoria `TP-01/src`.
+        \item Compile os ficheiros Java com o seguinte comando:
+            \begin{verbatim}
+javac *.java
+            \end{verbatim}
+    \end{enumerate}
+    \item \textbf{Execução:}
+    \begin{enumerate}
+        \item Após a compilação, execute a aplicação com o comando:
+            \begin{verbatim}
+java Main
+            \end{verbatim}
+    \end{enumerate}
+    \item \textbf{Acesso:}
+    \begin{itemize}
+        \item A aplicação será executada na consola, apresentando o menu principal.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Uso do Programa}
+\begin{itemize}
+    \item Ao iniciar a aplicação, será apresentado um menu principal com as opções de gestão de clientes, produtos e encomendas.
+    \item O utilizador pode navegar pelos submenus para adicionar, remover, listar ou editar as informações.
+    \item A interação é feita através da introdução de números correspondentes às opções de menu e do preenchimento dos dados solicitados.
+\end{itemize}
+
+\section{Estrutura da Solução Construída}
+O sistema foi arquitetado com base nos princípios da Programação Orientada a Objetos, dividindo as responsabilidades em diferentes classes que representam as entidades do domínio do problema.
+
+\subsection{Componentes do Sistema}
+\textbf{Classes de Modelo:} 
+\begin{itemize}
+    \item \texttt{Cliente.java}: Representa um cliente da farmácia, com nome, NIF e morada.
+    \item \texttt{Produto.java}: Representa um produto, com ID, nome, preço e stock.
+    \item \texttt{Encomenda.java}: Modela uma encomenda, associando um cliente a um conjunto de produtos e registando o estado da mesma.
+    \item \texttt{Morada.java}: Representa a morada de um cliente.
+    \item \texttt{Farmacia.java}: Classe central que gere as listas de clientes, produtos e encomendas, e contém a lógica de negócio principal.
+    \item \texttt{Main.java}: Ponto de entrada da aplicação, responsável pela interface com o utilizador (menus de consola).
+\end{itemize}
+
+\subsection{Estrutura de Ficheiros do Projeto}
+\dirtree{%
+.1 TP-01/
+.2 src/.
+.3 Cliente.java.
+.3 Encomenda.java.
+.3 Farmacia.java.
+.3 Main.java.
+.3 Morada.java.
+.3 Produto.java.
+}
+
+\section{Funcionalidades Implementadas}
+As funcionalidades implementadas na aplicação incluem:
+\begin{itemize}
+    \item \textbf{Gestão de Clientes:}
+    \begin{itemize}
+        \item Adicionar, remover, listar e editar clientes.
+        \item Cada cliente é identificado por um NIF único.
+    \end{itemize}
+    \item \textbf{Gestão de Produtos:}
+    \begin{itemize}
+        \item Adicionar, remover, listar e editar produtos.
+        \item Controlo de stock (adicionar e remover unidades).
+    \end{itemize}
+    \item \textbf{Gestão de Encomendas:}
+    \begin{itemize}
+        \item Criar uma nova encomenda para um cliente, adicionando produtos do stock.
+        \item Listar todas as encomendas registadas.
+        \item Atualizar o estado de uma encomenda (ex: "Em processamento", "Pago", "Enviado", "Entregue").
+    \end{itemize}
+\end{itemize}
+
+\section{Implementação de Funcionalidades}
+
+\subsection{Classe Farmacia: O Coração do Sistema}
+A classe `Farmacia` centraliza a lógica de negócio. Ela contém as listas de clientes, produtos e encomendas e os métodos para manipular esses dados.
+
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[caption={Método para adicionar um cliente em Farmacia.java}]
+public void adicionarCliente(String nome, String nif, Morada morada) {
+    if (acharClienteNif(nif) != null) {
+        System.out.println("Erro: Já existe um cliente com o NIF " + nif);
+        return;
+    }
+    Cliente novoCliente = new Cliente(nome, nif, morada);
+    this.clientes.add(novoCliente);
+    System.out.println("Cliente adicionado com sucesso!");
+}
+\end{lstlisting}
+\end{minipage}
+
+\subsection{Classe Main: Interface com o Utilizador}
+A classe `Main` é responsável por apresentar os menus ao utilizador e recolher o seu input, servindo de ponte para as funcionalidades da classe `Farmacia`.
+
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[caption={Menu principal em Main.java}]
+public static void main(String[] args) {
+    int opcao;
+    do {
+        System.out.println("\n--- BEM-VINDO À FARMÁCIA UBI ---");
+        System.out.println("1. Gestão de Clientes");
+        System.out.println("2. Gestão de Produtos");
+        System.out.println("3. Gestão de Encomendas");
+        System.out.println("0. Sair");
+        System.out.print("\nEscolha uma opção: ");
+
+        opcao = scanner.nextInt();
+        scanner.nextLine();
+
+       // Um switch para cada opção do menu.
+        switch (opcao) {
+            case 1:
+                menuClientes();
+                break;
+            case 2:
+                menuProdutos();
+                break;
+            case 3:
+                menuEncomendas();
+                break;
+            case 0:
+                System.out.println("Saindo do programa...");
+                break;
+            default:
+                System.out.println("Opção inválida!");
+        }
+    } while (opcao != 0);
+
+    scanner.close();
+}
+\end{lstlisting}
+\end{minipage}
+
+\subsection{Classe Encomenda: Gestão de Estados}
+A classe `Encomenda` utiliza um `enum` para gerir o estado do pedido, o que torna o código mais legível e seguro.
+
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[caption={Enum EstadoEncomenda em Encomenda.java}]
+public enum EstadoEncomenda {
+    EM_PROCESSAMENTO("Em processamento"),
+    PAGO("Pago"),
+    ENVIADO("Enviado"),
+    ENTREGUE("Entregue");
+
+    private final String descricao;
+    EstadoEncomenda(String descricao) {
+        this.descricao = descricao;
+    }
+    public String getDescricao() {
+        return descricao;
+    }
+}
+\end{lstlisting}
+\end{minipage}
+
+\section{Considerações de Implementação}
+
+\subsection{Princípios de Desenvolvimento}
+\begin{itemize}
+    \item \textbf{Separação de Responsabilidades:} A classe `Main` trata da interação com o utilizador, enquanto a `Farmacia` e as outras classes de modelo cuidam da lógica de negócio e dos dados.
+    \item \textbf{Encapsulamento:} Os atributos das classes são privados e o acesso é feito através de métodos públicos (getters e setters), protegendo o estado interno dos objetos.
+    \item \textbf{Validação de Dados:} Foram implementadas validações básicas para garantir a consistência dos dados, como a verificação de NIFs duplicados ou stocks negativos.
+\end{itemize}
+
+\subsection{Desafios Encontrados}
+Durante o desenvolvimento do projeto, alguns desafios foram encontrados:
+\begin{itemize}
+    \item \textbf{Gestão do Input do Utilizador:} Lidar com diferentes tipos de input (texto, números) e prevenir erros de execução devido a formatos inesperados exigiu atenção no uso da classe `Scanner`.
+    \item \textbf{Modelação do Relacionamento entre Classes:} Definir como as classes se relacionariam (ex: uma `Encomenda` tem um `Cliente` e vários `Produtos`) foi um passo crucial para a correta estruturação do sistema.
+    \item \textbf{Consistência dos Dados:} Garantir que o stock de um produto era atualizado corretamente ao criar uma encomenda foi um ponto importante para a integridade do sistema.
+\end{itemize}
+
+\section{Conclusão}
+O desenvolvimento deste projeto permitiu aplicar de forma prática e consolidada os conceitos fundamentais da Programação Orientada a Objetos. A criação de um sistema de gestão de farmácia, mesmo que simplificado, demonstrou a eficácia da modelação de entidades do mundo real em classes e objetos para a construção de software modular e de fácil manutenção.
+
+A experiência adquirida na estruturação das classes, na definição de responsabilidades e na implementação de uma interface de utilizador textual foi de grande valor para o aprofundamento dos conhecimentos em Java e no paradigma da POO.
+
+\clearpage
+
+\section{Referências Bibliográficas}
+\begin{itemize}
+    \item Schildt, Herbert. \textit{Java: A Beginner's Guide}. 6th ed., McGraw-Hill Education, 2014.
+    \item Olsson, Mikael. \textit{Java Quick Syntax Reference}. Apress, 2014.
+    \item Roberts, Eric S. \textit{The Art and Science of Java}. Addison-Wesley, 2008.
+\end{itemize}
+
+\section*{Acrónimos}
+\begin{acronym}[UBI]
+    \acro{UBI}{Universidade da Beira Interior}
+\end{acronym}
+
+\end{document}
