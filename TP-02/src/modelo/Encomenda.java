@@ -66,6 +66,15 @@ public class Encomenda implements Serializable {
     public double getPrecoTotal() { return precoTotal; }
     public EstadoEncomenda getEstado() { return estado; }
 
+    /**
+     * Obtém a quantidade total de itens incluídos na encomenda.
+     *
+     * @return soma das quantidades de todos os produtos associados
+     */
+    public int getQuantidadeTotal() {
+        return produtos.values().stream().mapToInt(Integer::intValue).sum();
+    }
+
     // Setters
     public void setEstado(EstadoEncomenda estado) { this.estado = estado; }
     public void setPrecoTotal(double precoTotal) { this.precoTotal = precoTotal; }

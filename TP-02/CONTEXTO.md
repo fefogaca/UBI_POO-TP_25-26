@@ -132,7 +132,7 @@ O enunciado exige ainda:
   Painel para gerir produtos, com validações de stock/preço e atualização visual. Comunica com `Farmacia` para refletir alterações. Essencial para controlar inventário.
 
 - `src/gui/PainelGestaoEncomendas.java`  
-  Painel complexo para criar, editar e remover encomendas. Inclui pesquisa, controlo de stock, sincronização com painel de produtos, gestão de estados, apresentação apenas informativa do cliente durante a edição e um diálogo de gestão com ações de adicionar, remover e guardar alterações. Necessário para operações de venda.
+  Painel complexo para criar, editar e remover encomendas. Inclui pesquisa, controlo de stock, sincronização com painel de produtos, gestão de estados, apresentação apenas informativa do cliente durante a edição, coluna de quantidade total por encomenda e um diálogo de gestão com ações de adicionar, remover e guardar alterações. Necessário para operações de venda.
 
 - `src/test/FarmaciaTest.java`  
   Conjunto de testes JUnit 5. Valida regras críticas de negócio (clientes, encomendas, stock). Necessário para garantir regressões mínimas.

@@ -1,12 +1,5 @@
 package gui;
 
-import modelo.Cliente;
-import modelo.Encomenda;
-import modelo.Farmacia;
-import modelo.Produto;
-
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -14,6 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import modelo.Cliente;
+import modelo.Encomenda;
+import modelo.Farmacia;
+import modelo.Produto;
 
 /**
  * Painel dedicado à gestão de encomendas.
@@ -40,7 +39,7 @@ public class PainelGestaoEncomendas extends JPanel {
         this.painelProdutos = painelProdutos;
         setLayout(new BorderLayout());
 
-        String[] colunas = {"ID", "Cliente", "Preço Total", "Estado"};
+        String[] colunas = {"ID", "Cliente", "Preço Total", "Quantidade", "Estado"};
         tableModel = new DefaultTableModel(colunas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -80,7 +79,13 @@ public class PainelGestaoEncomendas extends JPanel {
         tableModel.setRowCount(0);
         List<Encomenda> encomendas = farmacia.getEncomendas();
         for (Encomenda e : encomendas) {
-            tableModel.addRow(new Object[]{e.getId(), e.getCliente().getNome(), String.format("%.2f€", e.getPrecoTotal()), e.getEstado().getDescricao()});
+            tableModel.addRow(new Object[]{
+                    e.getId(),
+                    e.getCliente().getNome(),
+                    String.format("%.2f€", e.getPrecoTotal()),
+                    e.getQuantidadeTotal(),
+                    e.getEstado().getDescricao()
+            });
         }
     }
 
