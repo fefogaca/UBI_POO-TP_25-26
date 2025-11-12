@@ -31,6 +31,13 @@ public abstract class Pessoa implements Serializable {
     public void setNome(String nome) { this.nome = nome; }
 
     /**
+     * Atualiza o NIF da pessoa.
+     *
+     * @param nif novo Número de Identificação Fiscal
+     */
+    public void setNif(String nif) { this.nif = nif; }
+
+    /**
      * Método abstrato que deve ser implementado pelas subclasses para retornar uma representação em String.
      * Exemplo de polimorfismo.
      */

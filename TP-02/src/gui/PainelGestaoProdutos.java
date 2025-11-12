@@ -11,38 +11,47 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Painel Swing responsável pela manutenção do catálogo de produtos.
+ * <p>
+ * Exibe uma tabela com todos os produtos registados e permite a criação,
+ * atualização e remoção com validação de dados.
+ * </p>
+ */
 public class PainelGestaoProdutos extends JPanel {
 
     private Farmacia farmacia;
     private JTable tabelaProdutos;
     private DefaultTableModel tableModel;
 
+    /**
+     * Constrói o painel de produtos, ligado à instância de {@link Farmacia} fornecida.
+     *
+     * @param farmacia fonte de dados e operações sobre produtos
+     */
     public PainelGestaoProdutos(Farmacia farmacia) {
         this.farmacia = farmacia;
         setLayout(new BorderLayout());
 
-        // Tabela
         String[] colunas = {"ID", "Nome", "Preço", "Stock"};
         tableModel = new DefaultTableModel(colunas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false; // Torna todas as células não editáveis
+                return false;
             }
         };
         tabelaProdutos = new JTable(tableModel);
         atualizarTabela();
 
-        // Adicionar MouseListener para duplo clique
         tabelaProdutos.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) { // Deteta duplo clique
+                if (e.getClickCount() == 2) {
                     editarProduto();
                 }
             }
         });
 
-        // Painel de botões
         JPanel painelBotoes = new JPanel();
         JButton btnAdicionar = new JButton("Adicionar");
         JButton btnEditar = new JButton("Editar");
@@ -52,18 +61,19 @@ public class PainelGestaoProdutos extends JPanel {
         painelBotoes.add(btnEditar);
         painelBotoes.add(btnRemover);
 
-        // Adicionar componentes ao painel
         add(new JScrollPane(tabelaProdutos), BorderLayout.CENTER);
         add(painelBotoes, BorderLayout.SOUTH);
 
-        // Ações dos botões
         btnAdicionar.addActionListener(e -> adicionarProduto());
         btnEditar.addActionListener(e -> editarProduto());
         btnRemover.addActionListener(e -> removerProduto());
     }
 
+    /**
+     * Atualiza o conteúdo da tabela com o estado atual da lista de produtos.
+     */
     public void atualizarTabela() {
-        tableModel.setRowCount(0); // Limpa a tabela
+        tableModel.setRowCount(0);
         List<Produto> produtos = farmacia.getProdutos();
         for (Produto p : produtos) {
             tableModel.addRow(new Object[]{p.getId(), p.getNome(), String.format("%.2f€", p.getPreco()), p.getStock()});

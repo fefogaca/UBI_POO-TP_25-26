@@ -12,38 +12,47 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
+/**
+ * Painel Swing responsável pela gestão de clientes.
+ * <p>
+ * Exibe uma tabela com os clientes registados e disponibiliza operações de
+ * criação, edição e remoção através de diálogos modais.
+ * </p>
+ */
 public class PainelGestaoClientes extends JPanel {
 
     private Farmacia farmacia;
     private JTable tabelaClientes;
     private DefaultTableModel tableModel;
 
+    /**
+     * Cria o painel associado à farmácia fornecida.
+     *
+     * @param farmacia instância a partir da qual serão lidos e atualizados os clientes
+     */
     public PainelGestaoClientes(Farmacia farmacia) {
         this.farmacia = farmacia;
         setLayout(new BorderLayout());
 
-        // Tabela
         String[] colunas = {"Nome", "NIF", "Morada"};
         tableModel = new DefaultTableModel(colunas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false; // Torna todas as células não editáveis
+                return false;
             }
         };
         tabelaClientes = new JTable(tableModel);
         atualizarTabela();
 
-        // Adicionar MouseListener para duplo clique
         tabelaClientes.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) { // Deteta duplo clique
+                if (e.getClickCount() == 2) {
                     editarCliente();
                 }
             }
         });
 
-        // Painel de botões
         JPanel painelBotoes = new JPanel();
         JButton btnAdicionar = new JButton("Adicionar");
         JButton btnEditar = new JButton("Editar");
@@ -53,22 +62,40 @@ public class PainelGestaoClientes extends JPanel {
         painelBotoes.add(btnEditar);
         painelBotoes.add(btnRemover);
 
-        // Adicionar componentes ao painel
         add(new JScrollPane(tabelaClientes), BorderLayout.CENTER);
         add(painelBotoes, BorderLayout.SOUTH);
 
-        // Ações dos botões
         btnAdicionar.addActionListener(e -> adicionarCliente());
         btnEditar.addActionListener(e -> editarCliente());
         btnRemover.addActionListener(e -> removerCliente());
     }
 
     private void atualizarTabela() {
-        tableModel.setRowCount(0); // Limpa a tabela
+        tableModel.setRowCount(0);
         List<Cliente> clientes = farmacia.getClientes();
         for (Cliente c : clientes) {
             tableModel.addRow(new Object[]{c.getNome(), c.getNif(), c.getMorada().toString()});
         }
+    }
+
+    /**
+     * Valida se um NIF corresponde ao formato de 9 dígitos.
+     *
+     * @param nif número de identificação fiscal a validar
+     * @return {@code true} se o NIF for constituído por 9 dígitos
+     */
+    private boolean nifValido(String nif) {
+        return nif != null && nif.matches("\\d{9}");
+    }
+
+    /**
+     * Valida se um código postal está no formato 0000-000.
+     *
+     * @param codigoPostal código postal a validar
+     * @return {@code true} se respeitar o formato definido
+     */
+    private boolean codigoPostalValido(String codigoPostal) {
+        return codigoPostal != null && codigoPostal.matches("\\d{4}-\\d{3}");
     }
 
     private void adicionarCliente() {
@@ -119,15 +146,37 @@ public class PainelGestaoClientes extends JPanel {
 
         JButton btnSalvar = new JButton("Salvar");
         btnSalvar.addActionListener(e -> {
-            try {
-                Morada morada = new Morada(txtRua.getText(), txtCidade.getText(), txtCodPostal.getText());
-                Cliente cliente = new Cliente(txtNome.getText(), txtNif.getText(), morada);
-                farmacia.adicionarCliente(cliente);
-                atualizarTabela();
-                dialog.dispose();
-            } catch (IllegalArgumentException ex) {
-                JOptionPane.showMessageDialog(dialog, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            String nome = txtNome.getText().trim();
+            String nif = txtNif.getText().trim();
+            String rua = txtRua.getText().trim();
+            String cidade = txtCidade.getText().trim();
+            String codigoPostal = txtCodPostal.getText().trim();
+
+            if (nome.isEmpty() || nif.isEmpty() || rua.isEmpty() || cidade.isEmpty() || codigoPostal.isEmpty()) {
+                JOptionPane.showMessageDialog(dialog, "Todos os campos são obrigatórios.", "Validação", JOptionPane.WARNING_MESSAGE);
+                return;
             }
+
+            if (!nifValido(nif)) {
+                JOptionPane.showMessageDialog(dialog, "O NIF deve conter exatamente 9 dígitos.", "Validação", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            if (!codigoPostalValido(codigoPostal)) {
+                JOptionPane.showMessageDialog(dialog, "O Código Postal deve seguir o formato 0000-000.", "Validação", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            if (farmacia.acharClienteNif(nif).isPresent()) {
+                JOptionPane.showMessageDialog(dialog, "Já existe um cliente com o NIF indicado.", "Validação", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            Morada morada = new Morada(rua, cidade, codigoPostal);
+            Cliente cliente = new Cliente(nome, nif, morada);
+            farmacia.adicionarCliente(cliente);
+            atualizarTabela();
+            dialog.dispose();
         });
 
         JPanel panelBotoes = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -157,7 +206,6 @@ public class PainelGestaoClientes extends JPanel {
 
             JTextField txtNome = new JTextField(cliente.getNome(), 20);
             JTextField txtNif = new JTextField(cliente.getNif(), 15);
-            txtNif.setEditable(false); // NIF não deve ser editável
             JTextField txtRua = new JTextField(cliente.getMorada().getRua(), 20);
             JTextField txtCidade = new JTextField(cliente.getMorada().getCidade(), 15);
             JTextField txtCodPostal = new JTextField(cliente.getMorada().getCodPostal(), 10);
@@ -194,16 +242,40 @@ public class PainelGestaoClientes extends JPanel {
 
             JButton btnSalvar = new JButton("Salvar");
             btnSalvar.addActionListener(e -> {
-                try {
-                    cliente.setNome(txtNome.getText());
-                    cliente.getMorada().setRua(txtRua.getText());
-                    cliente.getMorada().setCidade(txtCidade.getText());
-                    cliente.getMorada().setCodPostal(txtCodPostal.getText());
-                    atualizarTabela();
-                    dialog.dispose();
-                } catch (IllegalArgumentException ex) {
-                    JOptionPane.showMessageDialog(dialog, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                String nome = txtNome.getText().trim();
+                String nif = txtNif.getText().trim();
+                String rua = txtRua.getText().trim();
+                String cidade = txtCidade.getText().trim();
+                String codigoPostal = txtCodPostal.getText().trim();
+
+                if (nome.isEmpty() || nif.isEmpty() || rua.isEmpty() || cidade.isEmpty() || codigoPostal.isEmpty()) {
+                    JOptionPane.showMessageDialog(dialog, "Todos os campos são obrigatórios.", "Validação", JOptionPane.WARNING_MESSAGE);
+                    return;
                 }
+
+                if (!nifValido(nif)) {
+                    JOptionPane.showMessageDialog(dialog, "O NIF deve conter exatamente 9 dígitos.", "Validação", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                Cliente clienteExistente = farmacia.acharClienteNif(nif).orElse(null);
+                if (clienteExistente != null && clienteExistente != cliente) {
+                    JOptionPane.showMessageDialog(dialog, "Já existe outro cliente com o NIF indicado.", "Validação", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                if (!codigoPostalValido(codigoPostal)) {
+                    JOptionPane.showMessageDialog(dialog, "O Código Postal deve seguir o formato 0000-000.", "Validação", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                cliente.setNome(nome);
+                cliente.setNif(nif);
+                cliente.getMorada().setRua(rua);
+                cliente.getMorada().setCidade(cidade);
+                cliente.getMorada().setCodPostal(codigoPostal);
+                atualizarTabela();
+                dialog.dispose();
             });
 
             JPanel panelBotoes = new JPanel(new FlowLayout(FlowLayout.RIGHT));

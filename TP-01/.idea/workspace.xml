@@ -6,15 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8e57b136-2e18-4f17-a7aa-1b73b6171586" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TP-01/Cliente.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TP-01/Cliente.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TP-01/Encomenda$EstadoEncomenda.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TP-01/Encomenda$EstadoEncomenda.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TP-01/Encomenda.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TP-01/Encomenda.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TP-01/Entregas.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TP-01/Farmacia.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TP-01/Farmacia.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TP-01/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TP-01/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TP-01/Morada.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TP-01/Morada.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TP-01/Produto.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TP-01/Produto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TP-01/TestarProdutos.class" beforeDir="false" />
     </list>
     <list id="84812e18-48fa-48a2-a528-183cb567d2d0" name="Changes by fefogaca" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -77,6 +68,7 @@
       <updated>1762334862648</updated>
       <workItem from="1762356004660" duration="12398000" />
       <workItem from="1762384006102" duration="30000" />
+      <workItem from="1762440181010" duration="1117000" />
     </task>
     <servers />
   </component>

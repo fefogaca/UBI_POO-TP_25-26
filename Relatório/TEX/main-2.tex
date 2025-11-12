@@ -51,7 +51,7 @@
 \end{figure}
 
 % Título e autores
-\title{Relatório do Trabalho Prático 2 - Farmácia GUI}
+\title{Relatório do Trabalho Prático 2 - Gestão de Farmácia}
 \author{Afonso Esteves - 55047\\Felipe Dourado - 53394\\Tiago Pereira - 55019}
 \date{\today}
 
@@ -65,8 +65,9 @@
 
 \section*{Resumo}
 \hspace{10pt}
-Este relatório documenta a evolução de uma aplicação de gestão de farmácia, migrando de uma interface de consola para uma interface gráfica de utilizador (GUI) desenvolvida com Java Swing. O sistema foi reestruturado em pacotes (modelo, GUI, persistência) para melhor organização e manutenibilidade, seguindo princípios de arquitetura em camadas. Além da nova interface, foi implementada a persistência de dados através de serialização de objetos, permitindo que o estado da aplicação (clientes, produtos e encomendas) seja guardado e recuperado entre sessões. Esta segunda versão representa um avanço significativo em termos de usabilidade e robustez.
+Este relatório documenta a evolução de um sistema de gestão de farmácia desenvolvido no âmbito da disciplina de Programação Orientada a Objetos. A segunda entrega introduziu uma interface gráfica baseada em Java Swing, persistência de dados através de serialização de objetos, testes unitários JUnit 5 e documentação com JavaDoc. O código foi reorganizado em pacotes (\texttt{app}, \texttt{modelo}, \texttt{gui}, \texttt{persistencia}, \texttt{test}) e beneficiou de refatoração orientada por princípios de POO, resultando numa aplicação mais robusta, reutilizável e preparada para futuras extensões.
 \addcontentsline{toc}{section}{Resumo}
+
 \section*{Palavras-chave e \textit{Keywords}}
 Java; Swing; GUI; Programação Orientada a Objetos; Persistência de Dados; Serialização; JUnit; Javadoc.
 
@@ -75,126 +76,162 @@ Java; Swing; GUI; Programação Orientada a Objetos; Persistência de Dados; Ser
 \section{Introdução}
 \subsection{Âmbito, enquadramento e motivação}
 \hspace{10pt}
-Este documento detalha o desenvolvimento do Trabalho Prático 2, uma evolução do sistema de gestão de farmácia introduzido no TP1. O foco principal desta nova fase foi a substituição da interface de linha de comandos por uma interface gráfica (GUI) mais intuitiva e funcional, utilizando a biblioteca Java Swing. Adicionalmente, foi introduzida uma camada de persistência para garantir que os dados da aplicação não são perdidos ao fechar o programa, e foram adicionados testes unitários e documentação formal ao projeto.
-
-A motivação foi aprofundar os conhecimentos em Programação Orientada a Objetos, explorando conceitos mais avançados como o desenvolvimento de interfaces gráficas, programação orientada a eventos, serialização de objetos, testes com JUnit, documentação com Javadoc e a importância de uma arquitetura de software bem definida.
+Este documento descreve o Trabalho Prático 2 (TP2) da disciplina, que dá continuidade ao sistema originalmente desenvolvido no TP1. O objetivo é consolidar competências de POO ao migrar uma aplicação de consola para uma interface gráfica, garantindo persistência de dados e qualidade através de testes e documentação formal. A motivação passa por aproximar o projeto de cenários reais: uma interface amigável, dados duráveis, testes automatizados e documentação técnica.
 
 \section{Contextualização do Projeto}
 
 \subsection{Identificação dos Desenvolvedores}
-Os autores do presente projeto são estudantes do curso de Informática Web, Móvel e na Nuvem da \ac{UBI}, matriculados na disciplina de Programação Orientada a Objetos.
+Os autores são estudantes do curso de Informática Web, Móvel e na Nuvem da \ac{UBI}, inscritos na unidade curricular de Programação Orientada a Objetos.
 
 \subsubsection{Desenvolvedores Envolvidos}
 \begin{itemize}
     \item \textbf{Afonso Esteves (55047)}
     \item \textbf{Felipe Dourado (53394)}
     \item \textbf{Tiago Pereira (55019)}
-\end{itemize}     
+\end{itemize}
 
 \subsection{Contextualização Académica}
-O projeto foi desenvolvido no contexto da disciplina de Programação Orientada a Objetos, lecionada pelo Professor Paul Andrew Crocker, com o objetivo de aplicar e consolidar conhecimentos em:
+O projeto foi desenvolvido com os seguintes objetivos principais:
 \begin{itemize}
-    \item Desenvolvimento de Interfaces Gráficas (GUI) com Java Swing.
-    \item Programação Orientada a Eventos (ActionListeners, MouseListeners).
-    \item Persistência de dados através de serialização de objetos Java.
-    \item Arquitetura de software em camadas (Modelo, Visão, Persistência).
-    \item Testes unitários com JUnit para garantir a qualidade do código.
-    \item Geração de documentação técnica com Javadoc.
-    \item Refatoração e melhoria de código existente.
+    \item Desenvolver GUIs com Java Swing e programação orientada a eventos.
+    \item Aplicar herança, interfaces, sobrecarga e sobreposição.
+    \item Implementar persistência de dados com serialização de objetos.
+    \item Criar testes unitários com JUnit 5.
+    \item Gerar documentação JavaDoc.
+    \item Produzir documentação escrita consolidando as decisões de design.
 \end{itemize}
 
 \section{Especificações Técnicas}
 
 \subsection{Ambiente de Desenvolvimento}
 \begin{itemize}
-    \item \textbf{Linguagem:} Java (JDK 8 ou superior)
-    \item \textbf{Bibliotecas Gráficas:} Java Swing
-    \item \textbf{Testes:} JUnit 5
-    \item \textbf{Documentação:} Javadoc
-    \item \textbf{Ambiente de Execução:} Java Development Kit (JDK)
-    \item \textbf{Ambiente de Desenvolvimento:} IntelliJ IDEA
+    \item \textbf{Sistema Operativo}: macOS 15 (Darwin 25.0.0).
+    \item \textbf{Shell}: \texttt{/bin/zsh}, utilizado para compilação, execução, testes e geração de documentação.
+    \item \textbf{IDE / Editores}: IntelliJ IDEA e Cursor, suportando funcionalidades de refatoração, inspeções e integração com VCS.
+    \item \textbf{Controlo de Versões}: Git (repositório local e integração com plataformas remotas).
+\end{itemize}
+
+\subsection{Tecnologias e Bibliotecas}
+\begin{itemize}
+    \item \textbf{Linguagem de Programação}: Java 21, permitindo explorar recursos modernos da linguagem mantendo compatibilidade retroativa.
+    \item \textbf{Biblioteca Gráfica}: Java Swing e AWT para construção da interface (componentes como \texttt{JFrame}, \texttt{JPanel}, \texttt{JTable}, \texttt{JDialog}).
+    \item \textbf{Persistência}: Serialização nativa com \texttt{ObjectOutputStream}/\texttt{ObjectInputStream}, garantindo persistência sem recurso a bases de dados relacionais ou NoSQL.
+    \item \textbf{Testes}: Framework JUnit 5, distribuída através do artefacto \texttt{junit-platform-console-standalone-1.10.2.jar}, permitindo execução em linha de comandos e integração CI.
+    \item \textbf{Documentação}: JavaDoc para produção de documentação HTML da API.
+    \item \textbf{Bibliotecas Standard}: \texttt{java.util} (coleções, \texttt{Optional}), \texttt{java.io} (streams de objetos) e \texttt{java.awt.event} (listeners).
+\end{itemize}
+
+\subsection{Práticas de Engenharia}
+\begin{itemize}
+    \item \textbf{Arquitetura em Camadas}: separação clara entre domínio, vista e persistência.
+    \item \textbf{POO Avançada}: utilização de herança (\texttt{Pessoa} \textrightarrow \texttt{Cliente}), abstrações (\texttt{Vendavel}), sobrecarga/sobrescrita (\texttt{Encomenda}), encapsulamento e composição (\texttt{Cliente}--\texttt{Morada}).
+    \item \textbf{Programação Orientada a Eventos}: modelo de listeners para captar interações na GUI.
+    \item \textbf{Testes Automatizados}: validação da lógica de negócio com JUnit e execução regular durante o desenvolvimento.
+    \item \textbf{Documentação Contínua}: manutenção do JavaDoc e do relatório técnico (\texttt{CONTEXTO.md}) alinhados com o estado do código.
 \end{itemize}
 
 \section{Utilização}
+
 \subsection{Requisitos Prévios}
 \begin{itemize}
-    \item \textbf{Java Development Kit (JDK) 8 ou superior:}
-    Essencial para compilar e executar a aplicação. Pode ser descarregado do site oficial da Oracle.
+    \item \textbf{Java Development Kit (JDK) 17 ou superior}: necessário para compilar e executar.
+    \item \textbf{Acesso à linha de comandos}: Terminal (macOS) ou CMD/PowerShell (Windows).
 \end{itemize}
 
 \subsection{Compilação e Execução}
 \begin{enumerate}
-    \item \textbf{Navegar até ao diretório raiz do projeto.}
-    \item \textbf{Compilar os ficheiros Java:}
-    \begin{verbatim}
-javac -d TP-02/out/production/TP-02 -cp TP-02/lib/junit-platform-console-standalone-1.10.2.jar $(find TP-02/src -name "*.java")
-    \end{verbatim}
-    \item \textbf{Executar a aplicação GUI:}
-    \begin{verbatim}
-java -cp TP-02/out/production/TP-02 Main
-    \end{verbatim}
+    \item Navegar até ao diretório raiz do projeto (\texttt{TP-02/}).
+    \item Compilar código de produção:
+\begin{verbatim}
+javac -cp "lib/junit-platform-console-standalone-1.10.2.jar:src" -d out \
+  $(find src -name "*.java" ! -path "*/test/*")
+\end{verbatim}
+    \item Compilar classes de teste:
+\begin{verbatim}
+javac -cp "lib/junit-platform-console-standalone-1.10.2.jar:out" -d out \
+  $(find src/test -name "*.java")
+\end{verbatim}
+    \item Executar a aplicação GUI:
+\begin{verbatim}
+java -cp "out" app.Main
+\end{verbatim}
 \end{enumerate}
 
 \subsection{Execução de Testes Unitários}
-Para verificar a integridade da lógica de negócio, podem ser executados os testes JUnit 5:
 \begin{enumerate}
-    \item \textbf{Navegar até ao diretório raiz do projeto.}
-    \item \textbf{Executar os testes (após compilação):}
-    \begin{verbatim}
-java -jar TP-02/lib/junit-platform-console-standalone-1.10.2.jar -cp TP-02/out/production/TP-02 --scan-classpath
-    \end{verbatim}
+    \item Após a compilação, executar:
+\begin{verbatim}
+java -jar lib/junit-platform-console-standalone-1.10.2.jar \
+  --class-path out --scan-class-path
+\end{verbatim}
 \end{enumerate}
 
-\subsection{Geração de Documentação Javadoc}
-Para gerar a documentação HTML do código fonte:
+\subsection{Geração de Documentação JavaDoc}
 \begin{enumerate}
-    \item \textbf{Navegar até ao diretório raiz do projeto.}
-    \item \textbf{Gerar a documentação:}
-    \begin{verbatim}
-javadoc -d TP-02/doc TP-02/src/**/*.java TP-02/src/*.java
-    \end{verbatim}
-    A documentação ficará disponível no diretório `TP-02/doc/`.
+    \item Na raiz do projeto:
+\begin{verbatim}
+javadoc -d doc -sourcepath src app modelo gui persistencia
+\end{verbatim}
+    \item O resultado fica em \texttt{doc/index.html}.
 \end{enumerate}
 
 \section{Estrutura da Solução Construída}
-O sistema foi reestruturado para uma arquitetura em camadas, separando as responsabilidades em pacotes distintos.
 
-\subsection{Componentes do Sistema}
+\subsection{Visão Geral}
+O código encontra-se organizado por responsabilidade:
 \begin{itemize}
-    \item \textbf{Pacote `modelo`:} Contém as classes que representam o domínio do problema (\texttt{Cliente}, \texttt{Produto}, \texttt{Farmacia}, etc.).
-    \item \textbf{Pacote `gui`:} Contém as classes da interface gráfica (\texttt{FarmaciaGUI}, \texttt{PainelGestaoClientes}, etc.).
-    \item \textbf{Pacote `persistencia`:} Contém a classe \texttt{GestorDados}, responsável por guardar e carregar o estado da aplicação.
-    \item \textbf{Pacote `test`:} Contém as classes de teste unitário, como \texttt{FarmaciaTest.java}.
-    \item \textbf{Classe `Main`:} Ponto de entrada que inicializa a farmácia, carrega os dados e lança a GUI.
+    \item \textbf{Pacote \texttt{app}}: ponto de entrada \texttt{Main}.
+    \item \textbf{Pacote \texttt{modelo}}: domínio da aplicação (entidades e regras).
+    \item \textbf{Pacote \texttt{gui}}: interface Swing (janela principal e painéis).
+    \item \textbf{Pacote \texttt{persistencia}}: gestão de ficheiros para serialização.
+    \item \textbf{Pacote \texttt{test}}: testes JUnit 5.
 \end{itemize}
 
-\subsection{Testes e Documentação}
-O projeto inclui artefactos importantes para garantir a qualidade e a manutenibilidade do software:
+\subsection{Detalhamento dos Ficheiros}
+\begin{itemize}[leftmargin=15pt]
+    \item \textbf{\texttt{src/app/Main.java}}: Carrega dados, inicializa \texttt{Farmacia} e arranca a GUI. Lança a aplicação na Event Dispatch Thread.
+    \item \textbf{\texttt{src/modelo/Pessoa.java}}: Classe abstrata base com nome e NIF. Obriga subclasses a implementar \texttt{toString()}.
+    \item \textbf{\texttt{src/modelo/Cliente.java}}: Extende \texttt{Pessoa}, adiciona \texttt{Morada} e serialização. Representa clientes da farmácia.
+    \item \textbf{\texttt{src/modelo/Morada.java}}: Value object com rua, cidade e código postal.
+    \item \textbf{\texttt{src/modelo/Vendavel.java}}: Interface com \texttt{getNome()} e \texttt{getPreco()}.
+    \item \textbf{\texttt{src/modelo/Produto.java}}: Implementa \texttt{Vendavel}; gere ID, preço e stock, com métodos de validação.
+    \item \textbf{\texttt{src/modelo/Encomenda.java}}: Relaciona cliente e produtos, controla estados, calcula preço total, oferece construtores sobrecarregados.
+    \item \textbf{\texttt{src/modelo/Farmacia.java}}: Núcleo da lógica; gere listas, valida operações, ajusta stock e estados.
+    \item \textbf{\texttt{src/persistencia/GestorDados.java}}: Serializa/desserializa dados para \texttt{farmacia.dat}; atualiza contadores de IDs.
+    \item \textbf{\texttt{src/gui/FarmaciaGUI.java}}: \texttt{JFrame} com \texttt{JTabbedPane}; trata encerramento com opção de guardar.
+    \item \textbf{\texttt{src/gui/PainelGestaoClientes.java}}: Tabela e formulários para CRUD de clientes, com validação de NIF (9 dígitos) e código postal (0000-000), permitindo correção de NIF apenas neste contexto.
+    \item \textbf{\texttt{src/gui/PainelGestaoProdutos.java}}: Gestão de produtos com validação de stock/preço e atualização da tabela.
+    \item \textbf{\texttt{src/gui/PainelGestaoEncomendas.java}}: Gestão completa de encomendas (seleção de cliente, seleção/pesquisa de produtos, certificação de stock, atualização de estado e sincronização com painel de produtos), apresentando o cliente apenas para consulta durante a edição e com diálogo de gestão que oferece ações de adicionar, remover e guardar alterações.
+    \item \textbf{\texttt{src/test/FarmaciaTest.java}}: Testes unitários que asseguram regras de negócio (clientes, encomendas, stock).
+    \item \textbf{\texttt{lib/junit-platform-console-standalone-1.10.2.jar}}: Dependência JUnit 5.
+    \item \textbf{\texttt{doc/}}: JavaDoc gerado.
+    \item \textbf{\texttt{farmacia.dat}}: Ficheiro de dados serializados (não versionado).
+    \item \textbf{\texttt{CONTEXTO.md}}: Documento de referência técnica.
+\end{itemize}
+
+\section{Testes e Documentação}
 \begin{itemize}
-    \item \textbf{Testes Unitários:} O diretório `TP-02/src/test/` contém a classe `FarmaciaTest.java`, que utiliza o framework JUnit 5 para validar a lógica de negócio da classe `Farmacia`, como adicionar clientes, gerir stock e processar encomendas.
-    \item \textbf{Documentação Javadoc:} O diretório `TP-02/doc/` é o destino da documentação gerada pela ferramenta Javadoc. Esta documentação descreve as classes, métodos e a API do projeto, facilitando a sua compreensão e reutilização.
+    \item \textbf{Testes Unitários}: \texttt{FarmaciaTest} cobre operações críticas (clientes, encomendas, stock). Execução via JUnit console.
+    \item \textbf{JavaDoc}: Geração automática para todos os pacotes, facilitando consulta da API.
 \end{itemize}
 
 \section{Funcionalidades Implementadas}
-As funcionalidades do sistema foram expandidas e agora são acedidas através da interface gráfica:
 \begin{itemize}
-    \item \textbf{Interface Gráfica com Separadores:} A janela principal usa um \texttt{JTabbedPane} para separar a gestão de Clientes, Produtos e Encomendas.
-    \item \textbf{Gestão CRUD Completa:} Todas as entidades podem ser criadas, lidas, atualizadas e removidas (CRUD) através de formulários e tabelas interativas.
-    \item \textbf{Persistência Automática:} Os dados da aplicação são automaticamente carregados ao iniciar e guardados ao fechar a janela.
-    \item \textbf{Testes Unitários:} Cobertura de testes para a lógica de negócio principal, garantindo robustez.
+    \item Interface gráfica com três separadores: Clientes, Produtos e Encomendas.
+    \item CRUD completo para clientes e produtos, com validação de NIF (9 dígitos) e código postal (0000-000).
+    \item Registo, edição (incluindo atualização de stock/estado) e remoção de encomendas com sincronização imediata do stock e cliente apresentado apenas para consulta durante edições.
+    \item Diálogo dedicado ao ajuste de produtos da encomenda, com ações de adicionar, remover e guardar alterações.
+    \item Persistência automática ao terminar a sessão (com confirmação).
+    \item Validações de dados (NIF único, formato de código postal, stock suficiente, preço/stock não negativos).
+    \item Testes unitários para garantir a consistência da lógica.
 \end{itemize}
 
 \section{Implementação de Funcionalidades}
 
-\subsection{Classe FarmaciaGUI: A Janela Principal}
-A classe `FarmaciaGUI` configura a janela principal, o `JTabbedPane` e o comportamento de fecho para guardar os dados.
-
-\begin{minipage}{\linewidth}
+\subsection{Classe FarmaciaGUI}
 \begin{lstlisting}[caption={Configuração da janela principal em FarmaciaGUI.java}]
 public class FarmaciaGUI extends JFrame {
-    // ...
     public FarmaciaGUI(Farmacia farmacia) {
-        // ...
         setTitle("Gestão de Farmácia");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -203,70 +240,120 @@ public class FarmaciaGUI extends JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                // ... Lógica para guardar dados ...
+                int confirm = JOptionPane.showConfirmDialog(
+                    null,
+                    "Deseja guardar os dados antes de sair?",
+                    "Sair",
+                    JOptionPane.YES_NO_CANCEL_OPTION
+                );
+                if (confirm == JOptionPane.YES_OPTION) {
+                    GestorDados.guardarDados(
+                        farmacia.getClientes(),
+                        farmacia.getProdutos(),
+                        farmacia.getEncomendas()
+                    );
+                    dispose();
+                    System.exit(0);
+                } else if (confirm == JOptionPane.NO_OPTION) {
+                    dispose();
+                    System.exit(0);
+                }
             }
         });
 
         JTabbedPane tabbedPane = new JTabbedPane();
-        // ... criação e adição dos painéis ...
+        PainelGestaoClientes painelClientes = new PainelGestaoClientes(farmacia);
+        PainelGestaoProdutos painelProdutos = new PainelGestaoProdutos(farmacia);
+        PainelGestaoEncomendas painelEncomendas =
+            new PainelGestaoEncomendas(farmacia, painelProdutos);
+
+        tabbedPane.addTab("Clientes", painelClientes);
+        tabbedPane.addTab("Produtos", painelProdutos);
+        tabbedPane.addTab("Encomendas", painelEncomendas);
         add(tabbedPane);
     }
 }
 \end{lstlisting}
-\end{minipage}
 
-\subsection{Classe GestorDados: Persistência de Dados}
-A classe `GestorDados` usa serialização para guardar e carregar as listas de objetos que compõem o estado da aplicação.
-
-\begin{minipage}{\linewidth}
-\begin{lstlisting}[caption={Método para guardar dados em GestorDados.java}]
-public static void guardarDados(List<Cliente> clientes, List<Produto> produtos, List<Encomenda> encomendas) {
-    try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(NOME_FICHEIRO))) {
+\subsection{Classe GestorDados}
+\begin{lstlisting}[caption={Persistência em GestorDados.java}]
+public static void guardarDados(
+        List<Cliente> clientes,
+        List<Produto> produtos,
+        List<Encomenda> encomendas) {
+    try (ObjectOutputStream oos =
+             new ObjectOutputStream(new FileOutputStream(NOME_FICHEIRO))) {
         oos.writeObject(clientes);
         oos.writeObject(produtos);
         oos.writeObject(encomendas);
     } catch (IOException e) {
-        // ...
+        System.err.println("Erro ao guardar os dados: " + e.getMessage());
+    }
+}
+
+@SuppressWarnings("unchecked")
+public static Object[] carregarDados() {
+    File f = new File(NOME_FICHEIRO);
+    if (!f.exists()) {
+        return null;
+    }
+    try (ObjectInputStream ois =
+             new ObjectInputStream(new FileInputStream(NOME_FICHEIRO))) {
+        List<Cliente> clientes = (List<Cliente>) ois.readObject();
+        List<Produto> produtos = (List<Produto>) ois.readObject();
+        List<Encomenda> encomendas = (List<Encomenda>) ois.readObject();
+
+        if (!produtos.isEmpty()) {
+            int maxIdProduto = produtos.stream()
+                    .mapToInt(Produto::getId).max().orElse(0);
+            Produto.setProximoId(maxIdProduto + 1);
+        }
+        if (!encomendas.isEmpty()) {
+            int maxIdEncomenda = encomendas.stream()
+                    .mapToInt(Encomenda::getId).max().orElse(0);
+            Encomenda.setProximoId(maxIdEncomenda + 1);
+        }
+        return new Object[]{clientes, produtos, encomendas};
+    } catch (IOException | ClassNotFoundException e) {
+        System.err.println("Erro ao carregar os dados: " + e.getMessage());
+        return null;
     }
 }
 \end{lstlisting}
-\end{minipage}
 
-\subsection{Classe FarmaciaTest: Testes Unitários}
-Os testes com JUnit 5 validam o comportamento esperado da lógica de negócio, como a adição de um cliente.
+\subsection{Classe FarmaciaTest}
+\begin{lstlisting}[caption={Exemplo de teste em FarmaciaTest.java}]
+@Test
+void testAtualizarProdutosEncomenda() {
+    Map<Produto, Integer> produtosEncomendaOriginal = new HashMap<>();
+    produtosEncomendaOriginal.put(produto1, 10);
+    farmacia.registarEncomenda(cliente, produtosEncomendaOriginal);
 
-\begin{minipage}{\linewidth}
-\begin{lstlisting}[caption={Exemplo de um teste unitário em FarmaciaTest.java}]
-class FarmaciaTest {
-    private Farmacia farmacia;
+    int idEncomenda = farmacia.getEncomendas().get(0).getId();
+    Map<Produto, Integer> produtosEncomendaNova = new HashMap<>();
+    produtosEncomendaNova.put(produto2, 15);
 
-    @BeforeEach
-    void setUp() {
-        farmacia = new Farmacia();
-    }
+    farmacia.atualizarProdutosEncomenda(idEncomenda, produtosEncomendaNova);
 
-    @Test
-    void testAdicionarCliente() {
-        Cliente cliente = new Cliente("Nome Teste", "123456789", new Morada("Rua Teste", "Cidade Teste", "6200-000"));
-        farmacia.adicionarCliente(cliente);
-        assertEquals(1, farmacia.getClientes().size());
-        assertEquals("Nome Teste", farmacia.acharClienteNif("123456789").get().getNome());
-    }
+    Encomenda encomendaAtualizada =
+        farmacia.acharEncomendaPorId(idEncomenda).get();
+    assertTrue(encomendaAtualizada.getProdutos().containsKey(produto2));
+    assertEquals(100, produto1.getStock());
+    assertEquals(35, produto2.getStock());
 }
 \end{lstlisting}
-\end{minipage}
 
 \section{Considerações de Implementação}
-
-\subsection{Princípios de Desenvolvimento}
 \begin{itemize}
-    \item \textbf{Arquitetura MVC (Model-View-Controller):} A estrutura em pacotes `modelo` (Model), `gui` (View) e a lógica de eventos nos painéis (Controller) aproxima o projeto do padrão MVC.
-    \item \textbf{Programação Orientada a Eventos:} A GUI é controlada por eventos gerados pelo utilizador, tratados por `Listeners`.
-    \item \textbf{Test-Driven Development (TDD):} A inclusão de testes unitários com JUnit incentiva um ciclo de desenvolvimento onde os testes guiam a implementação da lógica de negócio.
+    \item Utilização de encapsulamento e validações para garantir consistência (e.g., stock não negativo).
+    \item Regras de formato para NIF (9 dígitos) e código postal (0000-000), com correção restringida ao painel de clientes.
+    \item Dedução e reposição automáticas de stock ao registar/remover encomendas.
+    \item Atualização de identificadores estáticos após carregamento da persistência para evitar colisões.
+    \item Sincronização entre os painéis de encomendas e produtos para refletir alterações de stock imediatamente.
 \end{itemize}
 
 \section{Conclusão}
-O Trabalho Prático 2 representa um marco importante na evolução do sistema de farmácia. A migração para uma interface gráfica com Swing melhorou a usabilidade, enquanto a implementação da persistência de dados com serialização tornou a aplicação mais robusta. A adição de testes unitários com JUnit e a geração de documentação com Javadoc elevaram a qualidade e a profissionalismo do projeto, solidificando os conhecimentos em engenharia de software e Programação Orientada a Objetos.
+O TP2 alcançou os objetivos propostos: interface gráfica intuitiva, persistência de dados fiável, testes automatizados e documentação técnica. A organização em pacotes torna o projeto escalável e facilita futuras evoluções, como a introdução de relatórios estatísticos ou novas interfaces. O conhecimento consolidado neste trabalho forma uma base sólida para desafios mais complexos em POO.
 
 \clearpage
 
@@ -275,11 +362,13 @@ O Trabalho Prático 2 representa um marco importante na evolução do sistema de
     \item Schildt, Herbert. \textit{Java: A Beginner's Guide}. 6th ed., McGraw-Hill Education, 2014.
     \item Olsson, Mikael. \textit{Java Quick Syntax Reference}. Apress, 2014.
     \item Roberts, Eric S. \textit{The Art and Science of Java}. Addison-Wesley, 2008.
+    \item Documentação oficial do JUnit 5: \url{https://junit.org/junit5/docs/current/user-guide/}
 \end{itemize}
 
 \section*{Acrónimos}
 \begin{acronym}[UBI]
     \acro{UBI}{Universidade da Beira Interior}
+    \acro{GUI}{Graphical User Interface}
 \end{acronym}
 
 \end{document}

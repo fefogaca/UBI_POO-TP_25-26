@@ -1,3 +1,16 @@
+# Compilados e diretórios de build
+/out/
+*.class
+
+# Documentação gerada automaticamente
+/doc/
+
+# Dados persistidos em execução
+/farmacia.dat
+
+# Artefactos e ficheiros temporários
+*.log
+.DS_Store
 ### IntelliJ IDEA ###
 out/
 !**/src/main/**/out/

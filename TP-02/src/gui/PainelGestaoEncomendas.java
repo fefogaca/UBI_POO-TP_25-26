@@ -14,43 +14,51 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Vector;
-import java.util.stream.Collectors;
 
+/**
+ * Painel dedicado à gestão de encomendas.
+ * <p>
+ * Permite registar novas encomendas, editar as existentes (atualizando produtos e estado)
+ * e removê-las com reposição automática de stock. Mantém sincronização com o painel de produtos.
+ * </p>
+ */
 public class PainelGestaoEncomendas extends JPanel {
 
     private Farmacia farmacia;
     private JTable tabelaEncomendas;
     private DefaultTableModel tableModel;
-    private PainelGestaoProdutos painelProdutos; // Adicionar campo para PainelGestaoProdutos
+    private PainelGestaoProdutos painelProdutos;
 
+    /**
+     * Cria o painel de encomendas associado à instância da farmácia e ao painel de produtos.
+     *
+     * @param farmacia       fonte de dados para encomendas
+     * @param painelProdutos painel de produtos a atualizar quando o stock é alterado
+     */
     public PainelGestaoEncomendas(Farmacia farmacia, PainelGestaoProdutos painelProdutos) {
         this.farmacia = farmacia;
-        this.painelProdutos = painelProdutos; // Armazenar a referência
+        this.painelProdutos = painelProdutos;
         setLayout(new BorderLayout());
 
-        // Tabela
         String[] colunas = {"ID", "Cliente", "Preço Total", "Estado"};
         tableModel = new DefaultTableModel(colunas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false; // Torna todas as células não editáveis
+                return false;
             }
         };
         tabelaEncomendas = new JTable(tableModel);
         atualizarTabela();
 
-        // Adicionar MouseListener para duplo clique
         tabelaEncomendas.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) { // Deteta duplo clique
+                if (e.getClickCount() == 2) {
                     editarEncomenda();
                 }
             }
         });
 
-        // Painel de botões
         JPanel painelBotoes = new JPanel();
         JButton btnNovaEncomenda = new JButton("Nova Encomenda");
         JButton btnEditarEncomenda = new JButton("Editar Encomenda");
@@ -60,18 +68,16 @@ public class PainelGestaoEncomendas extends JPanel {
         painelBotoes.add(btnEditarEncomenda);
         painelBotoes.add(btnRemoverEncomenda);
 
-        // Adicionar componentes ao painel
         add(new JScrollPane(tabelaEncomendas), BorderLayout.CENTER);
         add(painelBotoes, BorderLayout.SOUTH);
 
-        // Ações dos botões
         btnNovaEncomenda.addActionListener(e -> novaEncomenda());
         btnEditarEncomenda.addActionListener(e -> editarEncomenda());
         btnRemoverEncomenda.addActionListener(e -> removerEncomenda());
     }
 
     private void atualizarTabela() {
-        tableModel.setRowCount(0); // Limpa a tabela
+        tableModel.setRowCount(0);
         List<Encomenda> encomendas = farmacia.getEncomendas();
         for (Encomenda e : encomendas) {
             tableModel.addRow(new Object[]{e.getId(), e.getCliente().getNome(), String.format("%.2f€", e.getPrecoTotal()), e.getEstado().getDescricao()});
@@ -87,6 +93,7 @@ public class PainelGestaoEncomendas extends JPanel {
         JPanel painelCliente = new JPanel(new FlowLayout(FlowLayout.LEFT));
         painelCliente.add(new JLabel("NIF:"));
         JTextField txtNifCliente = new JTextField(10);
+        txtNifCliente.setEditable(false);
         painelCliente.add(txtNifCliente);
         JButton btnSelecionarCliente = new JButton("Selecionar Cliente");
         painelCliente.add(btnSelecionarCliente);
@@ -234,6 +241,9 @@ public class PainelGestaoEncomendas extends JPanel {
             try {
                 farmacia.registarEncomenda(clienteSelecionado[0], produtosSelecionados);
                 atualizarTabela();
+                if (painelProdutos != null) {
+                    painelProdutos.atualizarTabela();
+                }
                 dialog.dispose();
             } catch (IllegalStateException | IllegalArgumentException ex) {
                 JOptionPane.showMessageDialog(dialog, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -305,34 +315,29 @@ public class PainelGestaoEncomendas extends JPanel {
                 gbc.insets = new Insets(5, 5, 5, 5);
                 gbc.fill = GridBagConstraints.HORIZONTAL;
 
-                // --- Seleção de Cliente ---
+                Cliente clienteEncomenda = encomenda.getCliente();
+
+                // --- Informação do Cliente ---
                 gbc.gridx = 0;
                 gbc.gridy = 0;
+                gbc.anchor = GridBagConstraints.WEST;
                 panelEdicao.add(new JLabel("Cliente:"), gbc);
+
                 gbc.gridx = 1;
                 gbc.weightx = 1.0;
-                JComboBox<Cliente> cbClientes = new JComboBox<>(new Vector<>(farmacia.getClientes()));
-                cbClientes.setSelectedItem(encomenda.getCliente());
-                panelEdicao.add(cbClientes, gbc);
+                gbc.fill = GridBagConstraints.HORIZONTAL;
+                JTextField txtClienteNome = new JTextField(clienteEncomenda.getNome());
+                txtClienteNome.setEditable(false);
+                panelEdicao.add(txtClienteNome, gbc);
 
                 gbc.gridx = 0;
                 gbc.gridy = 1;
-                gbc.weightx = 0;
                 panelEdicao.add(new JLabel("NIF:"), gbc);
+
                 gbc.gridx = 1;
-                gbc.weightx = 1.0;
-                JTextField txtNifCliente = new JTextField(encomenda.getCliente().getNif());
+                JTextField txtNifCliente = new JTextField(clienteEncomenda.getNif());
                 txtNifCliente.setEditable(false);
                 panelEdicao.add(txtNifCliente, gbc);
-
-                cbClientes.addActionListener(e -> {
-                    Cliente clienteSelecionado = (Cliente) cbClientes.getSelectedItem();
-                    if (clienteSelecionado != null) {
-                        txtNifCliente.setText(clienteSelecionado.getNif());
-                    } else {
-                        txtNifCliente.setText("");
-                    }
-                });
 
                 // --- Edição de Produtos ---
                 gbc.gridx = 0;
@@ -410,8 +415,10 @@ public class PainelGestaoEncomendas extends JPanel {
                     painelInput.add(txtQtd);
                     JButton btnAdd = new JButton("Adicionar");
                     JButton btnRem = new JButton("Remover");
+                    JButton btnGuardar = new JButton("Guardar");
                     painelInput.add(btnAdd);
                     painelInput.add(btnRem);
+                    painelInput.add(btnGuardar);
 
                     // Novo JTextArea para exibir produtos atuais
                     JTextArea txtAreaProdutosAtuais = new JTextArea(5, 30); // 5 linhas, 30 colunas
@@ -446,7 +453,14 @@ public class PainelGestaoEncomendas extends JPanel {
                                 if (prodOpt.isPresent()) {
                                     Produto p = prodOpt.get();
                                     if (qtd > 0) {
-                                        // A verificação de stock será feita no momento de salvar a encomenda
+                                        int quantidadeAtual = produtosAtuais.getOrDefault(p, 0);
+                                        int quantidadeOriginal = encomenda.getProdutos().getOrDefault(p, 0);
+                                        int stockDisponivel = p.getStock() + quantidadeOriginal - quantidadeAtual;
+                                        if (qtd > stockDisponivel) {
+                                            JOptionPane.showMessageDialog(gerirProdutosDialog, "Stock insuficiente para o produto selecionado.", "Erro", JOptionPane.ERROR_MESSAGE);
+                                            return;
+                                        }
+                                        produtosAtuais.put(p, quantidadeAtual + qtd);
                                         atualizarTabelaProdutosEdicao(modelProdutosEdicao, produtosAtuais);
                                         txtQtd.setText("");
                                         atualizarDisplayProdutosAtuais.run(); // Atualizar display
@@ -495,6 +509,8 @@ public class PainelGestaoEncomendas extends JPanel {
                         }
                                         });
 
+                    btnGuardar.addActionListener(ev -> gerirProdutosDialog.dispose());
+
                     JPanel painelNorteGerirProduto = new JPanel(new BorderLayout());
                     painelNorteGerirProduto.add(painelPesquisa, BorderLayout.NORTH);
                     painelNorteGerirProduto.add(scrollTodosProdutos, BorderLayout.CENTER);
@@ -517,6 +533,7 @@ public class PainelGestaoEncomendas extends JPanel {
                 panelEdicao.add(new JLabel("Estado:"), gbc);
                 gbc.gridx = 1;
                 gbc.weightx = 1.0;
+                gbc.fill = GridBagConstraints.HORIZONTAL;
                 JComboBox<String> cbEstado = new JComboBox<>();
                 for (Encomenda.EstadoEncomenda estado : Encomenda.EstadoEncomenda.values()) {
                     cbEstado.addItem(estado.getDescricao());
@@ -527,17 +544,6 @@ public class PainelGestaoEncomendas extends JPanel {
                 JButton btnSalvar = new JButton("Salvar");
                 btnSalvar.addActionListener(e -> {
                     try {
-                        // Salvar Cliente (se mudou)
-                        Cliente novoCliente = (Cliente) cbClientes.getSelectedItem();
-                        if (!encomenda.getCliente().equals(novoCliente)) {
-                            // Se o cliente mudou, é uma operação complexa que pode exigir recriação da encomenda
-                            // Por simplicidade, vamos apenas atualizar o objeto cliente na encomenda
-                            // Em um sistema real, isso teria implicações maiores.
-                            // encomenda.setCliente(novoCliente); // Se houvesse um setter
-                            JOptionPane.showMessageDialog(dialog, "A alteração do cliente de uma encomenda existente não é suportada diretamente. Por favor, crie uma nova encomenda.", "Aviso", JOptionPane.WARNING_MESSAGE);
-                            return;
-                        }
-
                         // Salvar Produtos
                         farmacia.atualizarProdutosEncomenda(idEncomenda, produtosAtuais);
 
@@ -558,6 +564,9 @@ public class PainelGestaoEncomendas extends JPanel {
                         }
 
                         atualizarTabela();
+                        if (painelProdutos != null) {
+                            painelProdutos.atualizarTabela();
+                        }
                         dialog.dispose();
                     } catch (IllegalStateException | IllegalArgumentException ex) {
                         JOptionPane.showMessageDialog(dialog, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
