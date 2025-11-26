@@ -5,18 +5,42 @@ import java.util.Map;
 
 /**
  * Representa uma encomenda feita por um Cliente.
+ * <p>
+ * Uma encomenda associa um cliente a um conjunto de produtos com quantidades específicas,
+ * mantém um estado (processamento, pago, enviado, entregue) e calcula o preço total.
+ * Demonstra o uso de Enums, sobrecarga de construtores e composição.
+ * </p>
  */
 public class Encomenda implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Enum que representa os possíveis estados de uma encomenda.
+     */
     public enum EstadoEncomenda {
+        /** Encomenda em processamento. */
         EM_PROCESSAMENTO("Em processamento"),
+        /** Encomenda paga. */
         PAGO("Pago"),
+        /** Encomenda enviada. */
         ENVIADO("Enviado"),
+        /** Encomenda entregue. */
         ENTREGUE("Entregue");
 
         private final String descricao;
+
+        /**
+         * Construtor do enum EstadoEncomenda.
+         *
+         * @param descricao A descrição textual do estado.
+         */
         EstadoEncomenda(String descricao) { this.descricao = descricao; }
+
+        /**
+         * Obtém a descrição textual do estado.
+         *
+         * @return A descrição do estado.
+         */
         public String getDescricao() { return descricao; }
     }
 
@@ -51,6 +75,11 @@ public class Encomenda implements Serializable {
         this.estado = estadoInicial;
     }
 
+    /**
+     * Calcula o preço total da encomenda com base nos produtos e quantidades.
+     *
+     * @return O preço total calculado.
+     */
     private double calcularPrecoTotal() {
         double total = 0;
         for (Map.Entry<Produto, Integer> entry : produtos.entrySet()) {
@@ -59,11 +88,39 @@ public class Encomenda implements Serializable {
         return total;
     }
 
-    // Getters
+    /**
+     * Obtém o ID único da encomenda.
+     *
+     * @return O ID da encomenda.
+     */
     public int getId() { return id; }
+
+    /**
+     * Obtém o cliente que fez a encomenda.
+     *
+     * @return O cliente associado à encomenda.
+     */
     public Cliente getCliente() { return cliente; }
+
+    /**
+     * Obtém o mapa de produtos e quantidades da encomenda.
+     *
+     * @return Mapa onde a chave é o produto e o valor é a quantidade.
+     */
     public Map<Produto, Integer> getProdutos() { return produtos; }
+
+    /**
+     * Obtém o preço total da encomenda.
+     *
+     * @return O preço total calculado.
+     */
     public double getPrecoTotal() { return precoTotal; }
+
+    /**
+     * Obtém o estado atual da encomenda.
+     *
+     * @return O estado da encomenda.
+     */
     public EstadoEncomenda getEstado() { return estado; }
 
     /**
@@ -75,14 +132,35 @@ public class Encomenda implements Serializable {
         return produtos.values().stream().mapToInt(Integer::intValue).sum();
     }
 
-    // Setters
+    /**
+     * Define o estado da encomenda.
+     *
+     * @param estado O novo estado da encomenda.
+     */
     public void setEstado(EstadoEncomenda estado) { this.estado = estado; }
+
+    /**
+     * Define o preço total da encomenda.
+     *
+     * @param precoTotal O novo preço total.
+     */
     public void setPrecoTotal(double precoTotal) { this.precoTotal = precoTotal; }
 
+    /**
+     * Define o próximo ID a ser usado para uma nova encomenda.
+     * Útil ao carregar dados de um ficheiro.
+     *
+     * @param id O próximo ID.
+     */
     public static void setProximoId(int id) {
         proximoId = id;
     }
 
+    /**
+     * Retorna uma representação textual da encomenda.
+     *
+     * @return String formatada com ID, nome do cliente e estado.
+     */
     @Override
     public String toString() {
         return "ID: " + id + " | Cliente: " + cliente.getNome() + " | Estado: " + estado.getDescricao();

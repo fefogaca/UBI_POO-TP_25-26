@@ -5,7 +5,14 @@ import java.io.Serializable;
 
 /**
  * Classe abstrata que representa uma Pessoa com atributos básicos.
- * Serve como base para outras classes como Cliente.
+ * <p>
+ * Serve como base para outras classes como Cliente, demonstrando o uso de Herança.
+ * Obriga as subclasses a implementar o método toString(), demonstrando Polimorfismo.
+ * </p>
+ *
+ * @author Afonso Esteves - 55047
+ * @author Felipe Dourado - 53394
+ * @author Tiago Pereira - 55019
  */
 public abstract class Pessoa implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -23,11 +30,25 @@ public abstract class Pessoa implements Serializable {
         this.nif = nif;
     }
 
-    // Getters
+    /**
+     * Obtém o nome da pessoa.
+     *
+     * @return O nome da pessoa.
+     */
     public String getNome() { return nome; }
+
+    /**
+     * Obtém o NIF da pessoa.
+     *
+     * @return O NIF da pessoa.
+     */
     public String getNif() { return nif; }
 
-    // Setters
+    /**
+     * Define o nome da pessoa.
+     *
+     * @param nome O novo nome.
+     */
     public void setNome(String nome) { this.nome = nome; }
 
     /**

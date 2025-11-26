@@ -5,7 +5,14 @@ import java.io.Serializable;
 
 /**
  * Representa um Cliente da farmácia, que é uma especialização de Pessoa.
- * Demonstra o uso de Herança.
+ * <p>
+ * Demonstra o uso de Herança (extends Pessoa) e Composição (possui uma Morada).
+ * Sobrescreve o método toString() para fornecer uma representação personalizada.
+ * </p>
+ *
+ * @author Afonso Esteves - 55047
+ * @author Felipe Dourado - 53394
+ * @author Tiago Pereira - 55019
  */
 public class Cliente extends Pessoa implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -23,8 +30,18 @@ public class Cliente extends Pessoa implements Serializable {
         this.morada = morada;
     }
 
-    // Getters e Setters
+    /**
+     * Obtém a morada do cliente.
+     *
+     * @return A morada do cliente.
+     */
     public Morada getMorada() { return morada; }
+
+    /**
+     * Define a morada do cliente.
+     *
+     * @param morada A nova morada.
+     */
     public void setMorada(Morada morada) { this.morada = morada; }
 
     /**

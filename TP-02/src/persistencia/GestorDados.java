@@ -11,7 +11,15 @@ import java.util.List;
 
 /**
  * Classe responsável pela persistência de dados da aplicação.
- * Utiliza ObjectOutputStream e ObjectInputStream para guardar e ler o estado da farmácia.
+ * <p>
+ * Utiliza ObjectOutputStream e ObjectInputStream para guardar e ler o estado da farmácia
+ * através de serialização de objetos. Atualiza contadores estáticos de IDs após carregamento
+ * para evitar colisões.
+ * </p>
+ *
+ * @author Afonso Esteves - 55047
+ * @author Felipe Dourado - 53394
+ * @author Tiago Pereira - 55019
  */
 public class GestorDados {
 

@@ -13,9 +13,13 @@ import java.util.List;
 /**
  * Ponto de entrada da aplicação de gestão de farmácia.
  * <p>
- * Responsável por carregar o estado persistido, inicializar a instância de {@link Farmacia}
+ * Responsável por carregar o estado persistido, inicializar a instância de {@link modelo.Farmacia}
  * e lançar a interface gráfica baseada em Swing na Event Dispatch Thread.
  * </p>
+ *
+ * @author Afonso Esteves - 55047
+ * @author Felipe Dourado - 53394
+ * @author Tiago Pereira - 55019
  */
 public class Main {
 

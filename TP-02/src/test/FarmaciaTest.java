@@ -11,6 +11,17 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Classe de testes unitários para a classe Farmacia.
+ * <p>
+ * Testa operações críticas como adição/remoção de clientes, registo de encomendas,
+ * gestão de stock e atualização de produtos de encomendas.
+ * </p>
+ *
+ * @author Afonso Esteves - 55047
+ * @author Felipe Dourado - 53394
+ * @author Tiago Pereira - 55019
+ */
 class FarmaciaTest {
 
     private Farmacia farmacia;
@@ -18,6 +29,10 @@ class FarmaciaTest {
     private Produto produto1;
     private Produto produto2;
 
+    /**
+     * Configura o ambiente de teste antes de cada método de teste.
+     * Cria uma instância de Farmacia, um cliente e dois produtos para uso nos testes.
+     */
     @BeforeEach
     void setUp() {
         farmacia = new Farmacia();

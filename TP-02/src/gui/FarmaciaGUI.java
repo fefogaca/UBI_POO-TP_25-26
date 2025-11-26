@@ -11,12 +11,25 @@ import java.awt.event.WindowEvent;
 
 /**
  * Janela principal da aplicação da Farmácia.
- * Utiliza Swing para criar a interface gráfica.
+ * <p>
+ * Utiliza Swing para criar a interface gráfica com separadores (JTabbedPane)
+ * para gestão de clientes, produtos e encomendas. Gere o ciclo de vida da aplicação,
+ * incluindo confirmação ao encerrar e opção de guardar dados.
+ * </p>
+ *
+ * @author Afonso Esteves - 55047
+ * @author Felipe Dourado - 53394
+ * @author Tiago Pereira - 55019
  */
 public class FarmaciaGUI extends JFrame {
 
     private Farmacia farmacia;
 
+    /**
+     * Construtor que cria a janela principal da aplicação.
+     *
+     * @param farmacia A instância da farmácia que contém os dados a gerir.
+     */
     public FarmaciaGUI(Farmacia farmacia) {
         this.farmacia = farmacia;
 
