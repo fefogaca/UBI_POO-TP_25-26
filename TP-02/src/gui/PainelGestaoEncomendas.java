@@ -3,6 +3,9 @@ package gui;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +22,13 @@ import modelo.Produto;
  * <p>
  * Permite registar novas encomendas, editar as existentes (atualizando produtos e estado)
  * e removê-las com reposição automática de stock. Mantém sincronização com o painel de produtos.
+ * A tabela de encomendas exibe informações sobre ID, cliente, preço total, quantidade,
+ * data/hora de criação e estado da encomenda.
  * </p>
+ *
+ * @author Afonso Esteves - 55047
+ * @author Felipe Dourado - 53394
+ * @author Tiago Pereira - 55019
  */
 public class PainelGestaoEncomendas extends JPanel {
 
@@ -39,7 +48,7 @@ public class PainelGestaoEncomendas extends JPanel {
         this.painelProdutos = painelProdutos;
         setLayout(new BorderLayout());
 
-        String[] colunas = {"ID", "Cliente", "Preço Total", "Quantidade", "Estado"};
+        String[] colunas = {"ID", "Cliente", "Preço Total", "Quantidade", "Data/Hora", "Estado"};
         tableModel = new DefaultTableModel(colunas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -47,6 +56,8 @@ public class PainelGestaoEncomendas extends JPanel {
             }
         };
         tabelaEncomendas = new JTable(tableModel);
+        tabelaEncomendas.setRowHeight(25);
+        aplicarCoresAlternadasTabela(tabelaEncomendas);
         atualizarTabela();
 
         tabelaEncomendas.addMouseListener(new MouseAdapter() {
@@ -63,6 +74,10 @@ public class PainelGestaoEncomendas extends JPanel {
         JButton btnEditarEncomenda = new JButton("Editar Encomenda");
         JButton btnRemoverEncomenda = new JButton("Remover Encomenda");
 
+        btnNovaEncomenda.setToolTipText("Cria uma nova encomenda para um cliente existente");
+        btnEditarEncomenda.setToolTipText("Edita a encomenda selecionada (duplo clique também funciona)");
+        btnRemoverEncomenda.setToolTipText("Remove a encomenda selecionada e repõe o stock dos produtos");
+
         painelBotoes.add(btnNovaEncomenda);
         painelBotoes.add(btnEditarEncomenda);
         painelBotoes.add(btnRemoverEncomenda);
@@ -75,15 +90,44 @@ public class PainelGestaoEncomendas extends JPanel {
         btnRemoverEncomenda.addActionListener(e -> removerEncomenda());
     }
 
+    /**
+     * Aplica cores alternadas nas linhas da tabela para melhor legibilidade.
+     *
+     * @param tabela A tabela a ser formatada.
+     */
+    private void aplicarCoresAlternadasTabela(JTable tabela) {
+        tabela.setDefaultRenderer(Object.class, new javax.swing.table.DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                    boolean hasFocus, int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if (!isSelected) {
+                    c.setBackground(row % 2 == 0 ? Color.WHITE : new Color(240, 240, 240));
+                }
+                return c;
+            }
+        });
+    }
+
+    /**
+     * Atualiza o conteúdo da tabela com o estado atual das encomendas.
+     * Inclui informações sobre ID, cliente, preço total, quantidade, data/hora e estado.
+     */
     private void atualizarTabela() {
         tableModel.setRowCount(0);
         List<Encomenda> encomendas = farmacia.getEncomendas();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        
         for (Encomenda e : encomendas) {
+            String dataHoraStr = (e.getDataHora() != null) ? 
+                e.getDataHora().format(formatter) : "N/A";
+            
             tableModel.addRow(new Object[]{
                     e.getId(),
                     e.getCliente().getNome(),
                     String.format("%.2f€", e.getPrecoTotal()),
                     e.getQuantidadeTotal(),
+                    dataHoraStr,
                     e.getEstado().getDescricao()
             });
         }
@@ -303,6 +347,11 @@ public class PainelGestaoEncomendas extends JPanel {
         }
     }
 
+    /**
+     * Abre um diálogo para editar uma encomenda existente.
+     * Permite editar produtos, estado e data/hora da encomenda.
+     * A data/hora pode ser editada para permitir análises temporais precisas nas estatísticas.
+     */
     private void editarEncomenda() {
         int linhaSelecionada = tabelaEncomendas.getSelectedRow();
         if (linhaSelecionada >= 0) {
@@ -312,7 +361,7 @@ public class PainelGestaoEncomendas extends JPanel {
             if (encomendaOpt.isPresent()) {
                 Encomenda encomenda = encomendaOpt.get();
                 JDialog dialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), "Editar Encomenda ID: " + idEncomenda, true);
-                dialog.setSize(700, 550); // Ajustar tamanho
+                dialog.setSize(700, 600); // Ajustar tamanho para acomodar campo de data/hora
                 dialog.setLocationRelativeTo(this);
 
                 JPanel panelEdicao = new JPanel(new GridBagLayout());
@@ -546,6 +595,26 @@ public class PainelGestaoEncomendas extends JPanel {
                 cbEstado.setSelectedItem(encomenda.getEstado().getDescricao());
                 panelEdicao.add(cbEstado, gbc);
 
+                // --- Edição de Data/Hora ---
+                gbc.gridx = 0;
+                gbc.gridy = 6;
+                gbc.gridwidth = 1;
+                JLabel lblDataHora = new JLabel("Data/Hora:");
+                lblDataHora.setToolTipText("Formato: dd/MM/yyyy HH:mm (ex: 25/12/2024 14:30)");
+                panelEdicao.add(lblDataHora, gbc);
+                gbc.gridx = 1;
+                gbc.weightx = 1.0;
+                gbc.fill = GridBagConstraints.HORIZONTAL;
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+                JTextField txtDataHora = new JTextField(20);
+                if (encomenda.getDataHora() != null) {
+                    txtDataHora.setText(encomenda.getDataHora().format(formatter));
+                } else {
+                    txtDataHora.setText(LocalDateTime.now().format(formatter));
+                }
+                txtDataHora.setToolTipText("Formato: dd/MM/yyyy HH:mm (ex: 25/12/2024 14:30)");
+                panelEdicao.add(txtDataHora, gbc);
+
                 JButton btnSalvar = new JButton("Salvar");
                 btnSalvar.addActionListener(e -> {
                     try {
@@ -565,6 +634,15 @@ public class PainelGestaoEncomendas extends JPanel {
                             farmacia.atualizarEstadoEncomenda(idEncomenda, novoEstado);
                         } else {
                             JOptionPane.showMessageDialog(dialog, "Estado inválido selecionado.", "Erro", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+
+                        // Salvar Data/Hora
+                        try {
+                            LocalDateTime novaDataHora = LocalDateTime.parse(txtDataHora.getText().trim(), formatter);
+                            encomenda.setDataHora(novaDataHora);
+                        } catch (DateTimeParseException ex) {
+                            JOptionPane.showMessageDialog(dialog, "Formato de data/hora inválido. Use o formato: dd/MM/yyyy HH:mm", "Erro", JOptionPane.ERROR_MESSAGE);
                             return;
                         }
 

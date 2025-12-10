@@ -16,8 +16,14 @@ import java.util.List;
  * Painel Swing responsável pela gestão de clientes.
  * <p>
  * Exibe uma tabela com os clientes registados e disponibiliza operações de
- * criação, edição e remoção através de diálogos modais.
+ * criação, edição e remoção através de diálogos modais. A tabela utiliza cores
+ * alternadas para melhor legibilidade e inclui validação de NIF português
+ * usando o algoritmo oficial de validação.
  * </p>
+ *
+ * @author Afonso Esteves - 55047
+ * @author Felipe Dourado - 53394
+ * @author Tiago Pereira - 55019
  */
 public class PainelGestaoClientes extends JPanel {
 
@@ -42,6 +48,8 @@ public class PainelGestaoClientes extends JPanel {
             }
         };
         tabelaClientes = new JTable(tableModel);
+        tabelaClientes.setRowHeight(25);
+        aplicarCoresAlternadasTabela(tabelaClientes);
         atualizarTabela();
 
         tabelaClientes.addMouseListener(new MouseAdapter() {
@@ -58,6 +66,10 @@ public class PainelGestaoClientes extends JPanel {
         JButton btnEditar = new JButton("Editar");
         JButton btnRemover = new JButton("Remover");
 
+        btnAdicionar.setToolTipText("Adiciona um novo cliente à base de dados");
+        btnEditar.setToolTipText("Edita os dados do cliente selecionado (duplo clique também funciona)");
+        btnRemover.setToolTipText("Remove o cliente selecionado da base de dados");
+
         painelBotoes.add(btnAdicionar);
         painelBotoes.add(btnEditar);
         painelBotoes.add(btnRemover);
@@ -68,6 +80,25 @@ public class PainelGestaoClientes extends JPanel {
         btnAdicionar.addActionListener(e -> adicionarCliente());
         btnEditar.addActionListener(e -> editarCliente());
         btnRemover.addActionListener(e -> removerCliente());
+    }
+
+    /**
+     * Aplica cores alternadas nas linhas da tabela para melhor legibilidade.
+     *
+     * @param tabela A tabela a ser formatada.
+     */
+    private void aplicarCoresAlternadasTabela(JTable tabela) {
+        tabela.setDefaultRenderer(Object.class, new javax.swing.table.DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                    boolean hasFocus, int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if (!isSelected) {
+                    c.setBackground(row % 2 == 0 ? Color.WHITE : new Color(240, 240, 240));
+                }
+                return c;
+            }
+        });
     }
 
     private void atualizarTabela() {

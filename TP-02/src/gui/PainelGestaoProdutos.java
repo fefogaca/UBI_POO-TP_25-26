@@ -15,8 +15,13 @@ import java.util.Optional;
  * Painel Swing responsável pela manutenção do catálogo de produtos.
  * <p>
  * Exibe uma tabela com todos os produtos registados e permite a criação,
- * atualização e remoção com validação de dados.
+ * atualização e remoção com validação de dados. A tabela utiliza cores alternadas
+ * para melhor legibilidade e inclui tooltips informativos nos botões.
  * </p>
+ *
+ * @author Afonso Esteves - 55047
+ * @author Felipe Dourado - 53394
+ * @author Tiago Pereira - 55019
  */
 public class PainelGestaoProdutos extends JPanel {
 
@@ -41,6 +46,8 @@ public class PainelGestaoProdutos extends JPanel {
             }
         };
         tabelaProdutos = new JTable(tableModel);
+        tabelaProdutos.setRowHeight(25);
+        aplicarCoresAlternadasTabela(tabelaProdutos);
         atualizarTabela();
 
         tabelaProdutos.addMouseListener(new MouseAdapter() {
@@ -57,6 +64,10 @@ public class PainelGestaoProdutos extends JPanel {
         JButton btnEditar = new JButton("Editar");
         JButton btnRemover = new JButton("Remover");
 
+        btnAdicionar.setToolTipText("Adiciona um novo produto ao catálogo");
+        btnEditar.setToolTipText("Edita os dados do produto selecionado (duplo clique também funciona)");
+        btnRemover.setToolTipText("Remove o produto selecionado do catálogo");
+
         painelBotoes.add(btnAdicionar);
         painelBotoes.add(btnEditar);
         painelBotoes.add(btnRemover);
@@ -67,6 +78,25 @@ public class PainelGestaoProdutos extends JPanel {
         btnAdicionar.addActionListener(e -> adicionarProduto());
         btnEditar.addActionListener(e -> editarProduto());
         btnRemover.addActionListener(e -> removerProduto());
+    }
+
+    /**
+     * Aplica cores alternadas nas linhas da tabela para melhor legibilidade.
+     *
+     * @param tabela A tabela a ser formatada.
+     */
+    private void aplicarCoresAlternadasTabela(JTable tabela) {
+        tabela.setDefaultRenderer(Object.class, new javax.swing.table.DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                    boolean hasFocus, int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if (!isSelected) {
+                    c.setBackground(row % 2 == 0 ? Color.WHITE : new Color(240, 240, 240));
+                }
+                return c;
+            }
+        });
     }
 
     /**
