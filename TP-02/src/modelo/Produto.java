@@ -72,34 +72,46 @@ public class Produto implements Serializable, Vendavel {
      * @param nome O novo nome.
      */
     public void setNome(String nome) { this.nome = nome; }
+    /**
+     * Define o preço do produto.
+     *
+     * @param preco O novo preço do produto.
+     * @throws IllegalArgumentException Se o preço for negativo.
+     */
     public void setPreco(double preco) {
-        if (preco >= 0) {
-            this.preco = preco;
-        } else {
-            System.out.println("Erro: O preço não pode ser negativo!");
+        if (preco < 0) {
+            throw new IllegalArgumentException("O preço não pode ser negativo.");
         }
+        this.preco = preco;
     }
 
     /**
      * Adiciona uma quantidade ao stock do produto.
+     *
      * @param quantidade A quantidade a ser adicionada.
+     * @throws IllegalArgumentException Se a quantidade for negativa ou zero.
      */
     public void adicionarStock(int quantidade) {
-        if (quantidade > 0) {
-            this.stock += quantidade;
+        if (quantidade <= 0) {
+            throw new IllegalArgumentException("A quantidade a adicionar deve ser positiva.");
         }
+        this.stock += quantidade;
     }
 
     /**
      * Remove uma quantidade do stock do produto.
+     *
      * @param quantidade A quantidade a ser removida.
+     * @throws IllegalArgumentException Se a quantidade for inválida ou o stock for insuficiente.
      */
     public void removerStock(int quantidade) {
-        if (quantidade > 0 && this.stock >= quantidade) {
-            this.stock -= quantidade;
-        } else {
-            System.out.println("Erro: Stock insuficiente ou quantidade inválida.");
+        if (quantidade <= 0) {
+            throw new IllegalArgumentException("A quantidade a remover deve ser positiva.");
         }
+        if (this.stock < quantidade) {
+            throw new IllegalArgumentException("Stock insuficiente. Disponível: " + this.stock + ", solicitado: " + quantidade);
+        }
+        this.stock -= quantidade;
     }
 
     /**

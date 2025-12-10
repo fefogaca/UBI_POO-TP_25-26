@@ -6,6 +6,7 @@ import modelo.Encomenda;
 import modelo.Produto;
 
 import java.io.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,6 +69,13 @@ public class GestorDados {
             if (!encomendas.isEmpty()) {
                 int maxIdEncomenda = encomendas.stream().mapToInt(Encomenda::getId).max().orElse(0);
                 Encomenda.setProximoId(maxIdEncomenda + 1);
+                
+                // Garantir que todas as encomendas têm data/hora (para compatibilidade com versões antigas)
+                for (Encomenda encomenda : encomendas) {
+                    if (encomenda.getDataHora() == null) {
+                        encomenda.setDataHora(LocalDateTime.now());
+                    }
+                }
             }
 
             System.out.println("Dados carregados com sucesso de " + NOME_FICHEIRO);

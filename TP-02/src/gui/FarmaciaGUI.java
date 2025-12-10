@@ -65,11 +65,13 @@ public class FarmaciaGUI extends JFrame {
         PainelGestaoClientes painelClientes = new PainelGestaoClientes(farmacia);
         PainelGestaoProdutos painelProdutos = new PainelGestaoProdutos(farmacia);
         PainelGestaoEncomendas painelEncomendas = new PainelGestaoEncomendas(farmacia, painelProdutos); // Passa painelProdutos
+        PainelEstatisticas painelEstatisticas = new PainelEstatisticas(farmacia);
 
         // Adicionar os painéis de gestão
         tabbedPane.addTab("Clientes", painelClientes);
         tabbedPane.addTab("Produtos", painelProdutos);
         tabbedPane.addTab("Encomendas", painelEncomendas);
+        tabbedPane.addTab("Estatísticas", painelEstatisticas);
 
         add(tabbedPane);
     }

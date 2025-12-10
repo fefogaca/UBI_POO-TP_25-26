@@ -78,25 +78,6 @@ public class PainelGestaoClientes extends JPanel {
         }
     }
 
-    /**
-     * Valida se um NIF corresponde ao formato de 9 dígitos.
-     *
-     * @param nif número de identificação fiscal a validar
-     * @return {@code true} se o NIF for constituído por 9 dígitos
-     */
-    private boolean nifValido(String nif) {
-        return nif != null && nif.matches("\\d{9}");
-    }
-
-    /**
-     * Valida se um código postal está no formato 0000-000.
-     *
-     * @param codigoPostal código postal a validar
-     * @return {@code true} se respeitar o formato definido
-     */
-    private boolean codigoPostalValido(String codigoPostal) {
-        return codigoPostal != null && codigoPostal.matches("\\d{4}-\\d{3}");
-    }
 
     private void adicionarCliente() {
         JDialog dialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), "Adicionar Cliente", true);
@@ -157,12 +138,12 @@ public class PainelGestaoClientes extends JPanel {
                 return;
             }
 
-            if (!nifValido(nif)) {
-                JOptionPane.showMessageDialog(dialog, "O NIF deve conter exatamente 9 dígitos.", "Validação", JOptionPane.WARNING_MESSAGE);
+            if (!ValidadorUtil.nifValido(nif)) {
+                JOptionPane.showMessageDialog(dialog, "O NIF inserido é inválido. Verifique se contém 9 dígitos e se o dígito de controlo está correto.", "Validação", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
-            if (!codigoPostalValido(codigoPostal)) {
+            if (!ValidadorUtil.codigoPostalValido(codigoPostal)) {
                 JOptionPane.showMessageDialog(dialog, "O Código Postal deve seguir o formato 0000-000.", "Validação", JOptionPane.WARNING_MESSAGE);
                 return;
             }
@@ -180,6 +161,9 @@ public class PainelGestaoClientes extends JPanel {
         });
 
         JPanel panelBotoes = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JButton btnCancelar = new JButton("Cancelar");
+        btnCancelar.addActionListener(e -> dialog.dispose());
+        panelBotoes.add(btnCancelar);
         panelBotoes.add(btnSalvar);
 
         dialog.add(panelForm, BorderLayout.CENTER);
@@ -253,8 +237,8 @@ public class PainelGestaoClientes extends JPanel {
                     return;
                 }
 
-                if (!nifValido(nif)) {
-                    JOptionPane.showMessageDialog(dialog, "O NIF deve conter exatamente 9 dígitos.", "Validação", JOptionPane.WARNING_MESSAGE);
+                if (!ValidadorUtil.nifValido(nif)) {
+                    JOptionPane.showMessageDialog(dialog, "O NIF inserido é inválido. Verifique se contém 9 dígitos e se o dígito de controlo está correto.", "Validação", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
 
@@ -264,7 +248,7 @@ public class PainelGestaoClientes extends JPanel {
                     return;
                 }
 
-                if (!codigoPostalValido(codigoPostal)) {
+                if (!ValidadorUtil.codigoPostalValido(codigoPostal)) {
                     JOptionPane.showMessageDialog(dialog, "O Código Postal deve seguir o formato 0000-000.", "Validação", JOptionPane.WARNING_MESSAGE);
                     return;
                 }

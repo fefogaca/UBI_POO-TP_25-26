@@ -52,4 +52,29 @@ public class Cliente extends Pessoa implements Serializable {
     public String toString() {
         return "Cliente: " + nome + " | NIF: " + nif + " | Morada: " + morada.toString();
     }
+
+    /**
+     * Compara dois clientes pelo seu NIF.
+     * Dois clientes são considerados iguais se tiverem o mesmo NIF.
+     *
+     * @param o O objeto a comparar.
+     * @return true se os NIFs forem iguais, false caso contrário.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cliente cliente = (Cliente) o;
+        return nif != null && nif.equals(cliente.nif);
+    }
+
+    /**
+     * Retorna o código hash baseado no NIF do cliente.
+     *
+     * @return O código hash do cliente.
+     */
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(nif);
+    }
 }

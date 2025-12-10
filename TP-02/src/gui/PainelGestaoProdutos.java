@@ -140,6 +140,9 @@ public class PainelGestaoProdutos extends JPanel {
         });
 
         JPanel panelBotoes = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JButton btnCancelar = new JButton("Cancelar");
+        btnCancelar.addActionListener(e -> dialog.dispose());
+        panelBotoes.add(btnCancelar);
         panelBotoes.add(btnSalvar);
 
         dialog.add(panelForm, BorderLayout.CENTER);

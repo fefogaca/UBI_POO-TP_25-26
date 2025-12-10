@@ -1,6 +1,7 @@
 package modelo;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 /**
@@ -8,8 +9,13 @@ import java.util.Map;
  * <p>
  * Uma encomenda associa um cliente a um conjunto de produtos com quantidades específicas,
  * mantém um estado (processamento, pago, enviado, entregue) e calcula o preço total.
+ * Armazena também a data e hora de criação para permitir análises temporais e estatísticas.
  * Demonstra o uso de Enums, sobrecarga de construtores e composição.
  * </p>
+ *
+ * @author Afonso Esteves - 55047
+ * @author Felipe Dourado - 53394
+ * @author Tiago Pereira - 55019
  */
 public class Encomenda implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -50,9 +56,11 @@ public class Encomenda implements Serializable {
     private Map<Produto, Integer> produtos;
     private double precoTotal;
     private EstadoEncomenda estado;
+    private LocalDateTime dataHora;
 
     /**
      * Construtor principal para criar uma nova encomenda.
+     * A data e hora são automaticamente definidas como o momento atual.
      * @param cliente O cliente que fez a encomenda.
      * @param produtos O mapa de produtos e respetivas quantidades.
      */
@@ -62,6 +70,7 @@ public class Encomenda implements Serializable {
         this.produtos = produtos;
         this.estado = EstadoEncomenda.EM_PROCESSAMENTO;
         this.precoTotal = calcularPrecoTotal();
+        this.dataHora = LocalDateTime.now();
     }
 
     /**
@@ -130,6 +139,25 @@ public class Encomenda implements Serializable {
      */
     public int getQuantidadeTotal() {
         return produtos.values().stream().mapToInt(Integer::intValue).sum();
+    }
+
+    /**
+     * Obtém a data e hora em que a encomenda foi criada.
+     *
+     * @return A data e hora da encomenda.
+     */
+    public LocalDateTime getDataHora() {
+        return dataHora;
+    }
+
+    /**
+     * Define a data e hora da encomenda.
+     * Útil ao carregar dados persistidos.
+     *
+     * @param dataHora A nova data e hora.
+     */
+    public void setDataHora(LocalDateTime dataHora) {
+        this.dataHora = dataHora;
     }
 
     /**
