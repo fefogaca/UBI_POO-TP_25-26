@@ -1,187 +1,387 @@
-# Projeto de Programação Orientada a Objetos - Gestão de Farmácia
+# TP-02: Sistema de Gestão de Farmácia - Versão Completa
 
-Este repositório contém duas implementações de um sistema de gestão de farmácia, desenvolvidas no âmbito da disciplina de Programação Orientada a Objetos (POO) da Universidade da Beira Interior (UBI). As implementações, designadas como `TP-01` e `TP-02`, representam fases distintas do desenvolvimento do projeto, com a `TP-02` sendo uma evolução da `TP-01`, incorporando conceitos mais avançados de POO e engenharia de software.
+Este documento descreve o **TP-02**, uma aplicação completa de gestão de farmácia desenvolvida no âmbito da disciplina de Programação Orientada a Objetos (POO) da Universidade da Beira Interior (UBI). Esta versão incorpora uma interface gráfica moderna, persistência de dados, funcionalidades de estatísticas avançadas, validações robustas e testes unitários.
 
-## Como Obter o Projeto
+## 📋 Índice
 
-Para clonar este repositório e ter acesso aos ficheiros do projeto, utilize o seguinte comando:
-
-```bash
-git clone https://github.com/fefogaca/TP-POO-25-26
-cd TP-POO-25-26
-```
-
+- [Descrição Geral](#descrição-geral)
+- [Funcionalidades](#funcionalidades)
+- [Requisitos](#requisitos)
+- [Estrutura do Projeto](#estrutura-do-projeto)
+- [Compilação e Execução](#compilação-e-execução)
+- [Testes Unitários](#testes-unitários)
+- [Documentação](#documentação)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
 
 ---
 
-## Estrutura do Repositório
+## Descrição Geral
 
-*   `Enunciado/`: Contém o enunciado original do projeto (Enunciado.pdf).
-*   `TP-01/`: Implementação inicial do sistema de gestão de farmácia (versão de consola).
-*   `TP-02/`: Implementação avançada do sistema de gestão de farmácia (versão com interface gráfica e persistência de dados).
+O **TP-02** é uma aplicação desktop completa para gestão de uma farmácia, desenvolvida em Java com interface gráfica Swing. A aplicação permite gerir clientes, produtos e encomendas de forma intuitiva, oferecendo funcionalidades de análise estatística e garantindo a persistência dos dados entre sessões.
+
+### Características Principais
+
+- ✅ **Interface Gráfica Moderna**: Interface Swing intuitiva com tabelas, formulários e diálogos modais
+- ✅ **Persistência de Dados**: Dados guardados automaticamente em ficheiro binário (`farmacia.dat`)
+- ✅ **Estatísticas Avançadas**: Painel dedicado com análises de vendas, clientes e faturação
+- ✅ **Validações Robustas**: Validação de NIF português (algoritmo oficial), códigos postais e integridade referencial
+- ✅ **Rastreamento Temporal**: Data/hora em todas as encomendas para análises temporais precisas
+- ✅ **Testes Unitários**: Cobertura de testes com JUnit 5
+- ✅ **Documentação Completa**: JavaDoc gerado automaticamente
+- ✅ **Compatibilidade Multiplataforma**: Testado e funcional em Windows, Linux e macOS
+
+---
+
+## Funcionalidades
+
+### 🧑‍💼 Gestão de Clientes
+
+- **CRUD Completo**: Criar, visualizar, editar e remover clientes
+- **Validação de NIF**: Validação rigorosa usando algoritmo oficial português (não apenas formato)
+- **Validação de Código Postal**: Formato 0000-000 obrigatório
+- **Integridade Referencial**: Não permite remover clientes com encomendas associadas
+- **Interface Melhorada**: Tabela com cores alternadas e tooltips informativos
+
+### 📦 Gestão de Produtos
+
+- **CRUD Completo**: Criar, visualizar, editar e remover produtos
+- **Gestão de Stock**: Atualização automática e sincronização entre painéis
+- **Validações**: Preço e stock não podem ser negativos (exceções em vez de mensagens no console)
+- **Integridade Referencial**: Não permite remover produtos presentes em encomendas
+- **Sincronização**: Alterações de stock refletidas imediatamente em todos os painéis
+
+### 📋 Gestão de Encomendas
+
+- **Registo Completo**: Criar encomendas associando cliente e produtos com quantidades
+- **Pesquisa Inteligente**: Pesquisa de clientes por NIF e produtos por nome/ID
+- **Validação em Tempo Real**: Verificação de stock disponível antes de confirmar
+- **Edição Completa**: 
+  - Atualizar estado da encomenda (Em processamento, Pago, Enviado, Entregue)
+  - **Editar data/hora** para análises temporais precisas
+  - Gerir produtos da encomenda (adicionar, remover, ajustar quantidades)
+- **Rastreamento Temporal**: Coluna de data/hora na tabela principal (formato dd/MM/yyyy HH:mm)
+- **Reposição Automática**: Stock reposto automaticamente ao remover encomendas
+
+### 📊 Estatísticas e Análises
+
+Painel dedicado com 4 abas organizadas:
+
+1. **Produtos Mais Vendidos**: Lista ordenada por quantidade vendida (maior → menor)
+2. **Produtos Menos Vendidos**: Lista ordenada por quantidade vendida (menor → maior)
+3. **Clientes Maior Volume**: Lista ordenada por valor total gasto (maior → menor)
+4. **Faturação**: Calculadora para faturação por:
+   - Dia específico
+   - Semana (segunda a domingo)
+   - Mês específico
+   - Período customizado
+
+**Características do Painel de Estatísticas**:
+- Interface melhorada com separadores visuais
+- Cores nos resultados para melhor legibilidade
+- Tooltips informativos
+- Mensagens quando não há dados disponíveis
+- Botão para atualizar estatísticas manualmente
+
+### 💾 Persistência e Validações
+
+- **Persistência Automática**: Dados guardados em `farmacia.dat` via serialização
+- **Carregamento Automático**: Dados carregados ao iniciar a aplicação
+- **Compatibilidade**: Suporta dados antigos (define data/hora em encomendas sem esse campo)
+- **Validações Centralizadas**: Classe `ValidadorUtil` para evitar duplicação de código
+- **Diálogo de Confirmação**: Pergunta ao utilizador se deseja guardar ao encerrar
 
 ---
 
 ## Requisitos
 
-Para compilar e executar os projetos `TP-01` e `TP-02`, é necessário ter instalado o seguinte software:
+### Software Necessário
 
-*   **Java Development Kit (JDK) 8 ou superior:** Essencial para compilar e executar aplicações Java. Pode ser descarregado a partir do site oficial da Oracle ou através de gestores de pacotes como o `sdkman` (para Linux/macOS) ou `Chocolatey` (para Windows).
-    *   [Download JDK](https://www.oracle.com/java/technologies/downloads/)
+- **Java Development Kit (JDK) 17 ou superior** (recomendado Java 21)
+  - [Download JDK Oracle](https://www.oracle.com/java/technologies/downloads/)
+  - [OpenJDK](https://openjdk.org/)
 
-Para a execução dos testes unitários da `TP-02`, o projeto já inclui o JAR necessário do JUnit 5 (`junit-platform-console-standalone-1.10.2.jar`) no diretório `TP-02/lib/`.
+### Dependências
 
----
+- **JUnit 5**: Incluído no projeto (`lib/junit-platform-console-standalone-1.10.2.jar`)
+- **Java Swing**: Incluído no JDK (não requer instalação adicional)
 
----
+### Sistemas Operativos Suportados
 
-## TP-01: Sistema de Gestão de Farmácia (Versão de Consola)
-
-### Descrição Geral
-
-A `TP-01` é uma aplicação de consola que simula um sistema básico de gestão para uma farmácia. Permite a gestão de clientes, produtos e encomendas através de um menu interativo na linha de comandos. O foco principal desta fase foi a implementação dos requisitos funcionais básicos e a compreensão dos conceitos fundamentais de Programação Orientada a Objetos, como classes, objetos, atributos, métodos e encapsulamento.
-
-### Funcionalidades Implementadas
-
-*   **Gestão de Clientes:**
-    *   Adicionar novos clientes (Nome, NIF, Morada).
-    *   Listar todos os clientes registados.
-    *   Eliminar clientes existentes pelo NIF.
-    *   Editar informações de clientes (Nome, Morada).
-*   **Gestão de Produtos:**
-    *   Adicionar novos produtos (Nome, Preço, Stock Inicial).
-    *   Listar todos os produtos disponíveis.
-    *   Eliminar produtos existentes pelo ID.
-    *   Editar informações de produtos (Nome, Preço, Stock).
-*   **Gestão de Encomendas:**
-    *   Registar novas encomendas, associando-as a um cliente e a uma lista de produtos com quantidades.
-    *   Listar todas as encomendas registadas.
-    *   Atualizar o estado de uma encomenda (e.g., Pendente, Em Processamento, Entregue).
-
-### Estrutura de Classes
-
-As principais classes que compõem a `TP-01` são:
-
-*   `Main.java`: Contém o método `main` e a lógica para a interação com o utilizador via consola, apresentando os menus e chamando os métodos da classe `Farmacia`.
-*   `Farmacia.java`: A classe central que gere as listas de `Cliente`, `Produto` e `Encomenda`. Contém a lógica de negócio para adicionar, remover, listar e editar estes elementos.
-*   `Cliente.java`: Representa um cliente da farmácia, com atributos como nome, NIF e morada.
-*   `Produto.java`: Representa um produto disponível na farmácia, com atributos como ID, nome, preço e stock.
-*   `Morada.java`: Representa a morada de um cliente.
-*   `Encomenda.java`: Representa uma encomenda, associando um cliente, uma lista de produtos e o seu estado.
-
-### Compilação e Execução
-
-Para compilar e executar a `TP-01` a partir da linha de comandos:
-
-1.  **Navegar até ao diretório:**
-    ```bash
-    cd TP-01/src
-    ```
-2.  **Compilar os ficheiros Java:**
-    ```bash
-    javac *.java
-    ```
-3.  **Executar a aplicação:**
-    ```bash
-    java Main
-    ```
+✅ **Windows** 10/11  
+✅ **Linux** (Ubuntu, Debian, RHEL, etc.)  
+✅ **macOS** 10.15+
 
 ---
 
-## TP-02: Sistema de Gestão de Farmácia (Versão com GUI e Persistência)
+## Estrutura do Projeto
 
-### Descrição Geral
+```
+TP-02/
+├── src/
+│   ├── app/                    # Ponto de entrada
+│   │   ├── Main.java          # Classe principal que inicia a aplicação
+│   │   └── package-info.java
+│   │
+│   ├── modelo/                 # Camada de domínio
+│   │   ├── Pessoa.java         # Classe abstrata (herança)
+│   │   ├── Cliente.java       # Extende Pessoa, implementa equals/hashCode
+│   │   ├── Morada.java        # Value object (composição)
+│   │   ├── Vendavel.java      # Interface
+│   │   ├── Produto.java       # Implementa Vendavel
+│   │   ├── Encomenda.java     # Inclui LocalDateTime para rastreamento
+│   │   └── Farmacia.java      # Lógica de negócio e estatísticas
+│   │
+│   ├── gui/                    # Interface gráfica
+│   │   ├── FarmaciaGUI.java           # Janela principal com JTabbedPane
+│   │   ├── PainelGestaoClientes.java  # CRUD de clientes
+│   │   ├── PainelGestaoProdutos.java  # CRUD de produtos
+│   │   ├── PainelGestaoEncomendas.java # CRUD de encomendas
+│   │   ├── PainelEstatisticas.java   # Painel de estatísticas (4 abas)
+│   │   └── ValidadorUtil.java        # Validações centralizadas
+│   │
+│   ├── persistencia/           # Persistência de dados
+│   │   └── GestorDados.java  # Serialização/desserialização
+│   │
+│   └── test/                   # Testes unitários
+│       ├── FarmaciaTest.java  # Testes da lógica de negócio
+│       └── package-info.java
+│
+├── lib/                        # Dependências externas
+│   └── junit-platform-console-standalone-1.10.2.jar
+│
+├── out/                        # Classes compiladas (gerado automaticamente)
+├── doc/                        # JavaDoc gerado (gerado automaticamente)
+├── farmacia.dat                # Ficheiro de dados (gerado automaticamente)
+├── CONTEXTO.md                 # Documentação técnica detalhada
+├── diagrama.puml              # Diagrama UML (PlantUML)
+├── diagrama.png               # Diagrama UML renderizado
+└── README.md                   # Este ficheiro
+```
 
-A `TP-02` é uma evolução significativa da `TP-01`, transformando a aplicação de consola numa aplicação com Interface Gráfica de Utilizador (GUI) utilizando a biblioteca Swing do Java. Além disso, introduz mecanismos de persistência de dados, garantindo que as informações da farmácia sejam guardadas entre as sessões da aplicação. Esta fase demonstra a aplicação de padrões de design, modularidade, tratamento de exceções e testes unitários.
+### Classes Principais
 
-### Funcionalidades e Melhorias
+#### Modelo de Domínio (`src/modelo/`)
 
-*   **Interface Gráfica de Utilizador (GUI):**
-    *   Substituição da interação por consola por uma interface gráfica intuitiva baseada em Swing.
-    *   Menus e formulários dedicados para a gestão de clientes, produtos e encomendas.
-*   **Persistência de Dados:**
-    *   As informações (clientes, produtos, encomendas) são automaticamente guardadas num ficheiro (`farmacia.dat`) ao fechar a aplicação e carregadas ao iniciar.
-    *   Utiliza `ObjectOutputStream` e `ObjectInputStream` para serialização de objetos.
-*   **Modularidade e Organização:**
-    *   O código foi refatorado e organizado em pacotes (`modelo`, `gui`, `persistencia`) para uma melhor separação de responsabilidades.
-*   **Tratamento de Exceções:**
-    *   A lógica de negócio na classe `Farmacia` utiliza exceções (`IllegalArgumentException`, `IllegalStateException`) para lidar com cenários inválidos (e.g., cliente duplicado, stock insuficiente), em vez de apenas imprimir mensagens na consola.
-*   **Novas Classes e Interfaces:**
-    *   `Pessoa.java`: Classe abstrata introduzida no pacote `modelo`, servindo como superclasse para `Cliente`, promovendo a reutilização de código.
-    *   `Vendavel.java`: Interface que pode ser implementada por classes que representam itens vendáveis.
-    *   `GestorDados.java`: Classe dedicada à gestão da persistência dos dados.
-*   **Testes Unitários (JUnit 5):**
-    *   Inclusão de testes unitários para a lógica de negócio da classe `Farmacia`, garantindo a correção e robustez das operações.
+- **`Pessoa`** (abstrata): Classe base com nome e NIF. Demonstra herança e obriga subclasses a implementar `toString()`.
+- **`Cliente`**: Extende `Pessoa`, adiciona `Morada` (composição). Implementa `equals()` e `hashCode()` baseados no NIF.
+- **`Produto`**: Implementa `Vendavel`, gere ID sequencial, preço e stock. Validações robustas com exceções.
+- **`Encomenda`**: Associa cliente e produtos, controla estados via enum, inclui `LocalDateTime` para rastreamento temporal.
+- **`Farmacia`**: Núcleo da lógica de negócio, implementa validações de integridade e métodos de estatísticas.
 
-### Estrutura de Classes e Pacotes
+#### Interface Gráfica (`src/gui/`)
 
-*   **`src/`:**
-    *   `Main.java`: Ponto de entrada da aplicação. Responsável por carregar os dados persistidos e iniciar a `FarmaciaGUI`.
-*   **`src/modelo/`:** Contém as classes que representam o domínio da aplicação.
-    *   `Farmacia.java`: Lógica de negócio central, agora mais robusta e utilizando `Optional` para pesquisas.
-    *   `Cliente.java`, `Produto.java`, `Morada.java`, `Encomenda.java`: Classes de domínio, possivelmente com pequenas adaptações para serialização e melhorias internas.
-    *   `Pessoa.java`: Classe abstrata base para entidades com nome e NIF.
-    *   `Vendavel.java`: Interface para itens que podem ser vendidos.
-*   **`src/gui/`:** Contém as classes relacionadas com a interface gráfica.
-    *   `FarmaciaGUI.java`: A janela principal da aplicação Swing, que organiza os diferentes painéis de gestão.
-    *   `PainelGestaoClientes.java`, `PainelGestaoProdutos.java`, `PainelGestaoEncomendas.java`: Painéis específicos para gerir cada tipo de entidade, contendo os componentes visuais e a lógica de interação com a `Farmacia`.
-*   **`src/persistencia/`:** Contém a lógica para guardar e carregar os dados.
-    *   `GestorDados.java`: Métodos estáticos para serializar e desserializar as listas de clientes, produtos e encomendas.
-*   **`src/test/`:**
-    *   `FarmaciaTest.java`: Classe de testes unitários para a classe `Farmacia` utilizando JUnit 5.
-
-### Compilação e Execução
-
-1.  **Navegar até ao diretório raiz do projeto (onde este `README.md` se encontra).**
-2.  **Compilar os ficheiros Java:**
-    ```bash
-    javac -d TP-02/out/production/TP-02 -cp TP-02/lib/junit-platform-console-standalone-1.10.2.jar $(find TP-02/src -name "*.java")
-    ```
-    *Nota: Este comando compila todos os ficheiros `.java` do projeto, incluindo os testes, e adiciona o JAR do JUnit 5 ao classpath. Para utilizadores Windows que não possuam o comando `find` disponível no seu terminal (e.g., PowerShell, CMD), pode ser necessário utilizar um terminal compatível com comandos Unix (como o Git Bash) ou listar os ficheiros `.java` manualmente.*
-
-3.  **Executar a aplicação GUI:**
-    ```bash
-    java -cp TP-02/out/production/TP-02 Main
-    ```
-    A aplicação abrirá uma janela Swing.
-
-### Execução de Testes Unitários (JUnit 5)
-
-1.  **Navegar até ao diretório raiz do projeto (onde este `README.md` se encontra).**
-2.  **Certifique-se de que os ficheiros Java foram compilados (ver secção "Compilação e Execução" acima).**
-3.  **Executar os testes JUnit:**
-    ```bash
-    java -jar TP-02/lib/junit-platform-console-standalone-1.10.2.jar -cp TP-02/out/production/TP-02 --scan-classpath
-    ```
-
-### Geração de Documentação Javadoc
-
-Para gerar a documentação Javadoc para a `TP-02`:
-
-1.  **Navegar até ao diretório raiz do projeto (onde este `README.md` se encontra).**
-2.  **Gerar a documentação Javadoc:**
-    ```bash
-    javadoc -d TP-02/doc TP-02/src/**/*.java TP-02/src/*.java
-    ```
-    A documentação será gerada no diretório `TP-02/doc/`. Abra `TP-02/doc/index.html` no seu navegador para visualizá-la.
+- **`FarmaciaGUI`**: Janela principal com `JTabbedPane` contendo 4 separadores.
+- **`PainelGestaoClientes`**: Gestão de clientes com validação de NIF e código postal.
+- **`PainelGestaoProdutos`**: Gestão de produtos com sincronização de stock.
+- **`PainelGestaoEncomendas`**: Gestão completa de encomendas com edição de data/hora.
+- **`PainelEstatisticas`**: Painel dedicado com 4 abas para análises.
+- **`ValidadorUtil`**: Métodos estáticos para validação de NIF português e código postal.
 
 ---
 
-## Diferenças Chave entre TP-01 e TP-02
+## Compilação e Execução
 
-| Característica          | TP-01 (Versão de Consola)                               | TP-02 (Versão com GUI e Persistência)                                  |
-| :---------------------- | :------------------------------------------------------ | :--------------------------------------------------------------------- |
-| **Interface de Utilizador** | Consola (CLI)                                           | Gráfica (Swing GUI)                                                    |
-| **Persistência de Dados** | Nenhuma (dados perdidos ao fechar a aplicação)          | Sim (serialização para `farmacia.dat` via `GestorDados`)               |
-| **Estrutura do Código** | Ficheiros `.java` no diretório `src`                    | Organizado em pacotes (`modelo`, `gui`, `persistencia`)                |
-| **Novas Classes/Interfaces** | N/A                                                     | `Pessoa` (abstrata), `Vendavel` (interface), `GestorDados`             |
-| **Tratamento de Erros** | Mensagens `System.out.println`                          | Lançamento de exceções (`IllegalArgumentException`, `IllegalStateException`) |
-| **Testes**              | Nenhuns                                                 | Testes unitários com JUnit 5 (`FarmaciaTest.java`)                     |
-| **Robustez da Lógica**  | Básica, com validações simples                          | Mais robusta, utilizando `Optional` e tratamento de exceções           |
-| **Gestão de Encomendas** | Adicionar, listar, atualizar estado                     | Adicionar, listar, atualizar estado, remover, atualizar produtos da encomenda (com reposição de stock) |
+### Pré-requisitos
+
+Certifique-se de que o JDK está instalado e configurado:
+
+```bash
+java -version
+javac -version
+```
+
+### Compilação
+
+#### Windows (CMD ou PowerShell)
+
+**Compilar código de produção:**
+```cmd
+cd TP-02
+javac -cp "lib\junit-platform-console-standalone-1.10.2.jar;src" -d out src\app\*.java src\modelo\*.java src\gui\*.java src\persistencia\*.java
+```
+
+**Compilar testes:**
+```cmd
+javac -cp "lib\junit-platform-console-standalone-1.10.2.jar;out" -d out src\test\*.java
+```
+
+**Alternativa (PowerShell com find):**
+```powershell
+javac -cp "lib\junit-platform-console-standalone-1.10.2.jar;src" -d out (Get-ChildItem -Path src -Recurse -Filter "*.java" | Where-Object { $_.FullName -notmatch "\\test\\" }).FullName
+javac -cp "lib\junit-platform-console-standalone-1.10.2.jar;out" -d out (Get-ChildItem -Path src\test -Recurse -Filter "*.java").FullName
+```
+
+#### Linux/macOS
+
+**Compilar código de produção:**
+```bash
+cd TP-02
+javac -cp "lib/junit-platform-console-standalone-1.10.2.jar:src" -d out $(find src -name "*.java" ! -path "*/test/*")
+```
+
+**Compilar testes:**
+```bash
+javac -cp "lib/junit-platform-console-standalone-1.10.2.jar:out" -d out $(find src/test -name "*.java")
+```
+
+**Alternativa (sem find):**
+```bash
+javac -cp "lib/junit-platform-console-standalone-1.10.2.jar:src" -d out src/app/*.java src/modelo/*.java src/gui/*.java src/persistencia/*.java
+javac -cp "lib/junit-platform-console-standalone-1.10.2.jar:out" -d out src/test/*.java
+```
+
+### Execução da Aplicação
+
+#### Windows
+```cmd
+cd TP-02
+java -cp "out" app.Main
+```
+
+#### Linux/macOS
+```bash
+cd TP-02
+java -cp "out" app.Main
+```
+
+A aplicação abrirá uma janela Swing com a interface gráfica.
+
+---
+
+## Testes Unitários
+
+### Execução dos Testes
+
+#### Windows
+```cmd
+cd TP-02
+java -jar lib\junit-platform-console-standalone-1.10.2.jar --class-path out --scan-class-path
+```
+
+#### Linux/macOS
+```bash
+cd TP-02
+java -jar lib/junit-platform-console-standalone-1.10.2.jar --class-path out --scan-class-path
+```
+
+### Cobertura de Testes
+
+Os testes unitários cobrem:
+
+- ✅ Adição e remoção de clientes
+- ✅ Prevenção de clientes duplicados (mesmo NIF)
+- ✅ Registo de encomendas e dedução de stock
+- ✅ Remoção de encomendas e reposição de stock
+- ✅ Atualização de produtos de encomendas
+- ✅ Validação de stock insuficiente
+
+---
+
+## Documentação
+
+### Geração de JavaDoc
+
+#### Windows
+```cmd
+cd TP-02
+javadoc -d doc -sourcepath src -subpackages app modelo gui persistencia
+```
+
+#### Linux/macOS
+```bash
+cd TP-02
+javadoc -d doc -sourcepath src -subpackages app modelo gui persistencia
+```
+
+A documentação será gerada em `TP-02/doc/`. Abra `doc/index.html` no navegador para visualizar.
+
+### Documentação Adicional
+
+- **`CONTEXTO.md`**: Documentação técnica detalhada do projeto, incluindo arquitetura, decisões de design e considerações de implementação.
+- **`diagrama.puml`**: Diagrama UML do projeto em formato PlantUML.
+- **`diagrama.png`**: Diagrama UML renderizado para visualização.
+
+---
+
+## Tecnologias Utilizadas
+
+### Linguagem e Bibliotecas
+
+- **Java 21**: Linguagem de programação principal
+- **Java Swing**: Biblioteca para interface gráfica
+- **JUnit 5**: Framework de testes unitários
+- **Java Time API**: Para rastreamento temporal (`LocalDateTime`, `LocalDate`)
+
+### Conceitos de POO Demonstrados
+
+- ✅ **Herança**: `Pessoa` (abstrata) → `Cliente`
+- ✅ **Classes Abstratas**: `Pessoa` com método abstrato `toString()`
+- ✅ **Interfaces**: `Vendavel` implementada por `Produto`
+- ✅ **Overloading**: Construtores sobrecarregados em `Encomenda`
+- ✅ **Overriding**: `toString()` em `Cliente`, métodos de `Vendavel` em `Produto`
+- ✅ **Composição**: `Cliente` possui `Morada`, `Encomenda` possui `Cliente` e produtos
+- ✅ **Polimorfismo**: Uso de `Vendavel` e `Pessoa` em contextos polimórficos
+- ✅ **Encapsulamento**: Atributos privados com acesso controlado via métodos públicos
+
+### Padrões e Práticas
+
+- **Arquitetura em Camadas**: Separação clara entre domínio, vista e persistência
+- **Programação Orientada a Eventos**: Listeners para interações na GUI
+- **Validações Centralizadas**: Classe utilitária para evitar duplicação
+- **Tratamento de Exceções**: Uso de exceções em vez de mensagens no console
+- **Testes Automatizados**: Validação contínua da lógica de negócio
+
+---
+
+## Melhorias Implementadas
+
+### Validações e Integridade
+
+- ✅ Validação de NIF português usando algoritmo oficial (não apenas formato)
+- ✅ Validações de integridade referencial (impede remoção de entidades com dependências)
+- ✅ Tratamento de erros robusto (exceções em vez de `System.out.println`)
+
+### Interface Visual
+
+- ✅ Tamanho de janela otimizado (1000x700) com tamanho mínimo (800x600)
+- ✅ Tabelas com cores alternadas para melhor legibilidade
+- ✅ Tooltips informativos em botões e campos
+- ✅ Botões "Cancelar" em diálogos de edição
+- ✅ Layout melhorado no painel de estatísticas
+
+### Funcionalidades de Estatísticas
+
+- ✅ Painel dedicado com 4 abas organizadas
+- ✅ Cálculos de faturação por dia, semana e mês
+- ✅ Produtos mais/menos vendidos
+- ✅ Clientes com maior volume de compras
+- ✅ Mensagens informativas quando não há dados
+
+### Rastreamento Temporal
+
+- ✅ Campo `dataHora` em todas as encomendas
+- ✅ Edição de data/hora nas encomendas
+- ✅ Exibição de data/hora na tabela de encomendas
+- ✅ Compatibilidade com dados antigos
+
+---
+
+## Autores
+
+- **Afonso Esteves** (55047)
+- **Felipe Dourado** (53394)
+- **Tiago Pereira** (55019)
+
+---
+
+## Licença
+
+Este projeto foi desenvolvido no âmbito académico da disciplina de Programação Orientada a Objetos da Universidade da Beira Interior.
 
 ---
 
 ## Conclusão
 
-A transição da `TP-01` para a `TP-02` ilustra um processo de desenvolvimento iterativo, onde os requisitos iniciais são expandidos e aprimorados com a introdução de uma interface gráfica, persistência de dados e uma arquitetura mais modular e testável. Este projeto serve como um excelente exemplo prático da aplicação de diversos princípios e padrões de Programação Orientada a Objetos.
+O **TP-02** representa uma aplicação completa e robusta de gestão de farmácia, demonstrando a aplicação prática de conceitos avançados de Programação Orientada a Objetos, desenvolvimento de interfaces gráficas, persistência de dados e testes unitários. A aplicação está totalmente funcional, testada e pronta para uso em ambiente de produção.
+
+Para mais detalhes técnicos, consulte o ficheiro [`CONTEXTO.md`](CONTEXTO.md).
