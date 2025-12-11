@@ -6,36 +6,17 @@
 \usepackage{enumitem}
 \usepackage{natbib}
 \usepackage{indentfirst}
-\usepackage{hyperref}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=black,citecolor=black]{hyperref}
 \usepackage{fancyhdr}
-\usepackage{listings}
 \usepackage{xcolor}
 \usepackage{acronym}
 \usepackage{dirtree}
-
-\lstset{
-    language=Java,
-    basicstyle=\ttfamily\small,
-    keywordstyle=\color{blue},
-    stringstyle=\color{red},
-    commentstyle=\color{green!50!black},
-    numberstyle=\tiny,
-    numbers=left,
-    stepnumber=1,
-    numbersep=5pt,
-    backgroundcolor=\color{gray!10},
-    showspaces=false,
-    showstringspaces=false,
-    showtabs=false,
-    tabsize=2,
-    captionpos=b,
-    breaklines=true,
-    breakatwhitespace=true,
-    breakautoindent=true,
-    escapeinside={\%*}{*)},
-    linewidth=\textwidth,
-    basewidth=0.5em,
-}
+\usepackage{adjustbox}
+\usepackage{pdflscape}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{rotating}
+\usepackage{placeins}
 
 \pagestyle{fancy}
 \fancyhf{}
@@ -64,9 +45,9 @@
 \newpage
 
 \section*{Resumo}
-\hspace{10pt}
-Este relatório documenta a evolução de um sistema de gestão de farmácia desenvolvido no âmbito da disciplina de Programação Orientada a Objetos. A segunda entrega introduziu uma interface gráfica baseada em Java Swing, persistência de dados através de serialização de objetos, testes unitários JUnit 5 e documentação com JavaDoc. O código foi reorganizado em pacotes (\texttt{app}, \texttt{modelo}, \texttt{gui}, \texttt{persistencia}, \texttt{test}) e beneficiou de refatoração orientada por princípios de POO, resultando numa aplicação mais robusta, reutilizável e preparada para futuras extensões.
 \addcontentsline{toc}{section}{Resumo}
+
+Este relatório documenta a evolução de um sistema de gestão de farmácia desenvolvido no âmbito da disciplina de Programação Orientada a Objetos. A segunda entrega introduziu uma interface gráfica baseada em Java Swing, persistência de dados através de serialização de objetos, testes unitários JUnit 5 e documentação com JavaDoc. O código foi reorganizado em pacotes (\texttt{app}, \texttt{modelo}, \texttt{gui}, \texttt{persistencia}, \texttt{test}) e beneficiou de refatoração orientada por princípios de POO, resultando numa aplicação mais robusta, reutilizável e preparada para futuras extensões.
 
 \section*{Palavras-chave e \textit{Keywords}}
 Java; Swing; GUI; Programação Orientada a Objetos; Persistência de Dados; Serialização; JUnit; Javadoc.
@@ -75,7 +56,7 @@ Java; Swing; GUI; Programação Orientada a Objetos; Persistência de Dados; Ser
 
 \section{Introdução}
 \subsection{Âmbito, enquadramento e motivação}
-\hspace{10pt}
+
 Este documento descreve o Trabalho Prático 2 (TP2) da disciplina, que dá continuidade ao sistema originalmente desenvolvido no TP1. O objetivo é consolidar competências de POO ao migrar uma aplicação de consola para uma interface gráfica, garantindo persistência de dados e qualidade através de testes e documentação formal. A motivação passa por aproximar o projeto de cenários reais: uma interface amigável, dados duráveis, testes automatizados e documentação técnica.
 
 \section{Contextualização do Projeto}
@@ -107,7 +88,7 @@ O projeto foi desenvolvido com os seguintes objetivos principais:
 \begin{itemize}
     \item \textbf{Sistema Operativo}: macOS 15 (Darwin 25.0.0).
     \item \textbf{Shell}: \texttt{/bin/zsh}, utilizado para compilação, execução, testes e geração de documentação.
-    \item \textbf{IDE / Editores}: IntelliJ IDEA e Cursor, suportando funcionalidades de refatoração, inspeções e integração com VCS.
+    \item \textbf{IDE / Editores}: IntelliJ IDEA e Cursor, com suporte a funcionalidades de reestruturação, inspeções e integração com VCS.
     \item \textbf{Controlo de Versões}: Git (repositório local e integração com plataformas remotas).
 \end{itemize}
 
@@ -118,16 +99,17 @@ O projeto foi desenvolvido com os seguintes objetivos principais:
     \item \textbf{Persistência}: Serialização nativa com \texttt{ObjectOutputStream}/\texttt{ObjectInputStream}, garantindo persistência sem recurso a bases de dados relacionais ou NoSQL.
     \item \textbf{Testes}: Framework JUnit 5, distribuída através do artefacto \texttt{junit-platform-console-standalone-1.10.2.jar}, permitindo execução em linha de comandos e integração CI.
     \item \textbf{Documentação}: JavaDoc para produção de documentação HTML da API.
-    \item \textbf{Bibliotecas Standard}: \texttt{java.util} (coleções, \texttt{Optional}), \texttt{java.io} (streams de objetos) e \texttt{java.awt.event} (listeners).
+    \item \textbf{Modelação UML}: PlantUML através da extensão PlantUML4idea do IntelliJ IDEA para criação e renderização de diagramas de classes.
+    \item \textbf{Bibliotecas Standard}: \texttt{Java.util} (coleções, \texttt{Optional}), \texttt{java.io} (streams de objetos) e \texttt{java.awt.event} (listeners).
 \end{itemize}
 
 \subsection{Práticas de Engenharia}
 \begin{itemize}
-    \item \textbf{Arquitetura em Camadas}: separação clara entre domínio, vista e persistência.
-    \item \textbf{POO Avançada}: utilização de herança (\texttt{Pessoa} \textrightarrow \texttt{Cliente}), abstrações (\texttt{Vendavel}), sobrecarga/sobrescrita (\texttt{Encomenda}), encapsulamento e composição (\texttt{Cliente}--\texttt{Morada}).
-    \item \textbf{Programação Orientada a Eventos}: modelo de listeners para captar interações na GUI.
-    \item \textbf{Testes Automatizados}: validação da lógica de negócio com JUnit e execução regular durante o desenvolvimento.
-    \item \textbf{Documentação Contínua}: manutenção do JavaDoc e do relatório técnico (\texttt{CONTEXTO.md}) alinhados com o estado do código.
+    \item \textbf{Arquitetura em Camadas}: Separação clara entre domínio, vista e persistência.
+    \item \textbf{POO Avançada}: Utilização de herança (\texttt{Pessoa} \textrightarrow \texttt{Cliente}), abstrações (\texttt{Vendavel}), sobrecarga/sobrescrita (\texttt{Encomenda}), encapsulamento e composição (\texttt{Cliente}--\texttt{Morada}).
+    \item \textbf{Programação Orientada a Eventos}: Modelo de listeners para captar interações na GUI.
+    \item \textbf{Testes Automatizados}: Validação da lógica de negócio com JUnit e execução regular durante o desenvolvimento.
+    \item \textbf{Documentação Contínua}: Manutenção do JavaDoc e do relatório técnico (\texttt{CONTEXTO.md}) alinhados com o estado do código.
 \end{itemize}
 
 \section{Utilização}
@@ -145,6 +127,11 @@ O projeto foi desenvolvido com os seguintes objetivos principais:
 \begin{verbatim}
 javac -cp "lib/junit-platform-console-standalone-1.10.2.jar:src" -d out \
   $(find src -name "*.java" ! -path "*/test/*")
+\end{verbatim}
+    Alternativamente, sem utilizar \texttt{find}:
+\begin{verbatim}
+javac -cp "lib/junit-platform-console-standalone-1.10.2.jar:src" -d out \
+  src/app/*.java src/modelo/*.java src/gui/*.java src/persistencia/*.java
 \end{verbatim}
     \item Compilar classes de teste:
 \begin{verbatim}
@@ -170,10 +157,12 @@ java -jar lib/junit-platform-console-standalone-1.10.2.jar \
 \begin{enumerate}
     \item Na raiz do projeto:
 \begin{verbatim}
-javadoc -d doc -sourcepath src app modelo gui persistencia
+javadoc -d doc -sourcepath src -subpackages app modelo gui persistencia
 \end{verbatim}
     \item O resultado fica em \texttt{doc/index.html}.
 \end{enumerate}
+
+\newpage
 
 \section{Estrutura da Solução Construída}
 
@@ -205,171 +194,251 @@ O código encontra-se organizado por responsabilidade:
     \item \textbf{\texttt{src/test/FarmaciaTest.java}}: Testes unitários que asseguram regras de negócio (clientes, encomendas, stock).
     \item \textbf{\texttt{lib/junit-platform-console-standalone-1.10.2.jar}}: Dependência JUnit 5.
     \item \textbf{\texttt{doc/}}: JavaDoc gerado.
-    \item \textbf{\texttt{farmacia.dat}}: Ficheiro de dados serializados (não versionado).
-    \item \textbf{\texttt{CONTEXTO.md}}: Documento de referência técnica.
 \end{itemize}
+
+\newpage
 
 \section{Testes e Documentação}
+
+\subsection{Testes Unitários}
+Os testes unitários foram implementados utilizando JUnit 5 e encontram-se no ficheiro \texttt{src/test/FarmaciaTest.java}. Estes testes cobrem operações críticas do sistema, incluindo:
+
 \begin{itemize}
-    \item \textbf{Testes Unitários}: \texttt{FarmaciaTest} cobre operações críticas (clientes, encomendas, stock). Execução via JUnit console.
-    \item \textbf{JavaDoc}: Geração automática para todos os pacotes, facilitando consulta da API.
+    \item Adição e remoção de clientes, garantindo que não são permitidos clientes duplicados (mesmo NIF).
+    \item Registo de encomendas e verificação da dedução automática de stock dos produtos envolvidos.
+    \item Remoção de encomendas e validação da reposição correta do stock.
+    \item Atualização de produtos de uma encomenda, incluindo casos de stock insuficiente.
 \end{itemize}
+
+A execução dos testes é realizada através da linha de comandos utilizando o artefacto JUnit standalone, permitindo validação contínua da lógica de negócio durante o desenvolvimento.
+
+\subsection{Documentação JavaDoc}
+A documentação da API foi gerada automaticamente utilizando JavaDoc para todos os pacotes do projeto (\texttt{app}, \texttt{modelo}, \texttt{gui}, \texttt{persistencia}). Esta documentação facilita a compreensão da estrutura do código, dos métodos disponíveis e dos relacionamentos entre classes, sendo essencial para manutenção e evolução futura do sistema.
+
+\newpage
 
 \section{Funcionalidades Implementadas}
+
+O sistema desenvolvido oferece um conjunto abrangente de funcionalidades organizadas em três áreas principais:
+
+\subsection{Gestão de Clientes}
 \begin{itemize}
-    \item Interface gráfica com três separadores: Clientes, Produtos e Encomendas.
-    \item CRUD completo para clientes e produtos, com validação de NIF (9 dígitos) e código postal (0000-000).
-    \item Registo, edição (incluindo atualização de stock/estado) e remoção de encomendas com sincronização imediata do stock e cliente apresentado apenas para consulta durante edições.
-    \item Diálogo dedicado ao ajuste de produtos da encomenda, com ações de adicionar, remover e guardar alterações.
-    \item Persistência automática ao terminar a sessão (com confirmação).
-    \item Validações de dados (NIF único, formato de código postal, stock suficiente, preço/stock não negativos).
-    \item Testes unitários para garantir a consistência da lógica.
+    \item Interface gráfica com tabela para visualização de todos os clientes registados.
+    \item Operações CRUD completas: criação, leitura, atualização e remoção de clientes.
+    \item Validação rigorosa de dados: NIF com exatamente 9 dígitos e código postal no formato 0000-000.
+    \item Garantia de unicidade do NIF, impedindo registos duplicados.
+    \item Possibilidade de correção de NIF durante a edição no painel de gestão de clientes.
 \end{itemize}
 
-\section{Implementação de Funcionalidades}
+\subsection{Gestão de Produtos}
+\begin{itemize}
+    \item Interface tabular para visualização do catálogo de produtos.
+    \item CRUD completo com validações de integridade: preço e stock não podem ser negativos.
+    \item Gestão de stock com atualização dinâmica da interface após alterações.
+    \item Sincronização automática entre painéis quando o stock é alterado através de encomendas.
+\end{itemize}
 
-\subsection{Classe FarmaciaGUI}
-\begin{lstlisting}[caption={Configuração da janela principal em FarmaciaGUI.java}]
-public class FarmaciaGUI extends JFrame {
-    public FarmaciaGUI(Farmacia farmacia) {
-        setTitle("Gestão de Farmácia");
-        setSize(800, 600);
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        setLocationRelativeTo(null);
+\subsection{Gestão de Encomendas}
+\begin{itemize}
+    \item Registo de novas encomendas com seleção de cliente (pesquisa por NIF) e produtos (pesquisa por nome ou ID).
+    \item Validação em tempo real do stock disponível antes de confirmar a encomenda.
+    \item Edição completa de encomendas existentes, incluindo:
+    \begin{itemize}
+        \item Atualização do estado da encomenda (Em processamento, Pago, Enviado, Entregue).
+        \item Diálogo dedicado para gestão de produtos da encomenda (adicionar, remover, ajustar quantidades).
+        \item Apresentação do cliente apenas para consulta durante a edição.
+    \end{itemize}
+    \item Remoção de encomendas com reposição automática do stock dos produtos envolvidos.
+    \item Sincronização imediata entre os painéis de encomendas e produtos para refletir alterações de stock.
+\end{itemize}
 
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                int confirm = JOptionPane.showConfirmDialog(
-                    null,
-                    "Deseja guardar os dados antes de sair?",
-                    "Sair",
-                    JOptionPane.YES_NO_CANCEL_OPTION
-                );
-                if (confirm == JOptionPane.YES_OPTION) {
-                    GestorDados.guardarDados(
-                        farmacia.getClientes(),
-                        farmacia.getProdutos(),
-                        farmacia.getEncomendas()
-                    );
-                    dispose();
-                    System.exit(0);
-                } else if (confirm == JOptionPane.NO_OPTION) {
-                    dispose();
-                    System.exit(0);
-                }
-            }
-        });
+\subsection{Persistência e Validações}
+\begin{itemize}
+    \item Persistência automática dos dados através de serialização de objetos em \texttt{farmacia.dat}.
+    \item Diálogo de confirmação ao encerrar a aplicação, permitindo escolher se deseja guardar os dados.
+    \item Carregamento automático dos dados persistidos ao iniciar a aplicação.
+    \item Validações abrangentes: NIF único, formato de código postal, stock suficiente, valores não negativos.
+\end{itemize}
 
-        JTabbedPane tabbedPane = new JTabbedPane();
-        PainelGestaoClientes painelClientes = new PainelGestaoClientes(farmacia);
-        PainelGestaoProdutos painelProdutos = new PainelGestaoProdutos(farmacia);
-        PainelGestaoEncomendas painelEncomendas =
-            new PainelGestaoEncomendas(farmacia, painelProdutos);
+\newpage
 
-        tabbedPane.addTab("Clientes", painelClientes);
-        tabbedPane.addTab("Produtos", painelProdutos);
-        tabbedPane.addTab("Encomendas", painelEncomendas);
-        add(tabbedPane);
-    }
-}
-\end{lstlisting}
+\section{Diagrama de Classes}
 
-\subsection{Classe GestorDados}
-\begin{lstlisting}[caption={Persistência em GestorDados.java}]
-public static void guardarDados(
-        List<Cliente> clientes,
-        List<Produto> produtos,
-        List<Encomenda> encomendas) {
-    try (ObjectOutputStream oos =
-             new ObjectOutputStream(new FileOutputStream(NOME_FICHEIRO))) {
-        oos.writeObject(clientes);
-        oos.writeObject(produtos);
-        oos.writeObject(encomendas);
-    } catch (IOException e) {
-        System.err.println("Erro ao guardar os dados: " + e.getMessage());
-    }
-}
+\subsection{Ferramenta Utilizada}
+O diagrama de classes foi criado utilizando a extensão \textbf{PlantUML4idea} do IntelliJ IDEA, que integra o framework PlantUML diretamente no ambiente de desenvolvimento. Esta ferramenta permite criar diagramas UML através de uma linguagem de marcação textual, facilitando a manutenção e versionamento do diagrama através do ficheiro fonte \texttt{diagrama.puml}.
 
-@SuppressWarnings("unchecked")
-public static Object[] carregarDados() {
-    File f = new File(NOME_FICHEIRO);
-    if (!f.exists()) {
-        return null;
-    }
-    try (ObjectInputStream ois =
-             new ObjectInputStream(new FileInputStream(NOME_FICHEIRO))) {
-        List<Cliente> clientes = (List<Cliente>) ois.readObject();
-        List<Produto> produtos = (List<Produto>) ois.readObject();
-        List<Encomenda> encomendas = (List<Encomenda>) ois.readObject();
+A extensão PlantUML4idea oferece funcionalidades de renderização em tempo real e exportação para diversos formatos de imagem, incluindo PNG, SVG e PDF. Para este projeto, o diagrama foi renderizado e exportado como imagem PNG (\texttt{diagrama.png}) a partir do ficheiro fonte PlantUML, garantindo alta qualidade e compatibilidade com o documento LaTeX.
 
-        if (!produtos.isEmpty()) {
-            int maxIdProduto = produtos.stream()
-                    .mapToInt(Produto::getId).max().orElse(0);
-            Produto.setProximoId(maxIdProduto + 1);
-        }
-        if (!encomendas.isEmpty()) {
-            int maxIdEncomenda = encomendas.stream()
-                    .mapToInt(Encomenda::getId).max().orElse(0);
-            Encomenda.setProximoId(maxIdEncomenda + 1);
-        }
-        return new Object[]{clientes, produtos, encomendas};
-    } catch (IOException | ClassNotFoundException e) {
-        System.err.println("Erro ao carregar os dados: " + e.getMessage());
-        return null;
-    }
-}
-\end{lstlisting}
+\subsection{Descrição do Diagrama}
+A Figura \ref{fig:diagrama_classes} apresenta o diagrama de classes UML que ilustra a arquitetura completa do sistema de gestão de farmácia, demonstrando a organização em pacotes (\texttt{app}, \texttt{gui}, \texttt{persistencia} e \texttt{modelo}), os relacionamentos entre classes, heranças, implementações de interfaces e composições.
 
-\subsection{Classe FarmaciaTest}
-\begin{lstlisting}[caption={Exemplo de teste em FarmaciaTest.java}]
-@Test
-void testAtualizarProdutosEncomenda() {
-    Map<Produto, Integer> produtosEncomendaOriginal = new HashMap<>();
-    produtosEncomendaOriginal.put(produto1, 10);
-    farmacia.registarEncomenda(cliente, produtosEncomendaOriginal);
+O diagrama evidencia a separação de responsabilidades: o pacote \texttt{modelo} contém as entidades de domínio (\texttt{Pessoa}, \texttt{Cliente}, \texttt{Produto}, \texttt{Encomenda}, \texttt{Farmacia}), o pacote \texttt{gui} agrupa os componentes da interface gráfica (\texttt{FarmaciaGUI} e os painéis de gestão), o pacote \texttt{persistencia} centraliza a gestão de dados através de \texttt{GestorDados}, e o pacote \texttt{app} contém o ponto de entrada \texttt{Main}.
 
-    int idEncomenda = farmacia.getEncomendas().get(0).getId();
-    Map<Produto, Integer> produtosEncomendaNova = new HashMap<>();
-    produtosEncomendaNova.put(produto2, 15);
+As classes principais do sistema incluem:
+\begin{itemize}
+    \item \textbf{\texttt{Farmacia}}: Classe central que gere todas as operações de negócio, mantendo listas de clientes, produtos e encomendas, e coordenando as validações e atualizações de stock.
+    \item \textbf{\texttt{Cliente}}: Extende a classe abstrata \texttt{Pessoa} e representa os clientes da farmácia, contendo informações de identificação e morada.
+    \item \textbf{\texttt{Produto}}: Implementa a interface \texttt{Vendavel} e gere o catálogo de produtos com controlo de stock e preços.
+    \item \textbf{\texttt{Encomenda}}: Relaciona clientes com produtos, gerindo estados de processamento e calculando preços totais.
+    \item \textbf{\texttt{GestorDados}}: Classe estática responsável pela persistência através de serialização de objetos.
+    \item \textbf{\texttt{FarmaciaGUI}}: Interface gráfica principal que coordena os diferentes painéis de gestão através de um \texttt{JTabbedPane}.
+\end{itemize}
 
-    farmacia.atualizarProdutosEncomenda(idEncomenda, produtosEncomendaNova);
+\FloatBarrier
+\begin{sidewaysfigure}[!htbp]
+    \centering
+    \includegraphics[width=\textwidth, height=0.9\textheight, keepaspectratio]{Anexos/diagrama.png}
+    \caption{Diagrama de Classes da Aplicação}
+    \label{fig:diagrama_classes}
+\end{sidewaysfigure}
+\FloatBarrier
+\clearpage
 
-    Encomenda encomendaAtualizada =
-        farmacia.acharEncomendaPorId(idEncomenda).get();
-    assertTrue(encomendaAtualizada.getProdutos().containsKey(produto2));
-    assertEquals(100, produto1.getStock());
-    assertEquals(35, produto2.getStock());
-}
-\end{lstlisting}
+\subsection{Legenda do Diagrama}
+\label{legenda_diagrama}
+
+Para facilitar a compreensão do diagrama de classes apresentado, esta secção descreve os elementos e notações UML utilizadas:
+
+\subsubsection{Organização em Pacotes}
+O diagrama organiza as classes em quatro pacotes principais:
+\begin{itemize}
+    \item \textbf{\texttt{app}}: Contém a classe \texttt{Main}, ponto de entrada da aplicação responsável por inicializar o sistema e carregar dados persistidos.
+    \item \textbf{\texttt{modelo}}: Agrupa as entidades de domínio que representam a lógica de negócio: \texttt{Farmacia}, \texttt{Cliente}, \texttt{Produto}, \texttt{Encomenda}, \texttt{Pessoa}, \texttt{Morada}, \texttt{Vendavel} e \texttt{EstadoEncomenda}.
+    \item \textbf{\texttt{gui}}: Contém os componentes da interface gráfica: \texttt{FarmaciaGUI} e os painéis de gestão (\texttt{PainelGestaoClientes}, \texttt{PainelGestaoProdutos}, \texttt{PainelGestaoEncomendas}).
+    \item \textbf{\texttt{persistencia}}: Inclui a classe \texttt{GestorDados}, responsável pela serialização e desserialização dos dados.
+\end{itemize}
+
+\subsubsection{Modificadores de Visibilidade}
+Os atributos e métodos são representados com os seguintes símbolos:
+\begin{itemize}
+    \item \textbf{\texttt{+}}: Visibilidade pública (público) — acessível de qualquer classe.
+    \item \textbf{\texttt{-}}: Visibilidade privada (privado) — acessível apenas dentro da própria classe.
+    \item \textbf{\texttt{\#}}: Visibilidade protegida (protegido) — acessível na classe e nas suas subclasses.
+\end{itemize}
+
+\subsubsection{Tipos de Relacionamentos}
+
+\textbf{Herança (Generalização)}: Representada por uma seta contínua com triângulo vazio apontando para a classe base.
+\begin{itemize}
+    \item \texttt{Cliente} herda de \texttt{Pessoa} — permite reutilização de código e modelação da relação "é um tipo de".
+    \item \texttt{FarmaciaGUI} herda de \texttt{JPanel} — integração com a biblioteca Swing.
+\end{itemize}
+
+\textbf{Implementação de Interface}: Representada por uma seta tracejada com triângulo vazio apontando para a interface.
+\begin{itemize}
+    \item \texttt{Produto} implementa \texttt{Vendavel} — garante que produtos possuem métodos \texttt{getNome()} e \texttt{getPreco()}, permitindo polimorfismo.
+\end{itemize}
+
+\textbf{Composição}: Representada por um losango preenchido (diamante sólido) na classe que contém.
+\begin{itemize}
+    \item \texttt{Cliente} compõe \texttt{Morada} — a morada não existe independentemente do cliente (relação forte, ciclo de vida dependente).
+    \item \texttt{Encomenda} compõe \texttt{Produto} — os produtos na encomenda são parte integrante da mesma.
+\end{itemize}
+
+\textbf{Agregação}: Representada por um losango vazio na classe que contém.
+\begin{itemize}
+    \item \texttt{Farmacia} agrega \texttt{Cliente}, \texttt{Produto} e \texttt{Encomenda} — estas entidades podem existir independentemente da farmácia (relação fraca).
+\end{itemize}
+
+\textbf{Associação}: Representada por uma linha simples entre classes.
+\begin{itemize}
+    \item \texttt{Encomenda} associa-se a \texttt{Cliente} — cada encomenda pertence a um cliente.
+    \item \texttt{Encomenda} associa-se a \texttt{EstadoEncomenda} — cada encomenda possui um estado.
+\end{itemize}
+
+\textbf{Dependência}: Representada por uma seta tracejada com etiqueta descritiva.
+\begin{itemize}
+    \item \texttt{Main} depende de \texttt{GestorDados} (etiqueta "carrega") — utiliza métodos estáticos para carregar dados.
+    \item \texttt{Main} depende de \texttt{JFrame} (etiqueta "cria") — cria a janela principal.
+    \item \texttt{FarmaciaGUI} depende dos painéis de gestão (etiqueta "cria") — instancia os componentes da interface.
+    \item \texttt{PainelGestaoEncomendas} depende de \texttt{PainelGestaoProdutos} (etiqueta "atualiza") — sincroniza atualizações de stock.
+    \item \texttt{GestorDados} depende de \texttt{Farmacia} (etiquetas "usa" e "serializa") — manipula os dados da farmácia para persistência.
+\end{itemize}
+
+\subsubsection{Elementos Especiais}
+
+\textbf{Classe Abstrata}: \texttt{Pessoa} é marcada como abstrata (indicada por \texttt{(A)}), não podendo ser instanciada diretamente. Serve como base para \texttt{Cliente} e potenciais futuras subclasses.
+
+\textbf{Interface}: \texttt{Vendavel} define um contrato que \texttt{Produto} deve implementar, permitindo polimorfismo e extensibilidade para futuros tipos de itens vendáveis.
+
+\textbf{Enumeração}: \texttt{EstadoEncomenda} define os estados possíveis de uma encomenda: \texttt{EM\_PROCESSAMENTO}, \texttt{PAGO}, \texttt{ENVIADO} e \texttt{ENTREGUE}, garantindo type-safety e valores fixos.
+
+\textbf{Classe Estática}: \texttt{GestorDados} é marcada como \texttt{<<static>>}, indicando que todos os seus métodos são estáticos e não requerem instanciação.
+
+\subsubsection{Multiplicidades}
+As relações incluem multiplicidades que indicam quantidades:
+\begin{itemize}
+    \item \texttt{0..*}: Zero ou mais (muitos) — \texttt{Farmacia} pode ter zero ou mais clientes, produtos e encomendas.
+    \item \texttt{1}: Exatamente um — \texttt{Encomenda} tem exatamente um cliente e um estado.
+    \item \texttt{1..*}: Um ou mais — \texttt{Encomenda} contém pelo menos um produto.
+\end{itemize}
+
+\subsubsection{Atributos e Métodos Principais}
+As classes principais expõem os seguintes elementos:
+\begin{itemize}
+    \item \texttt{Farmacia}: Mantém listas de clientes, produtos e encomendas; oferece métodos para adicionar/remover entidades e registar encomendas.
+    \item \texttt{Encomenda}: Contém identificador único, preço total calculado e estado atual; relaciona-se com cliente e produtos através de um \texttt{Map}.
+    \item \texttt{Produto}: Gere stock, preço e identificador; implementa métodos para ajustar stock (\texttt{adicionarStock}, \texttt{removerStock}).
+    \item \texttt{Cliente}: Extende \texttt{Pessoa} com nome e NIF; contém uma \texttt{Morada} completa.
+    \item Painéis GUI: Cada painel mantém referência à \texttt{Farmacia} e a uma \texttt{JTable} para visualização tabular dos dados.
+\end{itemize}
+
+Esta estrutura demonstra a aplicação de princípios fundamentais de POO: encapsulamento, herança, polimorfismo, composição e agregação, resultando numa arquitetura modular e extensível.
 
 \section{Considerações de Implementação}
-\begin{itemize}
-    \item Utilização de encapsulamento e validações para garantir consistência (e.g., stock não negativo).
-    \item Regras de formato para NIF (9 dígitos) e código postal (0000-000), com correção restringida ao painel de clientes.
-    \item Dedução e reposição automáticas de stock ao registar/remover encomendas.
-    \item Atualização de identificadores estáticos após carregamento da persistência para evitar colisões.
-    \item Sincronização entre os painéis de encomendas e produtos para refletir alterações de stock imediatamente.
-\end{itemize}
+
+Durante o desenvolvimento do projeto, foram aplicados diversos princípios e técnicas de Programação Orientada a Objetos, resultando em decisões de implementação que merecem destaque:
+
+\subsection{Encapsulamento e Validações}
+O sistema utiliza extensivamente encapsulamento para proteger o estado interno das classes. Todos os atributos são privados e o acesso é controlado através de métodos públicos. Validações rigorosas garantem a consistência dos dados em todas as operações, como a verificação de que o stock nunca assume valores negativos e que os preços são sempre positivos.
+
+\subsection{Validação de Dados de Entrada}
+Foram implementadas regras de formato específicas para dados de clientes: o NIF deve conter exatamente 9 dígitos e o código postal deve seguir o padrão 0000-000. A correção do NIF é permitida apenas no contexto do painel de gestão de clientes, mantendo a integridade dos dados em outras partes do sistema.
+
+\subsection{Gestão Automática de Stock}
+O sistema implementa uma gestão inteligente do stock, deduzindo automaticamente as quantidades dos produtos quando uma encomenda é registada e repondo o stock quando uma encomenda é removida. Esta funcionalidade garante que o inventário reflete sempre o estado real dos produtos disponíveis.
+
+\subsection{Persistência e Identificadores}
+Após o carregamento dos dados persistidos, o sistema atualiza automaticamente os contadores estáticos de identificadores (\texttt{Produto} e \texttt{Encomenda}) para evitar colisões de IDs. Esta abordagem garante que novos registos sempre recebem identificadores únicos, mesmo após múltiplas sessões da aplicação.
+
+\subsection{Sincronização entre Componentes}
+Foi implementada uma sincronização eficiente entre os painéis de encomendas e produtos, garantindo que alterações de stock sejam refletidas imediatamente em todas as interfaces relevantes. Esta coordenação melhora significativamente a experiência do utilizador e previne inconsistências visuais.
 
 \section{Conclusão}
-O TP2 alcançou os objetivos propostos: interface gráfica intuitiva, persistência de dados fiável, testes automatizados e documentação técnica. A organização em pacotes torna o projeto escalável e facilita futuras evoluções, como a introdução de relatórios estatísticos ou novas interfaces. O conhecimento consolidado neste trabalho forma uma base sólida para desafios mais complexos em POO.
+
+O Trabalho Prático 2 alcançou com sucesso todos os objetivos propostos, resultando numa aplicação robusta e bem estruturada. A migração de uma interface de consola para uma interface gráfica baseada em Java Swing demonstrou a aplicação prática dos conceitos de programação orientada a eventos e gestão de componentes gráficos.
+
+A implementação de persistência de dados através de serialização de objetos garantiu que os dados sejam mantidos entre sessões, enquanto os testes unitários com JUnit 5 asseguram a qualidade e consistência da lógica de negócio. A documentação JavaDoc completa facilita a manutenção e compreensão do código.
+
+A organização do código em pacotes bem definidos (\texttt{app}, \texttt{modelo}, \texttt{gui}, \texttt{persistencia}, \texttt{test}) reflete uma arquitetura limpa e escalável, preparada para futuras extensões. A aplicação de princípios avançados de POO, como herança, interfaces, sobrecarga, sobreposição e composição, demonstra um domínio sólido dos conceitos fundamentais da disciplina.
+
+O conhecimento consolidado neste trabalho forma uma base sólida para desafios mais complexos em Programação Orientada a Objetos e desenvolvimento de software em geral. O projeto demonstra a capacidade de transformar requisitos funcionais numa solução técnica completa, bem documentada e testada.
 
 \clearpage
 
+\newpage
+
 \section{Referências Bibliográficas}
+
 \begin{itemize}
     \item Schildt, Herbert. \textit{Java: A Beginner's Guide}. 6th ed., McGraw-Hill Education, 2014.
     \item Olsson, Mikael. \textit{Java Quick Syntax Reference}. Apress, 2014.
     \item Roberts, Eric S. \textit{The Art and Science of Java}. Addison-Wesley, 2008.
-    \item Documentação oficial do JUnit 5: \url{https://junit.org/junit5/docs/current/user-guide/}
+    \item Oracle Corporation. \textit{The Java Tutorials: Creating a GUI With Swing}. Disponível em: \url{https://docs.oracle.com/javase/tutorial/uiswing/}
+    \item JUnit Team. \textit{JUnit 5 User Guide}. Disponível em: \url{https://junit.org/junit5/docs/current/user-guide/}
+    \item Oracle Corporation. \textit{Java Platform, Standard Edition Documentation}. Disponível em: \url{https://docs.oracle.com/en/java/}
 \end{itemize}
 
 \section*{Acrónimos}
+\addcontentsline{toc}{section}{Acrónimos}
 \begin{acronym}[UBI]
     \acro{UBI}{Universidade da Beira Interior}
     \acro{GUI}{Graphical User Interface}
+    \acro{POO}{Programação Orientada a Objetos}
+    \acro{JDK}{Java Development Kit}
+    \acro{API}{Application Programming Interface}
+    \acro{UML}{Unified Modeling Language}
+    \acro{CRUD}{Create, Read, Update, Delete}
 \end{acronym}
 
 \end{document}
-
